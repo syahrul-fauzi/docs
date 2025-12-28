@@ -1,0 +1,63 @@
+erDiagram
+    meta_events {
+        string id PK "UUID primary key"
+        string type "Event type: feedback, reaction, etc"
+        string run_id FK "Reference to agent run"
+        string user_id FK "User who created the event"
+        string tenant_id FK "Tenant/organization ID"
+        string sentiment "positive | negative | neutral"
+        text comment "Optional user comment"
+        json metadata "Additional event metadata"
+        timestamp created_at "Event creation time"
+        timestamp updated_at "Last update time"
+    }
+
+    meta_event_aggregates {
+        string id PK "UUID primary key"
+        string tenant_id FK "Tenant ID"
+        string period_type "hour | day | week | month"
+        date period_start "Start of aggregation period"
+        date period_end "End of aggregation period"
+        integer total_events "Total events in period"
+        integer positive_count "Positive sentiment count"
+        integer negative_count "Negative sentiment count"
+        integer neutral_count "Neutral sentiment count"
+        decimal positive_ratio "Positive events / total"
+        json trends "Trending data"
+        timestamp created_at "Aggregation creation time"
+        timestamp updated_at "Last update time"
+    }
+
+    users {
+        string id PK "UUID primary key"
+        string email "User email"
+        string tenant_id FK "Tenant ID"
+        json profile "User profile data"
+        timestamp created_at "User creation time"
+    }
+
+    agent_runs {
+        string id PK "UUID primary key"
+        string tenant_id FK "Tenant ID"
+        string agent_id FK "Agent ID"
+        json input "Run input data"
+        json output "Run output data"
+        string status "pending | running | completed | failed"
+        timestamp created_at "Run creation time"
+        timestamp completed_at "Run completion time"
+    }
+
+    tenants {
+        string id PK "UUID primary key"
+        string name "Tenant name"
+        json settings "Tenant settings"
+        timestamp created_at "Tenant creation time"
+    }
+
+    %% Relationships
+    meta_events ||--o{ users : "created by"
+    meta_events ||--o{ agent_runs : "references"
+    meta_events ||--o{ tenants : "belongs to"
+    meta_event_aggregates ||--o{ tenants : "belongs to"
+    users ||--o{ tenants : "belongs to"
+    agent_runs ||--o{ tenants : "belongs to"

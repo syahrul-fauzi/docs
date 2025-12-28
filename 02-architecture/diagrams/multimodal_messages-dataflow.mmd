@@ -1,0 +1,9 @@
+flowchart LR
+  User[[External Entity: User]]
+  Validate[(Process: Validate)]
+  Upload[(Process: Upload/Stream)]
+  Store[(Data Store: Attachments TTL)]
+  Agent[[External Entity: Agent]]
+
+  User --> Validate --> Upload --> Store
+  Agent --> Store

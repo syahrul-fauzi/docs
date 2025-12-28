@@ -1,0 +1,22 @@
+sequenceDiagram
+autonumber
+actor User
+participant Browser
+participant SEC as SecurityHeaders
+participant RBAC
+participant RL as RateLimiter
+participant API
+participant METRICS
+participant DB
+User->>Browser: Action
+Browser->>SEC: Ensure headers
+SEC-->>Browser: OK
+Browser->>RBAC: Authorize
+RBAC-->>Browser: Allow
+Browser->>RL: Check
+RL-->>Browser: OK
+Browser->>API: Request
+API->>METRICS: Record
+API->>DB: Persist
+DB-->>API: Ack
+API-->>Browser: Response

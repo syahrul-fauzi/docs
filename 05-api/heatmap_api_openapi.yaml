@@ -1,0 +1,553 @@
+openapi: 3.0.3
+info:
+  title: SBA-Agentic Analytics Heatmap API
+  version: 1.0.0
+  description: REST API untuk pengumpulan event interaksi UI (heatmap) dengan multitenancy, RBAC, rate limiting, dan webhook integrasi.
+  contact:
+    name: SBA Engineering
+    url: https://example.com/support
+    email: support@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+servers:
+  - url: http://localhost:3002
+    description: Staging (local dev)
+  - url: https://api.sba-agentic.example.com
+    description: Production
+tags:
+  - name: events
+    description: Kirim satu event heatmap
+  - name: bulk
+    description: Kirim batch event heatmap
+  - name: listing
+    description: Listing events dengan filter
+  - name: stats
+    description: Ringkasan agregat heatmap
+  - name: export
+    description: Ekspor data heatmap
+  - name: admin
+    description: Operasi administratif
+paths:
+  /api/analytics/heatmap/events:
+    post:
+      tags: [events]
+      summary: Kirim satu event heatmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - $ref: '#/components/parameters/IdempotencyKey'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeatmapEvent'
+            examples:
+              sample:
+                value:
+                  eventId: 1b1ddf12-77b5-4f03-a0f7-4d6f21e3ef01
+                  type: click
+                  page: /integrations
+                  selector: button[data-testid=connect]
+                  x: 320
+                  y: 640
+                  vw: 1280
+                  vh: 720
+                  sessionId: s_001
+                  ts: 2025-12-08T12:00:00Z
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventCreated'
+              examples:
+                created:
+                  value:
+                    eventId: 1b1ddf12-77b5-4f03-a0f7-4d6f21e3ef01
+                    status: created
+                    receivedAt: 2025-12-08T12:00:00Z
+        '200':
+          description: Duplicate (idempotent)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventCreated'
+              examples:
+                duplicate:
+                  value:
+                    eventId: 1b1ddf12-77b5-4f03-a0f7-4d6f21e3ef01
+                    status: duplicate
+                    receivedAt: 2025-12-08T12:00:00Z
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/analytics/heatmap/bulk:
+    post:
+      tags: [bulk]
+      summary: Kirim batch event heatmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HeatmapEventBatch'
+      responses:
+        '200':
+          description: Batch accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BatchAccepted'
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/analytics/heatmap/events:
+    get:
+      tags: [listing]
+      summary: Listing event heatmap dengan filter
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/TypeQuery'
+        - $ref: '#/components/parameters/FromQuery'
+        - $ref: '#/components/parameters/ToQuery'
+        - $ref: '#/components/parameters/SessionQuery'
+        - $ref: '#/components/parameters/LimitQuery'
+        - $ref: '#/components/parameters/CursorQuery'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventListResponse'
+              examples:
+                sample:
+                  value:
+                    items:
+                      - eventId: 1b1ddf12-77b5-4f03-a0f7-4d6f21e3ef01
+                        type: click
+                        page: /integrations
+                        selector: button[data-testid=connect]
+                        x: 320
+                        y: 640
+                        vw: 1280
+                        vh: 720
+                        ts: 2025-12-08T12:00:00Z
+                    nextCursor: null
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/analytics/heatmap/stats:
+    get:
+      tags: [stats]
+      summary: Ringkasan agregat heatmap
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - $ref: '#/components/parameters/PageQuery'
+        - $ref: '#/components/parameters/FromQuery'
+        - $ref: '#/components/parameters/ToQuery'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+              examples:
+                sample:
+                  value:
+                    page: /integrations
+                    window:
+                      from: 2025-12-08T00:00:00Z
+                      to: 2025-12-08T23:59:59Z
+                    topSelectors:
+                      - selector: button[data-testid=connect]
+                        count: 120
+                        density: 0.87
+                    totals:
+                      click: 200
+                      hover: 420
+                      scroll: 670
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/analytics/heatmap/export:
+    get:
+      tags: [export]
+      summary: Ekspor data heatmap (CSV/NDJSON)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - in: query
+          name: format
+          schema:
+            type: string
+            enum: [csv, ndjson]
+          required: true
+          description: Format ekspor
+      responses:
+        '200':
+          description: OK
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+            application/x-ndjson:
+              schema:
+                type: string
+                format: binary
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/TooManyRequests' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+  /api/analytics/heatmap/events/{id}:
+    delete:
+      tags: [admin]
+      summary: Hapus event (admin)
+      security:
+        - bearerAuth: []
+      parameters:
+        - $ref: '#/components/parameters/TenantHeader'
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: ID event
+      responses:
+        '204':
+          description: No Content
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '500': { $ref: '#/components/responses/ServerError' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  parameters:
+    TenantHeader:
+      in: header
+      name: x-tenant-id
+      required: true
+      schema:
+        type: string
+      description: Identitas tenant
+    IdempotencyKey:
+      in: header
+      name: Idempotency-Key
+      required: false
+      schema:
+        type: string
+      description: Kunci idempoten untuk deduplikasi
+    PageQuery:
+      in: query
+      name: page
+      schema:
+        type: string
+      description: Filter path halaman
+    TypeQuery:
+      in: query
+      name: type
+      schema:
+        type: string
+        enum: [click, hover, scroll]
+      description: Filter tipe event
+    FromQuery:
+      in: query
+      name: from
+      schema:
+        type: string
+        format: date-time
+      description: Rentang waktu mulai (ISO)
+    ToQuery:
+      in: query
+      name: to
+      schema:
+        type: string
+        format: date-time
+      description: Rentang waktu akhir (ISO)
+    SessionQuery:
+      in: query
+      name: sessionId
+      schema:
+        type: string
+      description: Filter berdasarkan sesi
+    LimitQuery:
+      in: query
+      name: limit
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 500
+      description: Batas jumlah item
+    CursorQuery:
+      in: query
+      name: cursor
+      schema:
+        type: string
+      description: Cursor untuk paginasi
+  headers:
+    XRateLimitLimit:
+      schema:
+        type: integer
+    XRateLimitRemaining:
+      schema:
+        type: integer
+    RetryAfter:
+      schema:
+        type: integer
+  responses:
+    BadRequest:
+      description: Bad Request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            validation:
+              value:
+                code: validation
+                message: field x must be a number
+                details:
+                  field: x
+                requestId: req_abc123
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            unauthorized:
+              value:
+                code: unauthorized
+                message: missing or invalid token
+                requestId: req_def456
+    ServerError:
+      description: Server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            server_error:
+              value:
+                code: server_error
+                message: unexpected error
+                requestId: req_xyz987
+    NotFound:
+      description: Not Found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            idempotency_conflict:
+              value:
+                code: conflict
+                message: idempotency key collision
+                details:
+                  key: a1b2c3
+                requestId: req_cf_456
+    TooManyRequests:
+      description: Too Many Requests
+      headers:
+        X-RateLimit-Limit:
+          $ref: '#/components/headers/XRateLimitLimit'
+        X-RateLimit-Remaining:
+          $ref: '#/components/headers/XRateLimitRemaining'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            rate_limit:
+              value:
+                code: rate_limit
+                message: too many requests
+                requestId: req_rl_123
+    ServiceUnavailable:
+      description: Service Unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+          examples:
+            unavailable:
+              value:
+                code: service_unavailable
+                message: backend temporarily unavailable
+                requestId: req_svc_001
+  schemas:
+    HeatmapEvent:
+      type: object
+      required: [eventId, type, page, selector, x, y, vw, vh, ts]
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [click, hover, scroll]
+        page:
+          type: string
+          pattern: '^/'
+        selector:
+          type: string
+        x:
+          type: number
+        y:
+          type: number
+        vw:
+          type: number
+        vh:
+          type: number
+        density:
+          type: number
+          minimum: 0
+        sessionId:
+          type: string
+        userId:
+          type: string
+        device:
+          type: string
+        referrer:
+          type: string
+        ts:
+          type: string
+          format: date-time
+    HeatmapEventBatch:
+      type: object
+      required: [items]
+      properties:
+        items:
+          type: array
+          maxItems: 500
+          items:
+            $ref: '#/components/schemas/HeatmapEvent'
+    EventCreated:
+      type: object
+      properties:
+        eventId:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum: [created, duplicate]
+        receivedAt:
+          type: string
+          format: date-time
+    BatchAccepted:
+      type: object
+      properties:
+        accepted:
+          type: integer
+        duplicates:
+          type: integer
+        failed:
+          type: integer
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              index:
+                type: integer
+              code:
+                type: string
+              message:
+                type: string
+    EventListResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/HeatmapEvent'
+        nextCursor:
+          type: string
+    StatsResponse:
+      type: object
+      properties:
+        page:
+          type: string
+        window:
+          type: object
+          properties:
+            from:
+              type: string
+              format: date-time
+            to:
+              type: string
+              format: date-time
+        topSelectors:
+          type: array
+          items:
+            type: object
+            properties:
+              selector:
+                type: string
+              count:
+                type: integer
+              density:
+                type: number
+        totals:
+          type: object
+          properties:
+            click:
+              type: integer
+            hover:
+              type: integer
+            scroll:
+              type: integer
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+        requestId:
+          type: string

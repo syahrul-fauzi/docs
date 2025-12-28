@@ -1,0 +1,19 @@
+flowchart LR
+  Client[[External Entity: Client]]
+  Check[(Process: RBAC Check)]
+  Audit[(Data Store: Audit Logs)]
+  Route[(Process: Protected Route Handler)]
+
+  Client --> Check
+  Check --> Route
+  Check --> Audit
+  Route --> Client
+
+  classDef entity fill:#eef,stroke:#333,stroke-width:1px
+  classDef process fill:#cfe,stroke:#333,stroke-width:1px
+  classDef datastore fill:#ffc,stroke:#333,stroke-width:1px
+  class Client entity
+  class Check,Route process
+  class Audit datastore
+
+  %% Notes: Sesi Supabase/cookie diuji; deny menghasilkan 403 dan dicatat di Audit.

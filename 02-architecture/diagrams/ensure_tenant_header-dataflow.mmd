@@ -1,0 +1,7 @@
+flowchart LR
+  Client[[External Entity: Client]]
+  Ensure[(Process: ensureTenantHeader)]
+  Route[(Process: Route Handler)]
+  Metrics[(Data Store: Metrics Registry)]
+
+  Client --> Ensure --> Route --> Metrics

@@ -1,0 +1,11 @@
+sequenceDiagram
+  autonumber
+  participant Middleware as Web Middleware
+  participant App as Next.js App/Web
+  participant Client as Browser
+
+  Client->>Middleware: Request
+  Middleware->>App: Forward with CSP nonce
+  Middleware-->>Client: Security headers (CSP, HSTS, XFO, XCTO, RP, PP)
+  App-->>Client: HTML with nonce applied
+  Note right of Client: Browser enforces CSP and blocks inline scripts without nonce

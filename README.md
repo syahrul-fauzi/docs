@@ -20,11 +20,11 @@ SBA-Agentic dibangun di atas lima prinsip inti:
 
 ## ✨ Fitur Utama
 
-- **Autonomous Planner**: Engine orkestrasi yang cerdas untuk memecah tujuan kompleks.
+- **Autonomous Planner**: Engine orkestrasi yang cerdas untuk memecah tujuan kompleks dengan dukungan **Semantic Routing** dan **Self-Correction**.
 - **Tools Gateway**: Integrasi terpadu dengan API pihak ketiga (CRM, ERP, Analytics).
 - **Real-time Reasoning Stream**: Pantau proses berpikir agen secara langsung melalui SSE.
 - **Multi-tenant RBAC**: Manajemen akses berbasis peran yang aman untuk berbagai organisasi.
-- **Knowledge RAG**: Pencarian informasi berbasis vektor dan parsing dokumen otomatis.
+- **Knowledge RAG**: Pencarian informasi berbasis vektor dengan **SKOS Semantic Expansion**.
 
 ---
 

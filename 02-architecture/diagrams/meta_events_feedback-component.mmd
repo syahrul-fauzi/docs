@@ -1,0 +1,15 @@
+flowchart LR
+  subgraph BC_Analytics[Bounded Context: Analytics]
+    META_API[<<component>> Meta Events API]
+    META_STORE[(<<datastore>> Meta Events)]
+    DASH[<<component>> Dashboard]
+  end
+
+  UI[<<component>> Reaction UI]
+  UI --> META_API --> META_STORE
+  DASH --> META_API
+
+  subgraph Legend
+    C[<<component>> Component]
+    DS[(<<datastore>> Data Store)]
+  end

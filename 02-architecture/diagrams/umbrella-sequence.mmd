@@ -1,0 +1,32 @@
+sequenceDiagram
+autonumber
+actor User
+actor Admin
+participant Browser
+participant Security as SecurityHeaders
+participant RBAC as AccessControl
+participant RateLimiter
+participant API as ApplicationAPI
+participant Metrics as Observability
+participant Store as SupabaseDB
+participant Agent as AgentRuntime
+
+User->>Browser: Initiate action
+Browser->>Security: Add headers
+Security-->>Browser: Headers applied
+Browser->>RBAC: Check permissions
+RBAC-->>Browser: Authorized
+Browser->>RateLimiter: Consume token
+RateLimiter-->>Browser: Allowed
+Browser->>API: Request with payload and tenant
+API->>Metrics: Record request
+API->>Store: Persist data
+Store-->>API: Ack
+API-->>Browser: Response
+Admin->>API: Query analytics
+API->>Store: Aggregate points
+Store-->>API: Result
+API-->>Admin: Render overlay
+API->>Agent: Dispatch task
+Agent-->>API: Status update
+API->>Metrics: Record success

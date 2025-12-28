@@ -1,0 +1,18 @@
+flowchart LR
+  subgraph BC_AccessControl[Bounded Context: Access Control]
+    RBAC[<<component>> withRBAC]
+    AUDIT[(<<datastore>> Audit Logs)]
+    IF_RBAC[<<interface>> RBAC API Contract]
+  end
+
+  ROUTE[<<component>> Protected API Route]
+
+  ROUTE --> RBAC
+  RBAC --> IF_RBAC
+  RBAC --> AUDIT
+
+  subgraph Legend
+    C[<<component>> Component]
+    DS[(<<datastore>> Data Store)]
+    IF[<<interface>> Interface/Port]
+  end

@@ -14,7 +14,9 @@ Folder ini berisi dokumentasi inti mengenai desain AI Agent, pola penalaran (rea
 ## 📖 Konten Utama
 - **[WORKFLOW_STANDARD.md](./WORKFLOW_STANDARD.md)**: Standar alur kerja dan orkestrasi agen.
 - **[AGENT_OPERATIONS_LEARNING.md](./AGENT_OPERATIONS_LEARNING.md)**: Mekanisme pembelajaran operasional dan feedback loop agen.
+- **[MULTI_AGENT_COORDINATION.md](./MULTI_AGENT_COORDINATION.md)**: Koordinasi antar agen (Planner, Executor, Observer, Reviewer).
 - **[ONTOLOGY.md](./ONTOLOGY.md)**: Ontologi dan peta pengetahuan SBA-Agentic.
+- **[REASONING_ENGINE.md](./REASONING_ENGINE.md)**: Dokumentasi teknis Agentic Reasoning Engine (RAG, SKOS, Self-Correction).
 - **[SEMANTIC_ROUTING.md](./SEMANTIC_ROUTING.md)**: Dokumentasi teknis Semantic Router dan integrasi Engine.
 
 ## 👥 Audience

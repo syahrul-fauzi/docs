@@ -1,0 +1,9 @@
+flowchart LR
+  User[[External Entity: User]]
+  React[(Process: React)]
+  API[(Process: Meta Events API)]
+  Store[(Data Store: Meta Events)]
+  Dashboard[(Process: Aggregate/Visualize)]
+
+  User --> React --> API --> Store
+  Dashboard --> API --> Store

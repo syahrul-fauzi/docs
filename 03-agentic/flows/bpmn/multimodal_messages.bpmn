@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" targetNamespace="http://example.com/sba-agentic">
+  <process id="multimodal_messages" name="Multimodal Messages" isExecutable="false">
+    <laneSet id="laneSet2">
+      <lane id="laneUI2" name="UI"/>
+      <lane id="laneAPI2" name="API"/>
+      <lane id="laneAgent2" name="Agent"/>
+      <lane id="laneServices2" name="External Services"/>
+    </laneSet>
+    <startEvent id="start2" name="Input Received"/>
+    <task id="taskValidateInput" name="Validate Size/Type/RBAC"/>
+    <sequenceFlow id="g2f1" sourceRef="start2" targetRef="taskValidateInput"/>
+    <exclusiveGateway id="gwValidInput" name="Valid Input?"/>
+    <sequenceFlow id="g2f2" sourceRef="taskValidateInput" targetRef="gwValidInput"/>
+    <sequenceFlow id="g2f3" sourceRef="gwValidInput" targetRef="taskParse" name="Yes"/>
+    <sequenceFlow id="g2f4" sourceRef="gwValidInput" targetRef="endInvalid" name="No"/>
+    <task id="taskParse" name="Parse Modalities (OCR/ASR/Vision/NER)"/>
+    <exclusiveGateway id="gwModality" name="Modality Route"/>
+    <sequenceFlow id="g2f5" sourceRef="taskParse" targetRef="gwModality"/>
+    <task id="taskText" name="Route Text Intent"/>
+    <task id="taskImage" name="OCR/Vision Tags"/>
+    <task id="taskAudio" name="ASR Transcript"/>
+    <task id="taskFile" name="File Validation/Extract"/>
+    <sequenceFlow id="g2f6" sourceRef="gwModality" targetRef="taskText" name="Text"/>
+    <sequenceFlow id="g2f7" sourceRef="gwModality" targetRef="taskImage" name="Image"/>
+    <sequenceFlow id="g2f8" sourceRef="gwModality" targetRef="taskAudio" name="Audio"/>
+    <sequenceFlow id="g2f9" sourceRef="gwModality" targetRef="taskFile" name="File"/>
+    <task id="taskAct" name="Call Tools/Services"/>
+    <sequenceFlow id="g2f10" sourceRef="taskText" targetRef="taskAct"/>
+    <sequenceFlow id="g2f11" sourceRef="taskImage" targetRef="taskAct"/>
+    <sequenceFlow id="g2f12" sourceRef="taskAudio" targetRef="taskAct"/>
+    <sequenceFlow id="g2f13" sourceRef="taskFile" targetRef="taskAct"/>
+    <task id="taskValidateOut2" name="Validate Outputs"/>
+    <sequenceFlow id="g2f14" sourceRef="taskAct" targetRef="taskValidateOut2"/>
+    <exclusiveGateway id="gwValid2" name="Valid?"/>
+    <sequenceFlow id="g2f15" sourceRef="taskValidateOut2" targetRef="gwValid2"/>
+    <sequenceFlow id="g2f16" sourceRef="gwValid2" targetRef="end2" name="Yes"/>
+    <sequenceFlow id="g2f17" sourceRef="gwValid2" targetRef="taskHandleErr2" name="No"/>
+    <task id="taskHandleErr2" name="Handle Error (unsupported_modality/size_exceeded/parse_error)"/>
+    <sequenceFlow id="g2f18" sourceRef="taskHandleErr2" targetRef="endErr2"/>
+    <endEvent id="end2" name="Completed"/>
+    <endEvent id="endInvalid" name="Failed (Invalid Input)"/>
+    <endEvent id="endErr2" name="Failed"/>
+  </process>
+  <documentation>
+    <text>Legend: Validation, modality routing, external services calls, error handling.</text>
+  </documentation>
+</definitions>

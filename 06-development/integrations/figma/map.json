@@ -1,0 +1,10 @@
+{
+  "files": [],
+  "schema": {
+    "file_id": "string",
+    "component_ids": ["string"],
+    "token_export_url": "string",
+    "packages_ui_targets": ["string"],
+    "last_sync_at": "ISO-8601"
+  }
+}

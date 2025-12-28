@@ -1,0 +1,15 @@
+sequenceDiagram
+  autonumber
+  actor User as User
+  participant UI as Reaction UI
+  participant API as Meta Events API
+  participant Store as Meta Events Store
+  participant Dashboard as Dashboard
+
+  User->>UI: Thumbs up/down
+  UI->>API: POST meta event {type,user,tenant,time}
+  API->>Store: Save event
+  Dashboard->>API: GET aggregates
+  API->>Store: Aggregate
+  Store-->>API: Metrics
+  API-->>Dashboard: Charts

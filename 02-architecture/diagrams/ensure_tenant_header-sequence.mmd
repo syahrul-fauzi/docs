@@ -1,0 +1,14 @@
+sequenceDiagram
+  autonumber
+  participant Client as Client
+  participant Wrapper as ensureTenantHeader
+  participant Route as Route Handler
+  participant Metrics as Metrics Registry
+
+  Client->>Wrapper: Request
+  alt Header present
+    Wrapper-->>Route: proceed
+    Route->>Metrics: Label tenant
+  else Missing header
+    Wrapper-->>Client: Error (400)
+  end

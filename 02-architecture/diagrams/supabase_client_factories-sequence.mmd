@@ -1,0 +1,11 @@
+sequenceDiagram
+  autonumber
+  participant SSR as Factory (SSR)
+  participant Browser as Factory (Browser)
+  participant App as Apps/Packages Consumers
+  participant Guard as ci:guard
+
+  App->>SSR: Import server client
+  App->>Browser: Import browser client
+  App->>Guard: Build audit
+  Guard-->>App: Pass/Fail

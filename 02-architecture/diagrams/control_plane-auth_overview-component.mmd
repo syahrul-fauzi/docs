@@ -1,0 +1,115 @@
+flowchart TB
+  subgraph Infra[Infrastructure Layer]
+    subgraph Supabase[Supabase Platform]
+      SB_Auth[<<external>> Supabase Auth - GoTrue]
+      SB_DB[(<<database>> Supabase Postgres)]
+      SB_Realtime[<<service>> Supabase Realtime]
+      SB_Storage[(<<storage>> Supabase Storage)]
+    end
+    Upstash[(<<cache>> Upstash Redis)]
+  end
+
+  subgraph Shared[Shared Packages]
+    P_Supabase[<<package>> @sba/supabase]
+    P_Auth[<<package>> @sba/auth - planned boundary]
+    P_Entities[<<package>> @sba/entities]
+    P_SDK[<<package>> @sba/sdk]
+  end
+
+  subgraph Apps[Application Layer]
+    subgraph AppCP[apps/app - Control Plane]
+      CP_UI[<<component>> Admin UI]
+
+      subgraph CP_FSD[FSD Layers - apps/app]
+        CP_Pages[<<layer>> pages]
+        CP_Widgets[<<layer>> widgets]
+        CP_Features[<<layer>> features]
+        CP_Entities[<<layer>> entities]
+        CP_Shared[<<layer>> shared]
+      end
+
+      CP_Pages --> CP_Widgets
+      CP_Widgets --> CP_Features
+      CP_Features --> CP_Entities
+      CP_Entities --> CP_Shared
+
+      CP_Auth[<<bounded-context>> Auth Session Gateway]
+      CP_Access[<<bounded-context>> Access Control - RBAC + Audit]
+      CP_Tenant[<<bounded-context>> Tenant Management]
+      CP_Orch[<<bounded-context>> Orchestration & Routing]
+
+      CP_Auth -.-> CP_Shared
+      CP_Access -.-> CP_Features
+      CP_Tenant -.-> CP_Features
+      CP_Orch -.-> CP_Widgets
+    end
+
+    subgraph AppWeb[apps/web - Product App]
+      Web_UI[<<component>> End-User UI]
+
+      subgraph Web_FSD[FSD Layers - apps/web]
+        Web_Pages[<<layer>> pages]
+        Web_Widgets[<<layer>> widgets]
+        Web_Features[<<layer>> features]
+        Web_Entities[<<layer>> entities]
+        Web_Shared[<<layer>> shared]
+      end
+
+      Web_Pages --> Web_Widgets
+      Web_Widgets --> Web_Features
+      Web_Features --> Web_Entities
+      Web_Entities --> Web_Shared
+
+      Web_Tenant[<<bounded-context>> Tenant Routing]
+      Web_Access[<<bounded-context>> Access Control - RBAC]
+      Web_Domain[<<bounded-context>> Domain CRUD - Conversations/Docs]
+
+      Web_Tenant -.-> Web_Shared
+      Web_Access -.-> Web_Features
+      Web_Domain -.-> Web_Features
+    end
+
+    AppAPI[<<container>> apps/api - Backend Services]
+  end
+
+  Admin([<<actor>> Admin])
+  EndUser([<<actor>> End User])
+
+  Admin -->|HTTPS| CP_UI
+  EndUser -->|HTTPS| Web_UI
+
+  CP_UI -->|login / session| CP_Auth
+  Web_UI -->|login / session| Web_Access
+
+  CP_Auth -->|SSR/Browser clients| P_Supabase
+  Web_Access -->|Browser/SSR clients| P_Supabase
+  P_Supabase --> SB_Auth
+
+  CP_Tenant -->|write tenants, memberships, roles| SB_DB
+  Web_Tenant -->|read tenant by slug + memberships| SB_DB
+
+  Web_Domain -->|CRUD + RLS| SB_DB
+  Web_Domain -->|subscribe changes| SB_Realtime
+  Web_Domain -->|file upload/download| SB_Storage
+
+  CP_Access -->|withRBAC perm + audit log| SB_DB
+  Web_Access -->|withRBAC perm - planned centralization| P_Auth
+
+  CP_Orch -->|REST / SSE / WS + X-Tenant-ID| AppAPI
+  Web_UI -->|AG-UI Chat - internal API| AppAPI
+
+  CP_Orch -->|rate limit key: tenant, method, path| Upstash
+  AppAPI -->|rate limit key: tenant, method, path| Upstash
+
+  Web_Tenant -.->|tenant policy API - planned| CP_Tenant
+
+  subgraph Legend
+    L1[<<actor>> Actor]
+    L2[<<container>> App/Service]
+    L3[<<bounded-context>> Bounded Context]
+    L8[<<layer>> FSD Layer]
+    L4[<<package>> Shared Package]
+    L5[(<<database>> Data Store)]
+    L6[<<external>> External System]
+    L7[(<<cache>> Cache)]
+  end

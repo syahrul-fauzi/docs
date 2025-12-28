@@ -1,0 +1,13 @@
+flowchart LR
+User[[User]] --> UI[(Generative UI)]
+UI --> A11Y[(Accessibility)]
+A11Y --> UI
+UI --> Agent[(Agent Runtime)]
+Agent --> API[(Application API)]
+API --> Ingest[(Multimodal Ingest)]
+Ingest --> Validate[(Validator)]
+Validate --> ModalStore[(Modal Store)]
+API --> Metrics[(Metrics)]
+API --> DB[(Supabase)]
+Admin[[Admin]] --> API
+API --> Admin

@@ -1,0 +1,15 @@
+sequenceDiagram
+  autonumber
+  participant Client as Client
+  participant Route as Wrapped Route (withMetrics)
+  participant Registry as Metrics Registry
+  participant Prom as GET /api/metrics (prom text)
+
+  Client->>Route: Request
+  Route->>Registry: Observe duration, count, labels (tenant, method, path, status)
+  Route-->>Client: Response
+
+  Client->>Prom: GET /api/metrics
+  Prom->>Registry: getPrometheusText()
+  Registry-->>Prom: Text exposition
+  Prom-->>Client: Metrics text

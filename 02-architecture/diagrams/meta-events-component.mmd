@@ -1,0 +1,59 @@
+flowchart TB
+    subgraph BC_Frontend [Frontend - Presentation Layer]
+        UI_Reaction[<<component>> Reaction Controls]
+        UI_Dashboard[<<component>> Meta Events Dashboard]
+        UI_Feedback[<<component>> Feedback Form]
+    end
+
+    subgraph BC_API [API Layer]
+        API_Gateway[<<service>> API Gateway]
+        API_Meta[<<service>> Meta Events API]
+        API_Auth[<<service>> Auth Service]
+    end
+
+    subgraph BC_Domain [Domain Services]
+        S_Meta[<<service>> Meta Events Service]
+        S_Aggregate[<<service>> Aggregation Service]
+        S_RateLimit[<<component>> Rate Limiter]
+    end
+
+    subgraph BC_Infrastructure [Infrastructure Layer]
+        DB_Events[(<<database>> Meta Events DB)]
+        DB_Aggregates[(<<database>> Aggregates DB)]
+        Cache_Redis[(<<cache>> Redis Cache)]
+    end
+
+    subgraph BC_External [External Systems]
+        Auth_Provider[<<external>> Auth Provider]
+        Analytics[<<external>> Analytics Service]
+    end
+
+    %% Flows
+    UI_Reaction -->|POST /api/meta-events| API_Gateway
+    UI_Dashboard -->|GET /api/meta-events/aggregates| API_Gateway
+    UI_Feedback -->|POST /api/meta-events| API_Gateway
+
+    API_Gateway -->|Validate token| API_Auth
+    API_Gateway -->|Route to service| API_Meta
+
+    API_Meta -->|Store event| S_Meta
+    API_Meta -->|Check limit| S_RateLimit
+    S_Meta -->|Persist| DB_Events
+    S_Meta -->|Trigger aggregation| S_Aggregate
+    
+    S_Aggregate -->|Update metrics| DB_Aggregates
+    S_Aggregate -->|Cache results| Cache_Redis
+    S_Aggregate -->|Send analytics| Analytics
+
+    API_Auth -->|Verify| Auth_Provider
+
+    %% Styling
+    classDef component fill:#e1f5fe,stroke:#01579b,stroke-width:2px
+    classDef service fill:#fff3e0,stroke:#e65100,stroke-width:2px
+    classDef database fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
+    classDef external fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px
+
+    class UI_Reaction,UI_Dashboard,UI_Feedback,S_RateLimit component
+    class API_Gateway,API_Meta,API_Auth,S_Meta,S_Aggregate service
+    class DB_Events,DB_Aggregates,Cache_Redis database
+    class Auth_Provider,Analytics external

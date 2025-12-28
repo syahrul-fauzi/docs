@@ -1,0 +1,17 @@
+flowchart LR
+  subgraph BC_DataAccess[Bounded Context: Data Access]
+    SSR[<<component>> Supabase Factory SSR]
+    BROWSER[<<component>> Supabase Factory Browser]
+    GUARD[<<component>> ci:guard]
+    IF_SUPA[<<interface>> Supabase Clients]
+  end
+
+  APPS[<<component>> Apps/Packages]
+  APPS --> IF_SUPA --> SSR
+  APPS --> IF_SUPA --> BROWSER
+  APPS --> GUARD
+
+  subgraph Legend
+    C[<<component>> Component]
+    IF[<<interface>> Interface/Port]
+  end

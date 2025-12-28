@@ -1,0 +1,16 @@
+sequenceDiagram
+  autonumber
+  actor Client as Client
+  participant Interceptor as RateLimit Interceptor/Middleware
+  participant Upstash as Upstash Ratelimit
+
+  Client->>Interceptor: Request (tenant|method|path)
+  Interceptor->>Upstash: Check bucket
+  alt Under limit
+    Upstash-->>Interceptor: allow
+    Interceptor-->>Client: Proceed to handler (200)
+  else Over limit
+    Upstash-->>Interceptor: deny
+    Interceptor-->>Client: 429 Too Many Requests (+ headers)
+  end
+  Note over Interceptor: Fallback in-memory on configuration failure

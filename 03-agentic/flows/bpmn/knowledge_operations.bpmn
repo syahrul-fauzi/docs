@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" targetNamespace="http://example.com/sba-agentic">
+  <process id="knowledge_operations" name="Knowledge Operations" isExecutable="false">
+    <laneSet id="laneSet3">
+      <lane id="laneClient3" name="Client"/>
+      <lane id="laneAPI3" name="API"/>
+      <lane id="laneStorage3" name="Storage/Index"/>
+    </laneSet>
+    <startEvent id="start3" name="Request Received"/>
+    <task id="taskHeaderAuth" name="Validate Header (x-tenant-id) & Auth"/>
+    <sequenceFlow id="g3f1" sourceRef="start3" targetRef="taskHeaderAuth"/>
+    <exclusiveGateway id="gwAuth" name="Authorized?"/>
+    <sequenceFlow id="g3f2" sourceRef="taskHeaderAuth" targetRef="gwAuth"/>
+    <sequenceFlow id="g3f3" sourceRef="gwAuth" targetRef="endUnauth" name="No"/>
+    <sequenceFlow id="g3f4" sourceRef="gwAuth" targetRef="taskSchema" name="Yes"/>
+    <task id="taskSchema" name="Validate Schema (Zod/JSON Schema)"/>
+    <exclusiveGateway id="gwSchema" name="Schema Valid?"/>
+    <sequenceFlow id="g3f5" sourceRef="taskSchema" targetRef="gwSchema"/>
+    <sequenceFlow id="g3f6" sourceRef="gwSchema" targetRef="endInvalidSchema" name="No"/>
+    <sequenceFlow id="g3f7" sourceRef="gwSchema" targetRef="taskRoute" name="Yes"/>
+    <exclusiveGateway id="gwOp" name="Operation"/>
+    <task id="taskRoute" name="Route (list/search/upsert/vector/verify)"/>
+    <sequenceFlow id="g3f8" sourceRef="taskRoute" targetRef="gwOp"/>
+    <task id="taskList" name="List/Paginate"/>
+    <task id="taskSearch" name="Text Search"/>
+    <task id="taskVector" name="Vector Search"/>
+    <task id="taskUpsert" name="Upsert (idempotent via externalId)"/>
+    <task id="taskVerify" name="Verify (checksum/PII lint)"/>
+    <sequenceFlow id="g3f9" sourceRef="gwOp" targetRef="taskList" name="GET /api/knowledge"/>
+    <sequenceFlow id="g3f10" sourceRef="gwOp" targetRef="taskUpsert" name="POST /api/knowledge"/>
+    <sequenceFlow id="g3f11" sourceRef="gwOp" targetRef="taskSearch" name="GET /api/knowledge/search"/>
+    <sequenceFlow id="g3f12" sourceRef="gwOp" targetRef="taskVector" name="POST /api/knowledge/vector-search"/>
+    <sequenceFlow id="g3f13" sourceRef="gwOp" targetRef="taskVerify" name="POST /api/knowledge/verify"/>
+    <task id="taskExecute" name="Execute Query/Write"/>
+    <sequenceFlow id="g3f14" sourceRef="taskList" targetRef="taskExecute"/>
+    <sequenceFlow id="g3f15" sourceRef="taskSearch" targetRef="taskExecute"/>
+    <sequenceFlow id="g3f16" sourceRef="taskVector" targetRef="taskExecute"/>
+    <sequenceFlow id="g3f17" sourceRef="taskUpsert" targetRef="taskExecute"/>
+    <sequenceFlow id="g3f18" sourceRef="taskVerify" targetRef="taskExecute"/>
+    <task id="taskValidateOut3" name="Validate Outputs & Policies"/>
+    <sequenceFlow id="g3f19" sourceRef="taskExecute" targetRef="taskValidateOut3"/>
+    <exclusiveGateway id="gwValid3" name="Valid?"/>
+    <sequenceFlow id="g3f20" sourceRef="taskValidateOut3" targetRef="gwValid3"/>
+    <sequenceFlow id="g3f21" sourceRef="gwValid3" targetRef="end3" name="Yes"/>
+    <sequenceFlow id="g3f22" sourceRef="gwValid3" targetRef="taskHandleErr3" name="No"/>
+    <task id="taskHandleErr3" name="Handle Error (invalid_payload/unauthorized/rate_limited/internal_error)"/>
+    <sequenceFlow id="g3f23" sourceRef="taskHandleErr3" targetRef="endErr3"/>
+    <endEvent id="end3" name="Completed"/>
+    <endEvent id="endInvalidSchema" name="Failed (Invalid Schema)"/>
+    <endEvent id="endUnauth" name="Failed (Unauthorized)"/>
+    <endEvent id="endErr3" name="Failed"/>
+  </process>
+  <documentation>
+    <text>Legend: Authorization, schema validation, operation routing, execution, and standardized error handling.</text>
+  </documentation>
+</definitions>

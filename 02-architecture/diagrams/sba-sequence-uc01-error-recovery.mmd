@@ -1,0 +1,45 @@
+sequenceDiagram
+  autonumber
+  participant U as User
+  participant UI as apps/app (UI)
+  participant API as apps/app (API Edge)
+  participant S as Supabase Auth
+  participant RBAC as RBAC Guard
+  participant W as Workspace Service
+  participant OBS as Metrics/Logging
+
+  U->>UI: Open /login
+  UI->>U: Render login form
+  U->>UI: Submit credentials
+  UI->>API: POST /api/auth/login
+  API->>S: Authenticate
+  alt Auth success
+    S-->>API: Session + JWT
+    API->>OBS: Log login_success
+    API-->>UI: 200 OK (session)
+    UI->>RBAC: Evaluate role/permissions
+    RBAC-->>UI: Allow
+    UI->>API: GET /api/workspaces (tenant context)
+    API->>W: List workspaces for user
+    W-->>API: Workspaces
+    API->>OBS: Record latency + count
+    API-->>UI: 200 OK (workspaces)
+    UI->>U: Render workspace selector
+  else Invalid credentials
+    S-->>API: 401 Unauthorized
+    API->>OBS: Log auth_failure + count
+    API-->>UI: 401 (error)
+    UI->>U: Show inline error + recovery CTA
+  else Network / rate limit
+    API-->>UI: 429/503 (retryable)
+    UI->>OBS: Log retry_scheduled
+    UI->>UI: Exponential backoff retry (bounded)
+    UI->>U: Show "Retrying..." state
+  end
+
+  opt Workspace not accessible (RBAC)
+    RBAC-->>UI: Deny (insufficient permission)
+    UI->>OBS: Log rbac_denied
+    UI->>U: Show access denied + contact admin
+  end
+

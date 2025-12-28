@@ -1,0 +1,17 @@
+flowchart LR
+  subgraph BC_Multimodal[Bounded Context: Multimodal]
+    INPUT[<<component>> Input UI]
+    API[<<component>> Upload/Stream API]
+    DS[(<<datastore>> Attachments - TTL)]
+    VAL[<<component>> Validation]
+  end
+
+  AGENT[<<component>> Agent]
+
+  INPUT --> VAL --> API --> DS
+  AGENT --> DS
+
+  subgraph Legend
+    C[<<component>> Component]
+    DS[(<<datastore>> Data Store)]
+  end

@@ -1,0 +1,12 @@
+openapi: 3.0.3
+info:
+  title: MODULE-API-V1
+  version: 1.0.0
+paths:
+  /example:
+    get:
+      summary: Example
+      responses:
+        '200':
+          description: OK
+

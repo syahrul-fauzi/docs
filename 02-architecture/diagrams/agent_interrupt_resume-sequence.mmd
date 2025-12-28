@@ -1,0 +1,18 @@
+sequenceDiagram
+  autonumber
+  participant Runtime as AgenticRuntime
+  participant API as PUT /runs/:runId (pause|resume|cancel)
+  actor Admin as Admin/User
+  participant Audit as Audit Logs
+  participant Metrics as Metrics Registry
+
+  Runtime->>API: Emit interrupt {reason: human_approval}
+  Admin->>API: Approval payload {approved: true|false}
+  alt approved
+    API-->>Runtime: resume
+    Runtime->>Metrics: Record resume
+  else rejected
+    API-->>Runtime: cancel
+    Runtime->>Metrics: Record cancel
+  end
+  API->>Audit: Record action with tenant/user/time

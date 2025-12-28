@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" modified="2025-12-10" agent="TraeAI" version="24.7.1">
+  <diagram id="sba-architecture" name="SBA-Agentic Architecture">
+    <mxGraphModel dx="1024" dy="768" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1080">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="web" value="Web App (Next.js)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="app" value="App (Next.js SSR APIs)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="60" y="260" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="api" value="API (NestJS)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="340" y="80" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="queues" value="Workers (BullMQ Queues)\nAgentSupervisor | ToolExecution | Metrics | AuditLog | Render | Index" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="340" y="260" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="observability" value="Observability\nPrometheus Exporters (API: :9464/metrics, Workers: /metrics/workers)\nGrafana Dashboards" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="660" y="80" width="280" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="supabase" value="Supabase / Postgres\nUsage Metrics (worker metrics history)\nStorage & RPC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cdeb8b;strokeColor=#6c9a1f;" vertex="1" parent="1">
+          <mxGeometry x="660" y="280" width="280" height="140" as="geometry"/>
+        </mxCell>
+        <mxCell id="redis" value="Redis (Upstash / ioredis)\nCache & Rate Limit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffccff;strokeColor=#cc66cc;" vertex="1" parent="1">
+          <mxGeometry x="960" y="280" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="llm" value="LLM Providers\nOpenAI / Anthropic" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="960" y="80" width="220" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="edge" value="Edge / CDN / WS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1180" y="200" width="180" height="100" as="geometry"/>
+        </mxCell>
+        <mxCell id="web->api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="web" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="app->api" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#d6b656;" edge="1" parent="1" source="app" target="api">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="api->queues" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;" edge="1" parent="1" source="api" target="queues">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="queues->observability" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;" edge="1" parent="1" source="queues" target="observability">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="api->observability" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;" edge="1" parent="1" source="api" target="observability">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="queues->supabase" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#b85450;" edge="1" parent="1" source="queues" target="supabase">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="api->redis" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;" edge="1" parent="1" source="api" target="redis">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="api->llm" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#82b366;" edge="1" parent="1" source="api" target="llm">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="web->edge" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;strokeColor=#6c8ebf;" edge="1" parent="1" source="web" target="edge">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

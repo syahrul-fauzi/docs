@@ -1,0 +1,18 @@
+flowchart LR
+  subgraph BC_Observability[Bounded Context: Observability]
+    REG[<<component>> Metrics Registry]
+    PROM[<<component>> /api/metrics - prom text]
+    IF_PROM[<<interface>> Prometheus exposition]
+  end
+
+  WRAP[<<component>> withMetrics]
+  ROUTE[<<component>> API Route]
+
+  ROUTE --> WRAP --> REG
+  PROM --> REG
+  PROM --> IF_PROM
+
+  subgraph Legend
+    C[<<component>> Component]
+    IF[<<interface>> Interface/Port]
+  end

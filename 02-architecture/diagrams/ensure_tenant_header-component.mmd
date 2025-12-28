@@ -1,0 +1,15 @@
+flowchart LR
+  subgraph BC_Tenant[Bounded Context: Tenant]
+    ENSURE[<<component>> ensureTenantHeader]
+    IF_TENANT[<<interface>> Tenant Header]
+  end
+  ROUTE[<<component>> Observability/Analytics Routes]
+  METRICS[<<component>> Metrics Registry]
+
+  ROUTE --> ENSURE --> IF_TENANT
+  ROUTE --> METRICS
+
+  subgraph Legend
+    C[<<component>> Component]
+    IF[<<interface>> Interface/Port]
+  end

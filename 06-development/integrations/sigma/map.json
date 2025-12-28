@@ -1,0 +1,10 @@
+{
+  "threads": [],
+  "schema": {
+    "thread_id": "string",
+    "message_ids": ["string"],
+    "artifact_paths": ["string"],
+    "status": "open|merged|closed",
+    "labels": ["string"]
+  }
+}

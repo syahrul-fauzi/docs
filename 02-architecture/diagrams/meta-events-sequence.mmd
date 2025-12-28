@@ -1,0 +1,42 @@
+sequenceDiagram
+    participant User as Pengguna
+    participant UI as Antarmuka
+    participant API as API Gateway
+    participant Auth as Auth Service
+    participant Meta as Meta Events Service
+    participant DB as Database
+    participant Aggregate as Aggregation Service
+    participant Dashboard as Dashboard UI
+
+    User->>UI: Klik thumbs up/down
+    UI->>UI: Validasi sesi lokal
+    UI->>API: POST /api/meta-events
+    Note over API: Headers: Authorization: Bearer <token>
+    API->>Auth: Verifikasi token & sesi
+    Auth-->>API: Token valid & sesi aktif
+    
+    alt Rate limit exceeded
+        API->>Meta: Cek rate limit (userId)
+        Meta-->>API: Rate limit exceeded
+        API-->>UI: 429 Too Many Requests
+        UI-->>User: Tampilkan pesan error
+    else Valid request
+        API->>Meta: Forward event data
+        Meta->>Meta: Validasi payload
+        Meta->>DB: Simpan event: {type, runId, sentiment, comment, userId, tenantId, timestamp}
+        DB-->>Meta: Event tersimpan (eventId)
+        Meta->>Aggregate: Trigger aggregation update
+        Aggregate->>DB: Update aggregate metrics
+        DB-->>Aggregate: Metrics updated
+        Meta-->>API: 201 Created {eventId}
+        API-->>UI: Response sukses
+        UI-->>User: Tampilkan indikasi sukses
+    end
+
+    Dashboard->>Aggregate: GET /api/meta-events/aggregates
+    Aggregate->>DB: Query aggregate data
+    DB-->>Aggregate: Return metrics
+    Aggregate-->>Dashboard: {total, positive, negative, trends}
+    Dashboard-->>User: Tampilkan dashboard
+
+    Note over User,Dashboard: Rate limit: 10 feedback/jam/user

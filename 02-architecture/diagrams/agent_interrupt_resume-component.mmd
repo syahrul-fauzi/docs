@@ -1,0 +1,21 @@
+flowchart LR
+  subgraph BC_AgentRuntime[Bounded Context: Agent Runtime]
+    RT[<<component>> AgenticRuntime]
+    CTRL_API[<<component>> Run Control API]
+    AUDIT[(<<datastore>> Audit Logs)]
+    METRICS[<<component>> Metrics Registry]
+    IF_CTRL[<<interface>> Control Contract]
+  end
+
+  USER[<<component>> Admin/User]
+
+  RT --> CTRL_API --> IF_CTRL
+  USER --> CTRL_API
+  CTRL_API --> AUDIT
+  CTRL_API --> METRICS
+
+  subgraph Legend
+    C[<<component>> Component]
+    DS[(<<datastore>> Data Store)]
+    IF[<<interface>> Interface/Port]
+  end

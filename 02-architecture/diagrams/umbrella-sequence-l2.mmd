@@ -1,0 +1,24 @@
+sequenceDiagram
+autonumber
+actor User
+actor Admin
+participant UI as GenerativeUI
+participant A11Y as Accessibility
+participant Agent
+participant API
+participant MM as Multimodal
+participant METRICS
+participant STORE as Supabase
+User->>UI: Interact
+UI->>A11Y: Check semantics
+A11Y-->>UI: OK
+UI->>Agent: Emit event
+Agent->>API: Submit task
+API->>MM: Ingest media
+MM-->>API: Validated
+API->>STORE: Persist
+API->>METRICS: Record latency
+API-->>Agent: Task accepted
+Agent-->>UI: Status update
+Admin->>API: Query analytics
+API-->>Admin: Overlay data

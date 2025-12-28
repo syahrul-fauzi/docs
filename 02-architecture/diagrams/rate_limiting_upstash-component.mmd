@@ -1,0 +1,17 @@
+flowchart LR
+  subgraph BC_Security[Bounded Context: Security]
+    INT[<<component>> RateLimit Interceptor/Middleware]
+    KV[<<component>> Upstash Ratelimit]
+    IF_RATE[<<interface>> Limit API]
+  end
+
+  ROUTE[<<component>> API Route]
+  CLIENT[<<component>> Client]
+
+  CLIENT --> ROUTE --> INT --> KV
+  KV --> IF_RATE
+
+  subgraph Legend
+    C[<<component>> Component]
+    IF[<<interface>> Interface/Port]
+  end

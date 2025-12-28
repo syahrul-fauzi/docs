@@ -1,0 +1,19 @@
+flowchart LR
+  Client[[External Entity: Client]]
+  Wrap[(Process: withMetrics)]
+  Registry[(Data Store: Metrics Registry)]
+  Prom[[External Entity: Prometheus/Grafana]]
+
+  Client --> Wrap
+  Wrap --> Registry
+  Prom --> Registry
+  Prom --> Client
+
+  classDef entity fill:#eef,stroke:#333,stroke-width:1px
+  classDef process fill:#cfe,stroke:#333,stroke-width:1px
+  classDef datastore fill:#ffc,stroke:#333,stroke-width:1px
+  class Client,Prom entity
+  class Wrap process
+  class Registry datastore
+
+  %% Notes: Label tenant wajib; endpoint /api/metrics menyajikan prom text.

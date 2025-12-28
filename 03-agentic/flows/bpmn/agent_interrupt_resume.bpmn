@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://example.com/sba-agentic" exporter="SBA-Agentic" exporterVersion="1.0">
+  <process id="agent_interrupt_resume" name="Agent Interrupt & Resume" isExecutable="false">
+    <laneSet id="laneSet1">
+      <lane id="laneUI" name="UI"/>
+      <lane id="laneAPI" name="API"/>
+      <lane id="laneOrch" name="Orchestrator"/>
+      <lane id="laneAgent" name="Agent"/>
+    </laneSet>
+    <startEvent id="start" name="Run Started"/>
+    <sequenceFlow id="f1" sourceRef="start" targetRef="taskProposal"/>
+    <task id="taskProposal" name="Generate Tool Proposal"/>
+    <exclusiveGateway id="gwApprovalNeeded" name="Approval Needed?"/>
+    <sequenceFlow id="f2" sourceRef="taskProposal" targetRef="gwApprovalNeeded"/>
+    <sequenceFlow id="f3" sourceRef="gwApprovalNeeded" targetRef="taskContinue" name="No"/>
+    <sequenceFlow id="f4" sourceRef="gwApprovalNeeded" targetRef="taskPauseEmit" name="Yes"/>
+    <task id="taskContinue" name="Continue Execution"/>
+    <sequenceFlow id="f5" sourceRef="taskContinue" targetRef="taskValidateOutput"/>
+    <task id="taskPauseEmit" name="Pause Run & Emit INTERRUPT"/>
+    <sequenceFlow id="f6" sourceRef="taskPauseEmit" targetRef="taskAwaitApproval"/>
+    <intermediateCatchEvent id="taskAwaitApproval" name="Waiting Approval"/>
+    <exclusiveGateway id="gwApprovalResult" name="Approval Result"/>
+    <sequenceFlow id="f7" sourceRef="taskAwaitApproval" targetRef="gwApprovalResult"/>
+    <sequenceFlow id="f8" sourceRef="gwApprovalResult" targetRef="taskApplyResume" name="Approved"/>
+    <sequenceFlow id="f9" sourceRef="gwApprovalResult" targetRef="endRejected" name="Rejected"/>
+    <task id="taskApplyResume" name="Apply Resume Payload"/>
+    <sequenceFlow id="f10" sourceRef="taskApplyResume" targetRef="taskContinueAfterResume"/>
+    <task id="taskContinueAfterResume" name="Continue Execution After Resume"/>
+    <sequenceFlow id="f11" sourceRef="taskContinueAfterResume" targetRef="taskValidateOutput"/>
+    <task id="taskValidateOutput" name="Validate Outputs"/>
+    <exclusiveGateway id="gwValid" name="Valid?"/>
+    <sequenceFlow id="f12" sourceRef="taskValidateOutput" targetRef="gwValid"/>
+    <sequenceFlow id="f13" sourceRef="gwValid" targetRef="endSuccess" name="Yes"/>
+    <sequenceFlow id="f14" sourceRef="gwValid" targetRef="taskHandleError" name="No"/>
+    <task id="taskHandleError" name="Handle Error (policy_violation/timeout/invalid_payload)"/>
+    <sequenceFlow id="f15" sourceRef="taskHandleError" targetRef="endFailed"/>
+    <endEvent id="endSuccess" name="Completed"/>
+    <endEvent id="endRejected" name="Failed (Rejected)"/>
+    <endEvent id="endFailed" name="Failed"/>
+  </process>
+  <documentation>
+    <text>Legend: Tasks, Exclusive Gateways (XOR), Start/End Events, Intermediate Catch Event for approval. Roles via lanes.</text>
+  </documentation>
+</definitions>

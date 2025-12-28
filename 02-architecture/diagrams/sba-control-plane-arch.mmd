@@ -1,0 +1,14 @@
+flowchart TD
+  User((User)) -->|Auth| App[apps/app]
+  subgraph ControlPlane
+    App --> UX[UX Shell]
+    App --> AG[Agents & Runs]
+    App --> AN[Analytics]
+    App --> OBS[Observability]
+    App --> API[Next.js API Edge]
+  end
+  API --> SUP[(Supabase Auth & Data)]
+  OBS --> PROM[(Prometheus/OTel)]
+  AG --> ORCH[Orchestrator]
+  ORCH --> RUBE[@sba/rube]
+

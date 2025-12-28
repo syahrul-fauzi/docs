@@ -1,8 +1,10 @@
 # SBA-Agentic Ontology & Knowledge Map
-version: 1.0.0
+version: 1.1.0
 last_updated: 2025-12-28
 
-This document defines the semantic relationships between business domains, task patterns, and technical capabilities in the SBA-Agentic ecosystem.
+This document defines the semantic relationships between business domains, task patterns, and technical capabilities in the SBA-Agentic ecosystem. 
+
+**Status: Integrated with Agentic Reasoning Engine (Advanced RAG + SKOS).**
 
 ## 1. Business Domains (Classes)
 

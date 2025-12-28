@@ -1,0 +1,24 @@
+sequenceDiagram
+  autonumber
+  actor User as User
+  participant Browser as Browser UI
+  participant Tracker as HeatmapTracker
+  participant API as POST /api/analytics/heatmap
+  participant Store as Supabase: analytics
+  participant Admin as Admin UI
+
+  Note over User,Browser: User berinteraksi dan melakukan klik pada halaman
+  User->>Browser: Klik pada elemen
+  Browser->>Tracker: Dispatch event (coords, viewport, path, tenant)
+  Note right of Tracker: Validasi payload & sampling bila diperlukan
+  Tracker->>API: POST payload {x,y,viewport,path,tenant}
+  API->>Store: Persist event
+  Store-->>API: Ack (201)
+  API-->>Tracker: 201 Created
+  Note over Admin,Store: Admin memuat overlay heatmap per path/windowMs
+  Admin->>API: GET /api/analytics/heatmap?path=&windowMs=
+  API->>Store: Query aggregated points
+  Store-->>API: Points + intensities
+  API-->>Admin: Render overlay
+
+  Note over API: ensureTenantHeader, withRBAC(admin), withMetrics

@@ -1,0 +1,20 @@
+flowchart LR
+subgraph BC_Security
+ SEC[Security Headers]
+end
+subgraph BC_Access
+ RBAC[RBAC Guard]
+end
+subgraph BC_RateLimit
+ RL[RateLimiter]
+end
+subgraph BC_App
+ API[Application API]
+ METRICS[Metrics]
+ DB[(Supabase DB)]
+end
+API --> METRICS
+API --> DB
+API --> SEC
+API --> RBAC
+API --> RL

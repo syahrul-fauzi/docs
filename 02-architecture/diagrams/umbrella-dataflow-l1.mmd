@@ -1,0 +1,7 @@
+flowchart LR
+User[[User]] --> Collect[(Collect & Validate)]
+Collect --> Authorize[(RBAC)]
+Authorize --> Limit[(Rate Limit)]
+Limit --> Execute[(API Execute)]
+Execute --> DB[(Supabase DB)]
+Execute --> Metrics[(Metrics)]

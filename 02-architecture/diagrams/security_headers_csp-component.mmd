@@ -1,0 +1,18 @@
+flowchart LR
+  subgraph BC_Security[Bounded Context: Security]
+    MID[<<component>> Web Middleware]
+    POL[<<component>> Security Policies - CSP nonce, HSTS, XFO, XCTO, RP, PP]
+    IF_SEC[<<interface>> HTTP Headers]
+  end
+
+  APP[<<component>> Next.js App/Web]
+  BROWSER[<<component>> Browser]
+
+  MID --> POL --> IF_SEC
+  MID --> APP
+  APP --> BROWSER
+
+  subgraph Legend
+    C[<<component>> Component]
+    IF[<<interface>> Interface/Port]
+  end

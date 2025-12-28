@@ -1,0 +1,17 @@
+flowchart LR
+  Client[[External Entity: Client]]
+  Interceptor[(Process: RateLimit Check)]
+  Upstash[(External Entity: Upstash Ratelimit)]
+  Handler[(Process: Route Handler)]
+
+  Client --> Interceptor
+  Interceptor --> Upstash
+  Interceptor --> Handler
+  Handler --> Client
+
+  classDef entity fill:#eef,stroke:#333,stroke-width:1px
+  classDef process fill:#cfe,stroke:#333,stroke-width:1px
+  class Client,Upstash entity
+  class Interceptor,Handler process
+
+  %% Notes: Fallback in-memory; response 429 dengan header.

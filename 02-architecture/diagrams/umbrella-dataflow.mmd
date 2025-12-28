@@ -1,0 +1,44 @@
+flowchart LR
+%% DFD Level 0/1/2
+
+User[[External Entity: User]]
+Admin[[External Entity: Admin]]
+Agent[[External Entity: Agent]]
+
+Collect[(Process: Collect & Validate)]
+Authorize[(Process: RBAC Authorize)]
+Limit[(Process: Rate Limit)]
+Execute[(Process: API Execute)]
+Observe[(Process: Metrics Record)]
+Aggregate[(Process: Analytics Aggregate)]
+
+DB[(Data Store: Supabase DB)]
+Analytics[(Data Store: Analytics Events)]
+Audit[(Data Store: Audit Log)]
+
+User --> Collect
+Collect --> Authorize
+Authorize --> Limit
+Limit --> Execute
+Execute --> DB
+Execute --> Observe
+Observe --> Execute
+Admin --> Aggregate
+Aggregate --> Analytics
+Aggregate --> Admin
+Execute --> Aggregate
+Agent --> Execute
+Execute --> Audit
+
+classDef entity fill:#eef,stroke:#333,stroke-width:1px
+classDef process fill:#cfe,stroke:#333,stroke-width:1px
+classDef datastore fill:#ffc,stroke:#333,stroke-width:1px
+
+class User,Admin,Agent entity
+class Collect,Authorize,Limit,Execute,Observe,Aggregate process
+class DB,Analytics,Audit datastore
+
+%% Notes
+%% - Payload menyertakan tenant header; validasi & sanitasi.
+%% - RBAC menegakkan akses; rate limit mencegah abuse.
+%% - Metrics mencatat waktu dan status; agregasi untuk overlay.

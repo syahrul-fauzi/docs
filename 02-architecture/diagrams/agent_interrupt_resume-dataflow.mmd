@@ -1,0 +1,21 @@
+flowchart LR
+  Runtime[(Process: Agentic Runtime)]
+  ControlAPI[(Process: Run Control API)]
+  Admin[[External Entity: Admin/User]]
+  Audit[(Data Store: Audit Logs)]
+  Metrics[(Data Store: Metrics Registry)]
+
+  Runtime --> ControlAPI
+  Admin --> ControlAPI
+  ControlAPI --> Runtime
+  ControlAPI --> Audit
+  ControlAPI --> Metrics
+
+  classDef entity fill:#eef,stroke:#333,stroke-width:1px
+  classDef process fill:#cfe,stroke:#333,stroke-width:1px
+  classDef datastore fill:#ffc,stroke:#333,stroke-width:1px
+  class Admin entity
+  class Runtime,ControlAPI process
+  class Audit,Metrics datastore
+
+  %% Notes: Idempotency untuk cancel/resume; timeout handling.

@@ -1,0 +1,12 @@
+sequenceDiagram
+  autonumber
+  actor User as User
+  participant Agent as Agent
+  participant Renderer as GenerativeUI Renderer
+  participant Components as Atomic Components
+
+  Agent->>Renderer: UI Description (schema)
+  Renderer->>Components: Generate UI (tokens/a11y)
+  Components-->>User: Interactive UI
+  User->>Components: Interactions (events)
+  Components-->>Agent: Event payloads (optional)

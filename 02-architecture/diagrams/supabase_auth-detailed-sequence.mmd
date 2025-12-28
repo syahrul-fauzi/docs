@@ -1,0 +1,31 @@
+sequenceDiagram
+  autonumber
+  actor U as User (Browser)
+  participant CP as apps/app (Next.js)
+  participant SB as Supabase Auth (GoTrue)
+  participant CJ as Cookie Jar (sb-* cookies)
+
+  U->>CP: GET /(authenticated)/*
+  CP->>SB: auth.getSession() via server client (cookies)
+  SB-->>CP: session = null
+  CP-->>U: 302 Redirect /login
+
+  U->>SB: signInWithPassword(email, password)
+  SB-->>U: session + refresh token
+  U->>CJ: store/update cookies (via @supabase/ssr)
+  U->>CP: GET /(authenticated)/* with cookies
+  CP->>SB: auth.getSession() via server client (cookies)
+  SB-->>CP: session + user
+  CP-->>U: 200 Render protected page
+
+  U->>SB: signInWithOAuth(provider, redirectTo=/api/auth/callback?next=/)
+  SB-->>U: 302 Redirect to provider
+  U->>CP: GET /api/auth/callback?code=...&next=/
+  CP->>SB: auth.exchangeCodeForSession(code)
+  SB-->>CP: set cookie tokens
+  CP->>CJ: Set-Cookie (sb-* cookies)
+  CP-->>U: 302 Redirect safe next
+
+  Note over CP: Protected routes use authMiddleware + getServerSession
+  Note over CP: Authorization uses withRBAC(resource, action)
+

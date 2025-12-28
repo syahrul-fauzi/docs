@@ -1,0 +1,11 @@
+flowchart LR
+  Agent[[External Entity: Agent]]
+  Describe[(Process: Describe UI)]
+  Renderer[(Process: Render)]
+  Tokens[(Data Store: Design Tokens)]
+  Components[(Process: Components)]
+  User[[External Entity: User]]
+
+  Agent --> Describe --> Renderer
+  Renderer --> Tokens
+  Renderer --> Components --> User

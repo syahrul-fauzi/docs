@@ -1,0 +1,24 @@
+flowchart LR
+  %% DFD Level 0/1
+  User[[External Entity: User]]
+  Admin[[External Entity: Admin]]
+  Collect[(Process: CollectClick)]
+  Store[(Data Store: Analytics Events)]
+  Overlay[(Process: RenderOverlay)]
+
+  User --> Collect
+  Collect --> Store
+  Admin --> Overlay
+  Overlay --> Store
+  Overlay --> Admin
+
+  classDef entity fill:#eef,stroke:#333,stroke-width:1px
+  classDef process fill:#cfe,stroke:#333,stroke-width:1px
+  classDef datastore fill:#ffc,stroke:#333,stroke-width:1px
+  class User,Admin entity
+  class Collect,Overlay process
+  class Store datastore
+
+  %% Notes
+  %% - Payload berisi coords, viewport, path, tenant; validasi & sampling.
+  %% - Admin filter by path & windowMs; aggregation dilakukan di sisi API/DB.

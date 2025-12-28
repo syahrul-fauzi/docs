@@ -1,0 +1,371 @@
+{
+  "info": {
+    "name": "SBA-Agentic Analytics Heatmap API",
+    "_postman_id": "a1b2c3d4-e5f6-7890-1234-56789abcdef0",
+    "description": "Postman collection untuk API heatmap (events, bulk, listing, stats, export, admin)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "POST /events",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/heatmap/events",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "heatmap", "events"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"eventId\": \"1b1ddf12-77b5-4f03-a0f7-4d6f21e3ef01\",\n  \"type\": \"click\",\n  \"page\": \"/integrations\",\n  \"selector\": \"button[data-testid=connect]\",\n  \"x\": 320,\n  \"y\": 640,\n  \"vw\": 1280,\n  \"vh\": 720,\n  \"sessionId\": \"s_001\",\n  \"ts\": \"2025-12-08T12:00:00Z\"\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200 or 201', function () {",
+              "  pm.expect([200,201]).to.include(pm.response.code);",
+              "});",
+              "pm.test('Response has eventId', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json).to.have.property('eventId');",
+              "});",
+              "// Rate limit headers monitoring",
+              "pm.variables.set('last_limit', pm.response.headers.get('X-RateLimit-Limit'));",
+              "pm.variables.set('last_remaining', pm.response.headers.get('X-RateLimit-Remaining'));",
+              "pm.variables.set('last_retry_after', pm.response.headers.get('Retry-After'));",
+              "// Response time logging",
+              "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "POST /bulk",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/heatmap/bulk",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "heatmap", "bulk"]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"items\": [\n    {\n      \"eventId\": \"2b1ddf12-77b5-4f03-a0f7-4d6f21e3ef02\",\n      \"type\": \"hover\",\n      \"page\": \"/monitoring\",\n      \"selector\": \"nav a[href=/monitoring]\",\n      \"x\": 100,\n      \"y\": 200,\n      \"vw\": 1280,\n      \"vh\": 720,\n      \"ts\": \"2025-12-08T12:05:00Z\"\n    }\n  ]\n}"
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');",
+              "pm.variables.set('last_limit', pm.response.headers.get('X-RateLimit-Limit'));",
+              "pm.variables.set('last_remaining', pm.response.headers.get('X-RateLimit-Remaining'));",
+              "pm.variables.set('last_retry_after', pm.response.headers.get('Retry-After'));"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /events",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/heatmap/events?page=/integrations&type=click&limit=20",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "heatmap", "events"],
+          "query": [
+            { "key": "page", "value": "/integrations" },
+            { "key": "type", "value": "click" },
+            { "key": "limit", "value": "20" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "pm.test('Items array exists', function () {",
+              "  const json = pm.response.json();",
+              "  pm.expect(json).to.have.property('items');",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /stats",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/heatmap/stats?page=/integrations&from=2025-12-08T00:00:00Z&to=2025-12-08T23:59:59Z",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "heatmap", "stats"],
+          "query": [
+            { "key": "page", "value": "/integrations" },
+            { "key": "from", "value": "2025-12-08T00:00:00Z" },
+            { "key": "to", "value": "2025-12-08T23:59:59Z" }
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "GET /export",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/heatmap/export?format={{format}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "heatmap", "export"],
+          "query": [{ "key": "format", "value": "{{format}}" }]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 200', function () {",
+              "  pm.expect(pm.response.code).to.equal(200);",
+              "});",
+              "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "DELETE /events/:id",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{jwt}}" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/heatmap/events/{{eventId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "heatmap", "events", "{{eventId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Status is 204', function () {",
+              "  pm.expect(pm.response.code).to.equal(204);",
+              "});",
+              "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    }
+  ],
+  "item_ext": [
+    {
+      "name": "Load Runner",
+      "item": [
+        {
+          "name": "LR POST /events",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt}}" },
+              { "key": "x-tenant-id", "value": "{{tenantId}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics/heatmap/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics", "heatmap", "events"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"eventId\": \"{{eventId}}\",\n  \"type\": \"{{type}}\",\n  \"page\": \"{{page}}\",\n  \"selector\": \"{{selector}}\",\n  \"x\": {{x}},\n  \"y\": {{y}},\n  \"vw\": {{vw}},\n  \"vh\": {{vh}},\n  \"sessionId\": \"{{sessionId}}\",\n  \"ts\": \"{{ts}}\"\n}"
+            }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.variables.set('Authorization', `Bearer ${pm.environment.get('jwt')}`);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200/201', function(){ pm.expect([200,201]).to.include(pm.response.code); });",
+                  "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');",
+                  "pm.variables.set('last_limit', pm.response.headers.get('X-RateLimit-Limit'));",
+                  "pm.variables.set('last_remaining', pm.response.headers.get('X-RateLimit-Remaining'));",
+                  "pm.variables.set('last_retry_after', pm.response.headers.get('Retry-After'));"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "LR GET /events",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt}}" },
+              { "key": "x-tenant-id", "value": "{{tenantId}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics/heatmap/events?page={{page}}&type={{type}}&limit={{limit}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics", "heatmap", "events"],
+              "query": [
+                { "key": "page", "value": "{{page}}" },
+                { "key": "type", "value": "{{type}}" },
+                { "key": "limit", "value": "{{limit}}" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function(){ pm.expect(pm.response.code).to.equal(200); });",
+                  "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        },
+        {
+          "name": "LR GET /stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt}}" },
+              { "key": "x-tenant-id", "value": "{{tenantId}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics/heatmap/stats?page={{page}}&from={{from}}&to={{to}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics", "heatmap", "stats"],
+              "query": [
+                { "key": "page", "value": "{{page}}" },
+                { "key": "from", "value": "{{from}}" },
+                { "key": "to", "value": "{{to}}" }
+              ]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status 200', function(){ pm.expect(pm.response.code).to.equal(200); });",
+                  "pm.environment.set('resp_times', (pm.environment.get('resp_times') || '') + pm.response.responseTime + ',');"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "// Setup headers via variables if needed",
+          "pm.variables.set('Authorization', `Bearer ${pm.environment.get('jwt')}`);"
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          "// Performance report generation (mean, p95, p99)",
+          "const arr = (pm.environment.get('resp_times') || '').split(',').filter(x=>x).map(Number);",
+          "function percentile(a, p){ if(a.length===0) return 0; const s=[...a].sort((x,y)=>x-y); const idx=Math.ceil((p/100)*s.length)-1; return s[Math.max(0,Math.min(idx,s.length-1))]; }",
+          "const sum = arr.reduce((t,x)=>t+x,0); const mean = arr.length? (sum/arr.length):0;",
+          "const p95 = percentile(arr,95); const p99 = percentile(arr,99);",
+          "console.log('PerfReport', {mean, p95, p99, samples: arr.length});",
+          "pm.environment.set('perf_mean', mean);",
+          "pm.environment.set('perf_p95', p95);",
+          "pm.environment.set('perf_p99', p99);"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3002" },
+    { "key": "jwt", "value": "REPLACE_WITH_JWT" },
+    { "key": "tenantId", "value": "tenant_123" },
+    { "key": "format", "value": "csv" },
+    { "key": "eventId", "value": "1b1ddf12-77b5-4f03-a0f7-4d6f21e3ef01" }
+  ]
+}

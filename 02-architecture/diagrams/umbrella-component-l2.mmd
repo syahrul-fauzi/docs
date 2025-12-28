@@ -1,0 +1,27 @@
+flowchart LR
+subgraph BC_GenerativeUI
+ RENDERER[UI Renderer]
+ A11Y[Accessibility]
+end
+subgraph BC_Agent
+ AGENT[Agent Runtime]
+ AUDIT[(Audit Log)]
+end
+subgraph BC_Multimodal
+ INGEST[Ingestor]
+ VALIDATE[Validator]
+ STORE[(Modal Store)]
+end
+subgraph BC_App
+ API[Application API]
+ METRICS[Metrics]
+end
+RENDERER --> AGENT
+RENDERER --> METRICS
+A11Y --> RENDERER
+AGENT --> API
+API --> INGEST
+INGEST --> VALIDATE
+VALIDATE --> STORE
+API --> METRICS
+AGENT --> AUDIT

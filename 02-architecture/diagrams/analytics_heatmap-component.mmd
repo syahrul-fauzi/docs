@@ -1,0 +1,24 @@
+flowchart LR
+  subgraph BC_Analytics[Bounded Context: Analytics]
+    UI[<<component>> HeatmapTracker - UI lib]
+    API[<<component>> Analytics API - /api/analytics/heatmap]
+    STORE[(<<datastore>> Supabase: analytics)]
+    METRICS[<<component>> withMetrics]
+    RBAC[<<component>> withRBAC]
+  end
+
+  subgraph BC_Security[Bounded Context: Security]
+    TENANT[<<component>> ensureTenantHeader]
+  end
+
+  UI --> API
+  API --> STORE
+  API --> METRICS
+  API --> RBAC
+  API --> TENANT
+
+  subgraph Legend
+    C[<<component>> Component]
+    DS[(<<datastore>> Data Store)]
+    IF[<<interface>> Interface/Port]
+  end

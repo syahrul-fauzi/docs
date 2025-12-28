@@ -1,0 +1,10 @@
+flowchart LR
+  Apps[[External Entity: Apps/Packages]]
+  Import[(Process: Import Factories)]
+  SSR[(Process: Server Client)]
+  Browser[(Process: Browser Client)]
+  Guard[(Process: ci:guard Audit)]
+
+  Apps --> Import --> SSR
+  Apps --> Import --> Browser
+  Apps --> Guard

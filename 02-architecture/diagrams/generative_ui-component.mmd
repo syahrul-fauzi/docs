@@ -1,0 +1,19 @@
+flowchart LR
+  subgraph BC_GenerativeUI[Bounded Context: Generative UI]
+    RND[<<component>> Renderer]
+    TOKENS[<<component>> Design Tokens]
+    ATOM[<<component>> Atomic Components]
+    IF_DESC[<<interface>> UI Description]
+  end
+
+  AGENT[<<component>> Agent]
+  USER[<<component>> User]
+
+  AGENT --> IF_DESC --> RND --> ATOM
+  RND --> TOKENS
+  ATOM --> USER
+
+  subgraph Legend
+    C[<<component>> Component]
+    IF[<<interface>> Interface/Port]
+  end

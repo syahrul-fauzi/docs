@@ -1,0 +1,70 @@
+flowchart LR
+
+subgraph BC_Security[Bounded Context: Security]
+  SEC[<<component>> Security Headers]
+  CSP[<<component>> CSP Nonce]
+end
+
+subgraph BC_Access[Bounded Context: Access Control]
+  RBAC[<<component>> RBAC Guard]
+end
+
+subgraph BC_RateLimit[Bounded Context: Rate Limiting]
+  RL[<<component>> Upstash RateLimiter]
+end
+
+subgraph BC_Observability[Bounded Context: Observability]
+  METRICS[<<component>> Metrics Registry]
+  PROM[<<component>> /api/metrics]
+end
+
+subgraph BC_Analytics[Bounded Context: Analytics]
+  HEATMAP_UI[<<component>> HeatmapTracker]
+  ANALYTICS_API[<<component>> /api/analytics]
+  ANALYTICS_STORE[(<<datastore>> Supabase: analytics)]
+end
+
+subgraph BC_Agent[Bounded Context: Agent Runtime]
+  AGENT[<<component>> Agent Engine]
+  AUDIT[(<<datastore>> Audit Log)]
+end
+
+subgraph BC_GenerativeUI[Bounded Context: Generative UI]
+  RENDERER[<<component>> UI Renderer]
+  A11Y[<<component>> Accessibility Layer]
+end
+
+subgraph BC_Multimodal[Bounded Context: Multimodal]
+  MM_INGEST[<<component>> Ingestor]
+  MM_VALIDATE[<<component>> Validator]
+  MM_STORE[(<<datastore>> Modal Store)]
+end
+
+subgraph BC_Data[Bounded Context: Data Access]
+  DB[(<<datastore>> Supabase DB)]
+end
+
+HEATMAP_UI --> ANALYTICS_API
+ANALYTICS_API --> ANALYTICS_STORE
+ANALYTICS_API --> METRICS
+ANALYTICS_API --> RBAC
+ANALYTICS_API --> SEC
+ANALYTICS_API --> RL
+ANALYTICS_API --> DB
+ANALYTICS_API --> PROM
+ANALYTICS_API --> AGENT
+AGENT --> AUDIT
+RENDERER --> AGENT
+RENDERER --> METRICS
+A11Y --> RENDERER
+MM_INGEST --> MM_VALIDATE
+MM_VALIDATE --> MM_STORE
+AGENT --> MM_INGEST
+
+classDef component fill:#e6f7ff,stroke:#3399ff,stroke-width:1px
+classDef datastore fill:#fff3cd,stroke:#ffcc00,stroke-width:1px
+
+subgraph Legend
+  C[<<component>> Component]
+  DS[(<<datastore>> Data Store)]
+end

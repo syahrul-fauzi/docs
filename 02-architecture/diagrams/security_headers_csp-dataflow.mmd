@@ -1,0 +1,19 @@
+flowchart LR
+  Browser[[External Entity: Browser]]
+  Middleware[(Process: Apply Security Headers & CSP Nonce)]
+  App[(Process: Render App)]
+  Policy[(Data Store: Security Policy Config)]
+
+  Browser --> Middleware
+  Middleware --> Policy
+  Middleware --> App
+  App --> Browser
+
+  classDef entity fill:#eef,stroke:#333,stroke-width:1px
+  classDef process fill:#cfe,stroke:#333,stroke-width:1px
+  classDef datastore fill:#ffc,stroke:#333,stroke-width:1px
+  class Browser entity
+  class Middleware,App process
+  class Policy datastore
+
+  %% Notes: CSP nonce diwajibkan; HSTS aktif di produksi.

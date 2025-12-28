@@ -1,0 +1,13 @@
+sequenceDiagram
+  autonumber
+  actor User as User
+  participant UI as Multimodal Input UI
+  participant Upload as Upload/Stream API
+  participant Store as Attachments Store (TTL)
+  participant Agent as Agent
+
+  User->>UI: Select/Drop files/audio/image
+  UI->>Upload: Validate & send
+  Upload->>Store: Persist attachment (type,size,url,ttl)
+  Store-->>Upload: Ack
+  Agent->>Store: Fetch/consume attachment

@@ -1,0 +1,16 @@
+sequenceDiagram
+  participant U as User
+  participant A as apps/app
+  participant S as Supabase
+  participant O as Orchestrator
+  participant R as @sba/rube
+  U->>A: Open login
+  A->>S: Auth (email/password, OAuth)
+  S-->>A: Session + JWT
+  A->>U: Redirect to (authenticated)
+  U->>A: Select Workspace
+  A->>O: Submit task
+  O->>R: Enforce policies (RBAC)
+  O-->>A: Stream reasoning (SSE)
+  A-->>U: Update UI real-time
+

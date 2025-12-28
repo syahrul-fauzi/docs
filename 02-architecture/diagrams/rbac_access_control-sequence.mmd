@@ -1,0 +1,17 @@
+sequenceDiagram
+  autonumber
+  actor Client as Client
+  participant Route as API Route
+  participant RBAC as withRBAC(resource,action)
+  participant Audit as Audit Logs
+
+  Client->>Route: Request
+  Route->>RBAC: Check permission with session/cookie
+  alt Authorized
+    RBAC-->>Route: allow
+    Route-->>Client: 200 OK
+  else Unauthorized
+    RBAC-->>Route: deny
+    Route->>Audit: Record 403 with tenant/user
+    Route-->>Client: 403 Forbidden
+  end
