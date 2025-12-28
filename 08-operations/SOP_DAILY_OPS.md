@@ -1,10 +1,8 @@
 ---
-id: sba.operations.daily_sop
-version: 1.0.0
+title: "SBA-Agentic Daily Operations SOP"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [operations, sop, daily, procedure, production]
 ---
 
 # SBA-Agentic Daily Operations SOP

@@ -17,8 +17,10 @@ Folder ini berisi panduan teknis untuk pengembang, standar penulisan kode, setup
 - Fullstack Engineers
 
 ## 📖 Konten Utama
+- **[INSTALLATION.md](./INSTALLATION.md)**: Panduan instalasi dan setup lingkungan pengembangan.
 - **[EXECUTION_PLAN.md](./EXECUTION_PLAN.md)**: Peta jalan pengembangan fitur dan milestone.
 - **[TECHNICAL_GUIDELINES.md](./TECHNICAL_GUIDELINES.md)**: Spesifikasi teknis, arsitektur, dan panduan lingkungan.
+- **[CONTRIBUTING.md](./CONTRIBUTING.md)**: Panduan kontribusi, standar koding, dan workflow PR.
 - **[UI_UX_STANDARD.md](./UI_UX_STANDARD.md)**: Standar implementasi antarmuka, atomic design, dan aksesibilitas.
 - **[TYPE_CHECK_STRATEGY.md](./TYPE_CHECK_STRATEGY.md)**: Strategi pemeriksaan tipe TypeScript dan integrasi CI.
 - **[PR_TEMPLATE_SBA_AGENTIC.md](./PR_TEMPLATE_SBA_AGENTIC.md)**: Template standar untuk Pull Request.

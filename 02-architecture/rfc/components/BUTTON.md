@@ -1,10 +1,8 @@
 ---
-id: architecture.rfc.components.button
-version: 1.0.0
+title: "Button Component Specification"
+created_at: 2025-12-28
 author: UI/UX Team
 status: active
-scope: global
-tags: [rfc, ui, components, button]
 ---
 
 # Button Component Specification

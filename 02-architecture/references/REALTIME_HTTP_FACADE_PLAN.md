@@ -1,10 +1,8 @@
 ---
-id: architecture.references.realtime_http_facade_plan
-version: 1.0.0
+title: "Realtime HTTP Facade Plan"
+created_at: 2025-12-28
 author: Architecture Team
 status: active
-scope: global
-tags: [reference, plan, realtime, http, facade]
 ---
 
 # Realtime HTTP Facade Plan

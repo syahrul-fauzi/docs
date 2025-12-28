@@ -1,10 +1,8 @@
 ---
-id: sba.governance.pii_masking
-version: 1.0.0
+title: "SBA-Agentic PII Masking & Privacy Protocol"
+created_at: 2025-12-28
 author: SuperAgent
 status: active
-scope: global
-tags: [governance, security, pii, masking, privacy]
 ---
 
 # SBA-Agentic PII Masking & Privacy Protocol

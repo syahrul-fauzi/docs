@@ -1,10 +1,8 @@
 ---
-id: testing.tests.sla_nfr_acceptance
-version: 1.0.0
+title: "SLA & NFR Acceptance Criteria"
+created_at: 2025-12-28
 author: QA Team
 status: active
-scope: global
-tags: [testing, sla, nfr, acceptance]
 ---
 
 # SLA & NFR Acceptance Criteria

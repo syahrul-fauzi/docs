@@ -1,3 +1,10 @@
+---
+title: "1. Visi Produk"
+created_at: 2025-12-28
+author: SBA-Agent
+status: draft
+---
+
 % SBA-Agentic — Single Control Plane (Executive Deck)
 
 ---

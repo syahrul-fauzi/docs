@@ -1,10 +1,8 @@
 ---
-id: testing.testing.e2e_updates
-version: 1.0.0
+title: "Pembaruan Pengujian E2E — Playwright"
+created_at: 2025-12-28
 author: QA Team
 status: active
-scope: global
-tags: [testing, e2e, updates]
 ---
 
 # Pembaruan Pengujian E2E — Playwright

@@ -1,10 +1,8 @@
 ---
-id: sba.operations.hitl_guide
-version: 1.0.0
+title: "SBA-Agentic Human-in-the-Loop (HITL) Guide"
+created_at: 2025-12-28
 author: SuperAgent
 status: active
-scope: global
-tags: [operations, hitl, human-in-the-loop, supervision, safety]
 ---
 
 # SBA-Agentic Human-in-the-Loop (HITL) Guide

@@ -1,10 +1,8 @@
 ---
-id: architecture.references.benchmark_and_best_practices
-version: 1.0.0
+title: "Benchmark and Best Practices"
+created_at: 2025-12-28
 author: Architecture Team
 status: active
-scope: global
-tags: [reference, benchmark, best-practices]
 ---
 
 # Benchmark and Best Practices

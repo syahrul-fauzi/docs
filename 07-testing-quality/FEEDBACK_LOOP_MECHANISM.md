@@ -1,10 +1,8 @@
 ---
-id: sba.agentic.feedback_loop
-version: 1.0.0
+title: "SBA-Agentic Feedback Loop Mechanism"
+created_at: 2025-12-28
 author: SOLOCoder
 status: active
-scope: global
-tags: [agentic, feedback, learning, continuous-improvement]
 ---
 
 # SBA-Agentic Feedback Loop Mechanism

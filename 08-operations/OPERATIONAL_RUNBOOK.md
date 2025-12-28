@@ -1,10 +1,8 @@
 ---
-id: sba.operations.runbook
-version: 1.0.0
+title: "SBA-Agentic Operational Runbook"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [operations, runbook, guide, production]
 ---
 
 # SBA-Agentic Operational Runbook

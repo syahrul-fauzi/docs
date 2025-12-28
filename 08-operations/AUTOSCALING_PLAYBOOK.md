@@ -1,10 +1,8 @@
 ---
-id: sba.operations.autoscaling
-version: 1.0.0
+title: "SBA-Agentic Autoscaling Playbook"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [operations, autoscaling, performance, cloud-native]
 ---
 
 # SBA-Agentic Autoscaling Playbook

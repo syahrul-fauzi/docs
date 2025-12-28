@@ -1,3 +1,10 @@
+---
+title: "Attachments Persistence & Storage URL"
+created_at: 2025-12-28
+author: SBA-Agent
+status: draft
+---
+
 # Attachments Persistence & Storage URL
 
 - Repositories store attachments with `{ id, name, mimeType, size, url }` where `url` is canonical `storage_url`.

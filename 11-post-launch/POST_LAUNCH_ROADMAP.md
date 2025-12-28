@@ -1,10 +1,8 @@
 ---
-id: post_launch.post_launch_roadmap
-version: 1.0.0
+title: "SBA-Agentic — Post-Launch Roadmap (30/60/90 Day)"
+created_at: 2025-12-28
 author: Project Management
 status: active
-scope: global
-tags: [roadmap, maintenance, strategy]
 ---
 
 # SBA-Agentic — Post-Launch Roadmap (30/60/90 Day)

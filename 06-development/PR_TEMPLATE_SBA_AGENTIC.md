@@ -1,10 +1,8 @@
 ---
-id: development.pr_template
-version: 1.0.0
+title: "Pull Request: Stabilization & Observability Enhancements"
+created_at: 2025-12-28
 author: Development Team
 status: active
-scope: global
-tags: [development, pr, template, stabilization, observability]
 ---
 
 # Pull Request: Stabilization & Observability Enhancements

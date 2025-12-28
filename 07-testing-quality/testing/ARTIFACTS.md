@@ -1,10 +1,8 @@
 ---
-id: testing.testing.artifacts
-version: 1.0.0
+title: "Kebijakan Artefak Pengujian"
+created_at: 2025-12-28
 author: QA Team
 status: active
-scope: global
-tags: [testing, artifacts, policy]
 ---
 
 # Kebijakan Artefak Pengujian

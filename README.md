@@ -1,21 +1,46 @@
+---
+title: "SBA-Agentic Documentation Center"
+created_at: 2025-12-28
+author: SBA-Agent
+status: draft
+---
+
 # SBA-Agentic Documentation Center
 
 Selamat datang di pusat dokumentasi resmi **SBA-Agentic (Smart Business Assistant)**. Repositori ini berisi seluruh spesifikasi, panduan, dan aturan operasional untuk pengembangan dan pengelolaan sistem berbasis agen AI.
+
+## 🌟 Filosofi & Prinsip
+
+SBA-Agentic dibangun di atas lima prinsip inti:
+1.  **Autonomous**: Agen mampu merencanakan dan mengeksekusi tugas dengan intervensi minimal.
+2.  **Explainable**: Setiap langkah penalaran (reasoning) dicatat secara transparan untuk audit.
+3.  **Multi-tenant**: Isolasi data yang ketat dan keamanan tingkat perusahaan sejak awal.
+4.  **Modular**: Arsitektur monorepo yang memungkinkan penggunaan kembali kode secara maksimal.
+5.  **Modern**: Menggunakan stack teknologi terbaru (Next.js 15, Turborepo, Supabase).
+
+## ✨ Fitur Utama
+
+- **Autonomous Planner**: Engine orkestrasi yang cerdas untuk memecah tujuan kompleks.
+- **Tools Gateway**: Integrasi terpadu dengan API pihak ketiga (CRM, ERP, Analytics).
+- **Real-time Reasoning Stream**: Pantau proses berpikir agen secara langsung melalui SSE.
+- **Multi-tenant RBAC**: Manajemen akses berbasis peran yang aman untuk berbagai organisasi.
+- **Knowledge RAG**: Pencarian informasi berbasis vektor dan parsing dokumen otomatis.
 
 ---
 
 ## 🗺️ Peta Dokumentasi (Master Index)
 
-Kami menggunakan struktur dokumentasi modular yang disusun berdasarkan siklus hidup proyek dan peran operasional. Silakan mulai dari:
+Kami menggunakan struktur dokumentasi modular yang disusun berdasarkan siklus hidup proyek dan peran operasional.
 
-👉 **[MASTER INDEX DOKUMENTASI](./00-index/README.md)**
+### 🧭 Navigasi Cepat berdasarkan Peran:
 
-### 🧭 Navigasi Cepat:
-- **[🤖 Guide for AI Agents](./00-index/AGENTS.md)** — Instruksi navigasi untuk Agen AI.
-- **[👥 Guide for Human Teams](./00-index/HUMANS.md)** — Panduan eksplorasi untuk tim manusia.
-- **[🏗️ Arsitektur Sistem](./02-architecture/README.md)** — Diagram dan detail teknis arsitektur.
-- **[🛠️ Panduan Pengembangan](./06-development/README.md)** — Setup, standar kode, dan workflow.
-- **[🚢 Persiapan Rilis](./10-release-go-live/README.md)** — Checklist Go-Live dan kriteria produksi.
+| Peran | Titik Awal Rekomendasi |
+| :--- | :--- |
+| **Developer** | [🏗️ Arsitektur](./02-architecture/README.md) & [🛠️ Dev Guide](./06-development/README.md) |
+| **Product Manager** | [🚀 Product & Business](./01-product/README.md) & [📊 Roadmap](./01-product/PLATFORM_ALIGNMENT_ROADMAP.md) |
+| **DevOps / SRE** | [📊 Operasi](./08-operations/README.md) & [🚢 Go-Live](./10-release-go-live/README.md) |
+| **AI Agent** | [🤖 Agent Guide](./00-index/AGENTS.md) & [🧠 Agentic Core](./03-agentic/README.md) |
+| **Security Officer**| [🛡️ Security](./09-security-compliance/README.md) & [📜 Rules](./04-rules/README.md) |
 
 ---
 
@@ -28,6 +53,14 @@ SBA-Agentic menggunakan arsitektur monorepo berbasis Turborepo untuk mengelola d
 2.  **`apps/orchestrator` (Orchestrator Engine)**: Inti dari sistem yang mengelola penjadwalan tool, retry logic, dan rate limiting.
 3.  **`apps/api` (Tools Gateway)**: Gateway terpadu untuk mengeksekusi tools pihak ketiga dengan validasi schema dan tenant enforcement.
 4.  **`packages/`**: Kumpulan paket bersama termasuk UI components (`@sba/ui`), database client (`@sba/supabase`), dan logic bersama.
+
+---
+
+## 🚀 Cara Menggunakan Dokumentasi Ini
+
+1.  **Cari Cepat**: Gunakan fitur pencarian IDE Anda (Cmd/Ctrl + P) dan ketik nama folder (misal: `05-api`) untuk menemukan dokumen terkait.
+2.  **Single Source of Truth**: Jika Anda menemukan perbedaan antara kode dan dokumen, segera perbarui dokumen tersebut.
+3.  **Kontribusi**: Lihat [Panduan Kontribusi](./06-development/CONTRIBUTING.md) untuk cara menambahkan atau memperbarui dokumen.
 
 ---
 

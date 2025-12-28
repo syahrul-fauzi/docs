@@ -1,10 +1,8 @@
 ---
-id: sba.development.gap_analysis
-version: 1.0.0
+title: "SBA-Agentic Human-AI Skills Gap Analysis"
+created_at: 2025-12-28
 author: SuperAgent
 status: active
-scope: global
-tags: [development, sdm, gap-analysis, human-ai, transformation]
 ---
 
 # SBA-Agentic Human-AI Skills Gap Analysis

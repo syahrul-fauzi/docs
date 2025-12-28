@@ -1,10 +1,8 @@
 ---
-id: architecture.adr.agent_separation
-version: 1.0.0
+title: "2. Agent Separation Strategy"
+created_at: 2025-12-28
 author: Architecture Team
 status: active
-scope: global
-tags: [adr, agentic, architecture, separation]
 ---
 
 # 2. Agent Separation Strategy

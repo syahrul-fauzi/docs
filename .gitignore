@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 
+# .trae/
+.trae/
+
 # Cache and temporary files
 .cache/
 .DS_Store

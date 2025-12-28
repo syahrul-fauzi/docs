@@ -1,3 +1,10 @@
+---
+title: "Adapter Percakapan (Web)"
+created_at: 2025-12-28
+author: SBA-Agent
+status: draft
+---
+
 # Adapter Percakapan (Web)
 
 - Sumber: `apps/web/src/shared/api/adapters/conversation.ts`

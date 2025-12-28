@@ -1,10 +1,8 @@
 ---
-id: sba.agentic.workflow_patterns
-version: 1.0.0
+title: "SBA-Agentic Workflow & Reasoning Patterns"
+created_at: 2025-12-28
 author: SOLOCoder
 status: active
-scope: global
-tags: [agentic, workflow, reasoning, scratchpad]
 ---
 
 # SBA-Agentic Workflow & Reasoning Patterns

@@ -1,3 +1,10 @@
+---
+title: "Interface Control Documents — API"
+created_at: 2025-12-28
+author: SBA-Agent
+status: draft
+---
+
 # Interface Control Documents — API
 
 ## Runtime Runs

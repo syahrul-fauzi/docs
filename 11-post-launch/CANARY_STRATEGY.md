@@ -1,10 +1,8 @@
 ---
-id: sba.post_launch.canary_strategy
-version: 1.0.0
+title: "SBA-Agentic Canary Deployment Strategy"
+created_at: 2025-12-28
 author: SOLOCoder
 status: active
-scope: global
-tags: [post-launch, deployment, canary, release-management]
 ---
 
 # SBA-Agentic Canary Deployment Strategy

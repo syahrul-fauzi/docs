@@ -1,10 +1,8 @@
 ---
-id: sba.quality.kpi_metrics
-version: 1.0.0
+title: "SBA-Agentic KPI & Performance Metrics Standard"
+created_at: 2025-12-28
 author: SuperAgent
 status: active
-scope: global
-tags: [kpi, quality, metrics, production]
 ---
 
 # SBA-Agentic KPI & Performance Metrics Standard

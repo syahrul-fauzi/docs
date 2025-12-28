@@ -1,10 +1,8 @@
 ---
-id: sba.post_launch.feedback_pipeline
-version: 1.0.0
+title: "SBA-Agentic User Feedback Pipeline"
+created_at: 2025-12-28
 author: SOLOCoder
 status: active
-scope: global
-tags: [post-launch, feedback, pipeline, continuous-improvement]
 ---
 
 # SBA-Agentic User Feedback Pipeline

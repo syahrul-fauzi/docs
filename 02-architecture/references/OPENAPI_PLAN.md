@@ -1,10 +1,8 @@
 ---
-id: architecture.references.openapi_plan
-version: 1.0.0
+title: "OpenAPI Implementation Plan"
+created_at: 2025-12-28
 author: API Team
 status: active
-scope: global
-tags: [reference, plan, openapi, swagger]
 ---
 
 # OpenAPI Implementation Plan

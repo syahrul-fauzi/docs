@@ -1,10 +1,8 @@
 ---
-id: core.dependencies
-version: 1.0.0
+title: "SBA-Agentic Dependencies Governance"
+created_at: 2025-12-28
 author: sba-team
 status: active
-scope: global
-tags: [dependencies, tech-stack, governance]
 ---
 
 # SBA-Agentic Dependencies Governance

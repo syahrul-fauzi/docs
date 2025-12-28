@@ -1,10 +1,8 @@
 ---
-id: sba.architecture.service_mesh
-version: 1.0.0
+title: "SBA-Agentic Service Mesh Configuration"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [architecture, service-mesh, networking, security, inter-agent]
 ---
 
 # SBA-Agentic Service Mesh Configuration

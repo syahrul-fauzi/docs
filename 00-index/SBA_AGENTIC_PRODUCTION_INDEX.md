@@ -1,10 +1,8 @@
 ---
-id: sba.index.production
-version: 1.3.0
+title: "SBA-Agentic Production Implementation Index"
+created_at: 2025-12-28
 author: SuperAgent
 status: active
-scope: global
-tags: [production, index, roadmap, complete, final, meta-cognitive]
 ---
 
 # SBA-Agentic Production Implementation Index

@@ -15,6 +15,7 @@ Folder ini berisi dokumentasi yang berkaitan dengan visi bisnis, kebutuhan produ
 - **[PRODUCT_REQUIREMENTS_MATRIX.md](./PRODUCT_REQUIREMENTS_MATRIX.md)**: Matriks persyaratan produk dan fitur.
 - **[USE_CASE_SPECIFICATIONS.md](./USE_CASE_SPECIFICATIONS.md)**: Spesifikasi detail skenario penggunaan.
 - **[PLATFORM_ALIGNMENT_ROADMAP.md](./PLATFORM_ALIGNMENT_ROADMAP.md)**: Rencana pengembangan dan penyelarasan platform.
+- **[COMPATIBILITY_MATRIX.md](./COMPATIBILITY_MATRIX.md)**: Matriks kompatibilitas runtime, browser, dan dependensi.
 - **[GTM_STRATEGY.md](./GTM_STRATEGY.md)**: Strategi Go-To-Market untuk SBA-Agentic.
 - **[APPS_COMPARISON.md](./APPS_COMPARISON.md)**: Perbandingan aplikasi dan analisis kompetitif.
 

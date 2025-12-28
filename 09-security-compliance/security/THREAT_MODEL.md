@@ -1,10 +1,8 @@
 ---
-id: security.security.threat_model
-version: 1.0.0
+title: "Threat Model Specification"
+created_at: 2025-12-28
 author: Security Team
 status: active
-scope: global
-tags: [security, threat-model, risk]
 ---
 
 # Threat Model Specification

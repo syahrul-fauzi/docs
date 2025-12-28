@@ -1,10 +1,8 @@
 ---
-id: architecture.references.tests_load_chaos_plan
-version: 1.0.0
+title: "Tests Load & Chaos Plan"
+created_at: 2025-12-28
 author: QA Team
 status: active
-scope: global
-tags: [reference, plan, testing, load, chaos]
 ---
 
 # Tests Load & Chaos Plan

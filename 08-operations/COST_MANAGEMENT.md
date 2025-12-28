@@ -1,10 +1,8 @@
 ---
-id: sba.operations.cost_management
-version: 1.0.0
+title: "SBA-Agentic Cost Management & Optimization"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [operations, cost, optimization, cloud, llm]
 ---
 
 # SBA-Agentic Cost Management & Optimization

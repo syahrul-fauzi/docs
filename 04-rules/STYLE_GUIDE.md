@@ -1,10 +1,8 @@
 ---
-id: core.style_guide
-version: 1.0.0
+title: "SBA-Agentic Style Guide"
+created_at: 2025-12-28
 author: sba-team
 status: active
-scope: global
-tags: [style, guide, typescript, python]
 ---
 
 # SBA-Agentic Style Guide

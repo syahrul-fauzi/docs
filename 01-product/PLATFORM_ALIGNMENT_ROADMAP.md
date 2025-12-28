@@ -22,20 +22,35 @@ tags: [product, roadmap, alignment, strategy, implementation]
   - Selaraskan label metrik (route, method, status, tenant).
   - KPI dashboard terpusat: latensi p95/p99, error rate, throughput.
 
-## 2. Roadmap Implementasi Bertahap
+## 2. Roadmap Implementasi Bertahap (2026)
 
-- **Fase 1 (0–3 bulan): Foundation**
-  - Finalisasi audit schema & dokumentasi API.
-  - Implementasi rate‑limiting standar.
-  - Pengembangan shared utilities library.
-- **Fase 2 (3–6 bulan): Alignment**
-  - Observability alignment (label, exporters, SDK web).
-  - Definisi alert rules berbasis SLA (p95 ≤500ms, error ≤0.5%).
-  - KPI dashboard terpusat.
-- **Fase 3 (6–9 bulan): Rollout**
-  - Canary rollout ke staging (5% trafik).
-  - Monitoring intensif & iterasi feedback.
-  - Persiapan go‑live & runbook rollback.
+### Fase 1: Foundation & Core Stability (Q1 2026)
+**Fokus**: Memperkuat fondasi sistem, keamanan, dan dokumentasi.
+- **Milestone 1.1**: Finalisasi audit schema & dokumentasi API lengkap. [COMPLETED]
+- **Milestone 1.2**: Implementasi rate-limiting standar di API Gateway. [IN PROGRESS]
+- **Milestone 1.3**: Migrasi shared utilities ke `@sba/shared-utils`. [PENDING]
+- **Prioritas**: Tinggi (Kritikal untuk stabilitas).
+
+### Fase 2: Observability & Agentic Intelligence (Q2 2026)
+**Fokus**: Meningkatkan visibilitas sistem dan kemampuan otonom agen.
+- **Milestone 2.1**: Penyelarasan Observability (Metrics, Tracing, Logging) lintas platform.
+- **Milestone 2.2**: Implementasi Autonomous Planner v2 dengan dukungan multi-step reasoning.
+- **Milestone 2.3**: Dashboard KPI terpusat untuk monitoring performa agen.
+- **Prioritas**: Menengah-Tinggi.
+
+### Fase 3: Multi-tenant Scale & Human-in-the-loop (Q3 2026)
+**Fokus**: Skalabilitas dan interaksi manusia dengan AI.
+- **Milestone 3.1**: Optimasi isolasi database (RLS) untuk skala ribuan tenant.
+- **Milestone 3.2**: Visual Workflow Builder dengan intervensi manusia (HITL).
+- **Milestone 3.3**: Integrasi sistem notifikasi omnichannel (Push, Email, Slack).
+- **Prioritas**: Menengah.
+
+### Fase 4: Ecosystem & Market Readiness (Q4 2026)
+**Fokus**: Kesiapan pasar dan ekosistem pihak ketiga.
+- **Milestone 4.1**: SDK untuk pengembang eksternal membangun tools SBA.
+- **Milestone 4.2**: Peluncuran SBA Marketplace untuk shared action handlers.
+- **Milestone 4.3**: Sertifikasi kepatuhan keamanan (SOC2/ISO27001).
+- **Prioritas**: Menengah-Rendah.
 
 ## 3. Kriteria Kesuksesan
 

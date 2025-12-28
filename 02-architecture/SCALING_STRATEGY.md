@@ -1,10 +1,8 @@
 ---
-id: sba.architecture.scaling
-version: 1.0.0
+title: "SBA-Agentic Scaling Strategy"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [architecture, scaling, performance, production]
 ---
 
 # SBA-Agentic Scaling Strategy

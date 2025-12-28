@@ -1,10 +1,8 @@
 ---
-id: architecture.references.raci
-version: 1.0.0
+title: "RACI Matrix"
+created_at: 2025-12-28
 author: Project Management
 status: active
-scope: global
-tags: [reference, raci, governance, roles]
 ---
 
 # RACI Matrix

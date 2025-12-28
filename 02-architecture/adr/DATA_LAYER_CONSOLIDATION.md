@@ -1,10 +1,8 @@
 ---
-id: architecture.adr.data_layer_consolidation
-version: 1.0.0
+title: "3. Data Layer Consolidation"
+created_at: 2025-12-28
 author: Architecture Team
 status: active
-scope: global
-tags: [adr, data, architecture, consolidation]
 ---
 
 # 3. Data Layer Consolidation

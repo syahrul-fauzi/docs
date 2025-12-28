@@ -1,10 +1,8 @@
 ---
-id: sba.arch.event_schema
-version: 1.0.0
+title: "SBA-Agentic Event Schema Standard"
+created_at: 2025-12-28
 author: SOLOBuilder
 status: active
-scope: global
-tags: [architecture, event-driven, schema, production]
 ---
 
 # SBA-Agentic Event Schema Standard

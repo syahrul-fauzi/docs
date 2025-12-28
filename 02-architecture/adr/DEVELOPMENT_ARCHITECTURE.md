@@ -1,10 +1,8 @@
 ---
-id: architecture.adr.development_architecture
-version: 1.0.0
+title: "1. Development Architecture Strategy"
+created_at: 2025-12-28
 author: Architecture Team
 status: active
-scope: global
-tags: [adr, development, architecture, docker]
 ---
 
 # 1. Development Architecture Strategy

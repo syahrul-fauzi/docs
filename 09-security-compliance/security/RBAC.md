@@ -1,10 +1,8 @@
 ---
-id: security.security.rbac
-version: 1.0.0
+title: "RBAC Schema"
+created_at: 2025-12-28
 author: Security Team
 status: active
-scope: global
-tags: [security, rbac, schema]
 ---
 
 # RBAC Schema

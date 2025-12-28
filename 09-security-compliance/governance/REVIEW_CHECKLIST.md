@@ -1,10 +1,8 @@
 ---
-id: security.governance.review_checklist
-version: 1.0.0
+title: "Security Review Checklist"
+created_at: 2025-12-28
 author: Security Team
 status: active
-scope: global
-tags: [security, governance, review, checklist]
 ---
 
 # Security Review Checklist

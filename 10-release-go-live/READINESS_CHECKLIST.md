@@ -1,10 +1,8 @@
 ---
-id: sba.release.readiness_checklist
-version: 1.0.0
+title: "SBA-Agentic Production Readiness Checklist"
+created_at: 2025-12-28
 author: SuperAgent
 status: active
-scope: global
-tags: [release, readiness, checklist, production, go-live]
 ---
 
 # SBA-Agentic Production Readiness Checklist
