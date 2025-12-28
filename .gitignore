@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Cache and temporary files
+.cache/
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.temp
+
+# Environment variables and local config
+.env
+.env.local
+.env.*.local
+
+# Build and Output directories
+dist/
+build/
+out/
+.next/
+
+# Documentation specific outputs (e.g., from static site generators)
+_site/
+public/
+site/
+
+# IDE and Editor specific files
+.vscode/
+.idea/
+*.swp
+*.swo
