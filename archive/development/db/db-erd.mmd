@@ -1,0 +1,112 @@
+```mermaid
+erDiagram
+    tenants ||--o{ users : has
+    tenants ||--o{ conversations : has
+    tenants ||--o{ documents : has
+    tenants ||--o{ runs : has
+    tenants ||--o{ workflows : has
+    tenants ||--o{ integrations : has
+    tenants ||--o{ audit_logs : has
+
+    users ||--o{ conversations : creates
+    conversations ||--o{ messages : contains
+    runs ||--o{ run_events : emits
+    workflows ||--o{ workflow_steps : defines
+
+    tenants {
+        uuid id PK
+        text name
+        text slug UNIQUE
+        timestamptz created_at
+    }
+    users {
+        uuid id PK
+        uuid tenant_id FK
+        text email UNIQUE
+        text role  "admin|user"
+        timestamptz created_at
+    }
+    conversations {
+        uuid id PK
+        uuid tenant_id FK
+        uuid created_by FK
+        text title
+        text status "active|archived"
+        timestamptz created_at
+        timestamptz archived_at
+    }
+    messages {
+        uuid id PK
+        uuid tenant_id FK
+        uuid conversation_id FK
+        uuid sender_id FK
+        text type "user|assistant|system|tool"
+        jsonb content
+        timestamptz created_at
+    }
+    documents {
+        uuid id PK
+        uuid tenant_id FK
+        uuid created_by FK
+        text title
+        jsonb content
+        int version
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    runs {
+        uuid id PK
+        uuid tenant_id FK
+        uuid created_by FK
+        text status "starting|streaming|completed|cancelled|failed"
+        jsonb metadata
+        timestamptz started_at
+        timestamptz completed_at
+    }
+    run_events {
+        bigserial id PK
+        uuid run_id FK
+        uuid tenant_id FK
+        int seq
+        text type
+        jsonb payload
+        timestamptz created_at
+    }
+    workflows {
+        uuid id PK
+        uuid tenant_id FK
+        uuid created_by FK
+        text name
+        text status "draft|active|paused"
+        jsonb config
+        timestamptz created_at
+        timestamptz updated_at
+    }
+    workflow_steps {
+        uuid id PK
+        uuid workflow_id FK
+        int position
+        text step_type
+        jsonb step_config
+        timestamptz created_at
+    }
+    integrations {
+        uuid id PK
+        uuid tenant_id FK
+        text provider
+        jsonb config
+        bool enabled
+        timestamptz created_at
+    }
+    audit_logs {
+        bigserial id PK
+        uuid tenant_id FK
+        uuid actor_id FK
+        text action
+        text entity_type
+        uuid entity_id
+        jsonb metadata
+        timestamptz created_at
+    }
+```
+

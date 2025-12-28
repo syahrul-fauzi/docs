@@ -1,0 +1,26 @@
+sequenceDiagram
+  actor Client
+  participant API as apps/api (RunsController)
+  participant Redis
+
+  Client->>API: POST /api/v1/runs/:runId/cancel (cancelRun)
+  Note right of API: apps/api/src/api/runs.controller.ts:455-584 cancelRun
+  API->>API: CancelRunSchema.parse
+  alt Valid runId & run exists & tenant OK
+    API->>Redis: get run:runId
+    API->>API: status=failed, endedAt, add cancel step
+    API->>Redis: setex run:runId JSON
+    API->>API: cancelQueuedJobs(runId)
+    API-->>Client: 200 { run }
+  else Invalid UUID
+    API-->>Client: 400 INVALID_RUN_ID
+  else Not Found
+    API-->>Client: 404 RUN_NOT_FOUND
+  else Tenant Denied
+    API-->>Client: 403 TENANT_ACCESS_DENIED
+  else Not Cancellable
+    API-->>Client: 400 RUN_NOT_CANCELLABLE
+  end
+  opt Internal Failure
+    API-->>Client: 500 INTERNAL_ERROR
+  end

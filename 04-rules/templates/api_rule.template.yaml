@@ -1,0 +1,39 @@
+metadata:
+  id: api.[service_name].[endpoint]
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: global
+  tags: [api, integration, external]
+
+description: >
+  Template untuk mendefinisikan aturan integrasi dan keamanan API pihak ketiga.
+
+trigger:
+  event: api.call.requested
+  conditions:
+    - field: service.name
+      operator: equals
+      value: "[service_name]"
+
+actions:
+  - type: inject_credentials
+    params:
+      secret_key: "[SECRET_NAME]"
+    on_success: continue
+  - type: rate_limit_check
+    params:
+      requests_per_minute: 60
+    on_success: continue
+  - type: call_external_api
+    params:
+      method: POST
+      endpoint: "https://api.example.com/v1"
+    on_success: stop
+
+error_handling:
+  strategy: retry
+  on_error:
+    log_level: warn
+    max_retries: 3
+    emit_event: api.integration_error

@@ -1,0 +1,20 @@
+sequenceDiagram
+  actor Client as Browser (apps/app)
+  participant App as apps/app SSE Route
+  participant Runtime as AgenticRuntime
+
+  Client->>App: GET /api/runs/:runId/events (SSE)
+  Note right of App: apps/app/src/app/api/runs/[runId]/events/route.ts:12-112
+  App->>Runtime: subscribe(runId, handler)
+  Runtime-->>App: emit events (agent/tool/stream/META)
+  App-->>Client: event: connected \n data: {type:"connected"}
+  loop stream
+    App-->>Client: data: {type, payload, timestamp}
+  end
+  alt Rate limit exceeded
+    App-->>Client: 429 Too Many Requests
+  else Forbidden in test env
+    App-->>Client: 403 Forbidden
+  else Internal error
+    App-->>Client: 500
+  end

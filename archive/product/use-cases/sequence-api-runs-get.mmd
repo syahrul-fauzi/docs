@@ -1,0 +1,26 @@
+sequenceDiagram
+  actor Client
+  participant API as apps/api (RunsController)
+  participant Redis
+
+  Client->>API: GET /api/v1/runs/:runId (getRun)
+  Note right of API: apps/api/src/api/runs.controller.ts:163-268 getRun
+  alt Invalid UUID
+    API-->>Client: 400 { error: INVALID_RUN_ID }
+  else Valid UUID
+    API->>Redis: get run:runId
+    alt Run not found or expired
+      API-->>Client: 404 { error: RUN_NOT_FOUND }
+    else Run exists
+      API->>API: Verify tenant access
+      alt Tenant access denied
+        API-->>Client: 403 { error: TENANT_ACCESS_DENIED }
+      else Tenant OK
+        API->>API: metrics.requestCounter success
+        API-->>Client: 200 { run }
+      end
+    end
+  end
+  opt Internal Failure
+    API-->>Client: 500 { error: INTERNAL_ERROR }
+  end

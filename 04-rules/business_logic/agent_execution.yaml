@@ -1,0 +1,45 @@
+metadata:
+  id: business.agent.execution_flow
+  version: 1.1.0
+  author: SuperAgent
+  status: active
+  scope: global
+
+description: >
+  Mendefinisikan batasan dan alur kerja eksekusi agent, termasuk
+  validasi rencana (plan) sebelum dijalankan dan integrasi meta-kognitif.
+
+trigger:
+  event: agent.task.requested
+  conditions:
+    - field: agent.role
+      operator: in
+      value: [executor, planner]
+
+actions:
+  - type: validate_plan_signature
+    params:
+      required: true
+    on_success: continue
+
+  - type: verify_reasoning_chain
+    params:
+      steps: [Analysis, Planning, Execution, Review]
+      strict_mode: true
+    on_failure: deny
+
+  - type: check_execution_budget
+    params:
+      limit_per_task: 1.0 # USD or internal units
+    on_success: continue
+
+  - type: apply_meta_cognitive_threshold
+    params:
+      min_confidence: 0.8
+    on_failure: escalate_to_human
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: error
+    emit_event: agent.execution_failed

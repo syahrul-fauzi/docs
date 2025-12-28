@@ -1,0 +1,64 @@
+---
+id: sba.core.meta_cognitive_governance
+version: 1.0.0
+author: SuperAgent
+status: active
+scope: global
+tags: [governance, meta-cognition, drift-detection, reasoning-guardrails]
+---
+
+metadata:
+  id: sba.core.meta_cognitive_governance
+  version: 1.0.0
+  scope: global
+
+description: >
+  Aturan ini mengatur pemantauan tingkat tinggi terhadap proses penalaran (reasoning) agen, 
+  mendeteksi penyimpangan (drift) dari persona/logika yang ditetapkan, 
+  dan menerapkan tindakan korektif otomatis untuk menjaga integritas sistem.
+
+trigger:
+  event: agent.reasoning.completed
+  conditions:
+    - field: reasoning_chain.confidence_score
+      operator: exists
+    - field: context.persona_match
+      operator: exists
+
+actions:
+  - type: detect_reasoning_drift
+    params:
+      baseline_period: 24h
+      drift_threshold: 0.15 # 15% deviasi dari baseline performa
+    on_failure:
+      - type: log_alert
+        params:
+          level: warn
+          message: "Reasoning drift detected in agent execution"
+      - type: trigger_self_correction
+        params:
+          method: re_index_knowledge
+          target: vector_memory
+
+  - type: validate_ethical_alignment
+    params:
+      check_bias: true
+      check_hallucination: true
+    on_failure:
+      - type: deny
+      - type: emit_event
+        params:
+          event: security.policy_violation
+          severity: high
+
+  - type: update_learning_weights
+    params:
+      strategy: reinforcement_learning
+      min_score: 0.85
+    on_success: continue
+
+error_handling:
+  strategy: fail_safe
+  on_error:
+    log_level: error
+    emit_event: system.meta_cognitive.failure

@@ -1,0 +1,51 @@
+```mermaid
+sequenceDiagram
+  actor Admin
+  actor Pengguna
+  participant App as apps/app
+  participant Web as apps/web
+  participant API as apps/api
+  participant SB as Supabase
+  participant Q as Queue/Redis
+
+  rect rgb(240,240,255)
+  note over Admin,SB: 1) Manajemen Tugas & Proyek
+  Admin->>SB: INSERT proyek/tugas
+  App->>API: POST /runs (tenant)
+  API-->>App: 201 {runId}
+  App->>API: SSE subscribe /runs/{runId}/events
+  API-->>App: stream events
+  Pengguna->>API: POST /runs/{runId}/continue
+  Pengguna->>API: POST /runs/{runId}/cancel
+  end
+
+  rect rgb(240,255,240)
+  note over Pengguna,SB: 2) Analisis Data Bisnis
+  Pengguna->>App: Ajukan pertanyaan
+  App->>API: POST /runs (pipeline)
+  API-->>App: stream insight
+  Pengguna->>SB: Save insight to doc
+  end
+
+  rect rgb(255,240,240)
+  note over Admin,Q: 3) Otomatisasi Proses Bisnis
+  Admin->>API: Define workflow & trigger
+  API->>Q: Enqueue jobs
+  API-->>Web: Stream status
+  end
+
+  rect rgb(255,255,240)
+  note over Admin,API: 4) Integrasi Eksternal
+  Admin->>API: Register connector & creds
+  API-->>Admin: Test connection OK
+  Web->>API: Use connector in run
+  end
+
+  rect rgb(240,255,255)
+  note over Pengguna,Web: 5) Smart Document Engine
+  Pengguna->>Web: Create document
+  Web->>SB: CRUD documents
+  App->>API: POST /tools/render
+  API-->>App: {url, commitId}
+  end
+```

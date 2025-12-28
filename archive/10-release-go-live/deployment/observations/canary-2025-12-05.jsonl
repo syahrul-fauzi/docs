@@ -1,0 +1,2 @@
+{"timestamp":"2025-12-05T15:10:00Z","window":"5m","latency":{"p50_ms":0,"p95_ms":0,"p99_ms":0},"error_rate_percent":0,"throughput_rps":0,"resources":{"cpu_percent":4,"mem_percent":92.1,"redis_status":"ok"},"alerts":[]}
+{"timestamp":"2025-12-05T15:25:00Z","window":"15m","latency":{"p50_ms":0,"p95_ms":0,"p99_ms":0},"error_rate_percent":0,"throughput_rps":0,"resources":{"cpu_percent":4,"mem_percent":93.4,"redis_status":"ok"},"alerts":[{"type":"environment","severity":"warning","message":"NEXT_PUBLIC_APP_URL missing (dev)"}]}

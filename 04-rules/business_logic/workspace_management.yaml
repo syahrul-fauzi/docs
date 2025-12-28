@@ -1,0 +1,29 @@
+metadata:
+  id: business.workspace.management
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: tenant
+  tags: [workspace, management]
+
+description: >
+  Aturan untuk manajemen area kerja (workspace), termasuk pembuatan,
+  penghapusan, dan konfigurasi resource per workspace.
+
+trigger:
+  event: workspace.action.requested
+  conditions:
+    - field: action.type
+      operator: exists
+
+actions:
+  - type: validate_workspace_quota
+    on_success: continue
+  - type: audit_workspace_change
+    on_success: stop
+
+error_handling:
+  strategy: fail_safe
+  on_error:
+    log_level: warn
+    emit_event: workspace.management_error

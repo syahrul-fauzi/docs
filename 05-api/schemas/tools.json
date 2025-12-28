@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ToolManifest",
+  "description": "Schema for Rube Tool Manifest",
+  "type": "object",
+  "properties": {
+    "toolId": {
+      "type": "string",
+      "description": "Unique identifier for the tool"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the tool"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the tool"
+    },
+    "version": {
+      "type": "string",
+      "description": "Version of the tool"
+    },
+    "inputSchema": {
+      "type": "object",
+      "description": "JSON schema for the tool's input"
+    },
+    "outputSchema": {
+      "type": "object",
+      "description": "JSON schema for the tool's output"
+    },
+    "capabilitiesRequired": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of capabilities required to use this tool"
+    },
+    "safetyLevel": {
+      "type": "string",
+      "enum": ["safe", "caution", "dangerous"],
+      "description": "Safety level of the tool"
+    },
+    "simulationMode": {
+      "type": "boolean",
+      "description": "Indicates if the tool supports simulation mode"
+    }
+  },
+  "required": [
+    "toolId",
+    "name",
+    "description",
+    "version",
+    "inputSchema",
+    "outputSchema",
+    "capabilitiesRequired",
+    "safetyLevel",
+    "simulationMode"
+  ]
+}

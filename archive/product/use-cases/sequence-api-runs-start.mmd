@@ -1,0 +1,31 @@
+sequenceDiagram
+  actor Client
+  participant API as apps/api (RunsController)
+  participant Redis
+  participant Metrics
+  participant Queue as queue:agent-runs
+
+  Client->>API: POST /api/v1/runs (startRun)
+  Note right of API: apps/api/src/api/runs.controller.ts:55-158 startRun
+  API->>API: Validate (StartRunSchema.parse)
+  alt Validation OK
+    API->>API: uuidv4() runId
+    API->>Redis: setex run:runId JSON (TTL 24h)
+    API->>Redis: sadd tenant:tenantId:runs runId (expire 24h)
+    API->>API: queueRun(runId, validatedData)
+    API->>Queue: lpush queue:agent-runs {runId, tenantId, userId, prompt}
+    API->>Metrics: requestCounter + agentRunCounter
+    API-->>Client: 201 { run }
+    alt Continue next
+      Client->>API: POST /api/v1/runs/:runId/continue (continueRun)
+      API-->>Client: 200 { run }
+    else Cancel next
+      Client->>API: POST /api/v1/runs/:runId/cancel (cancelRun)
+      API-->>Client: 200 { run }
+    end
+  else Validation Error
+    API-->>Client: 400 { error: VALIDATION_ERROR }
+  end
+  opt Internal Failure
+    API-->>Client: 500 { error: INTERNAL_ERROR }
+  end

@@ -1,0 +1,25 @@
+# Post-Mortem Template
+
+- Incident Title:
+- Date/Time (UTC):
+- Owners:
+- Summary:
+- Impact:
+- Timeline:
+  - T0 Detection:
+  - T+5m Mitigation Start:
+  - T+X Rollback/Resolution:
+- Root Cause:
+- Contributing Factors:
+- What Went Well:
+- What Went Wrong:
+- Remediation Actions:
+  - Immediate:
+  - Follow-up:
+- Prevention:
+  - Tests/Checks:
+  - Alerts/Automation:
+- Artifacts:
+  - Logs:
+  - Dashboards:
+  - PRs:

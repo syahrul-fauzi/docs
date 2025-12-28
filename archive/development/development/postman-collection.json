@@ -1,0 +1,118 @@
+{
+  "info": {
+    "_postman_id": "e1f5b1c4-9a3b-4c0d-9f7e-collection-knowledge",
+    "name": "SBA-Agentic API — Core",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Postman Collection v2.1 untuk endpoint inti: health, analytics, knowledge."
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3000", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "tenantId", "value": "t1", "type": "string" },
+    { "key": "searchQuery", "value": "agentic", "type": "string" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Set x-tenant-id and correlation headers",
+          "pm.request.headers.upsert({ key: 'x-tenant-id', value: pm.variables.get('tenantId') || 't1' });",
+          "pm.request.headers.upsert({ key: 'x-request-id', value: (Date.now().toString()) });",
+          "pm.variables.set('timestamp', new Date().toISOString());"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "Health — GET /api/health",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": {
+          "raw": "{{baseUrl}}/api/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "health"]
+        },
+        "description": "Memeriksa status kesehatan sistem."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response time < 2000ms', function () { pm.expect(pm.response.responseTime).to.be.below(2000); });",
+              "pm.test('Has status field', function () { const json = pm.response.json(); pm.expect(json).to.have.property('status'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics — GET /api/analytics/metrics",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/analytics/metrics",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "analytics", "metrics"]
+        },
+        "description": "Mengambil agregasi metrik analitik per tenant."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Has analytics aggregate keys', function () { const j = pm.response.json(); ['totalRuns','successfulRuns','failedRuns'].forEach(k => pm.expect(j).to.have.property(k)); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Knowledge — GET /api/knowledge/search",
+      "request": {
+        "method": "GET",
+        "header": [
+          { "key": "Accept", "value": "application/json" },
+          { "key": "x-tenant-id", "value": "{{tenantId}}" }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/knowledge/search?q={{searchQuery}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "knowledge", "search"],
+          "query": [{ "key": "q", "value": "{{searchQuery}}" }]
+        },
+        "description": "Pencarian teks penuh item pengetahuan per tenant."
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Status code is 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('Response is JSON', function () { pm.response.to.have.header('Content-Type'); });",
+              "pm.test('Search payload contains items or results', function () { const j = pm.response.json(); pm.expect(typeof j === 'object').to.be.true; });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

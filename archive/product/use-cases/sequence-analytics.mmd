@@ -1,0 +1,15 @@
+sequenceDiagram
+  actor User
+  participant App as apps/app
+  participant API as apps/api
+  participant SSE as EventSource
+  participant SB as Supabase
+
+  User->>App: Ajukan pertanyaan analitik
+  App->>API: POST /api/v1/runs
+  API->>Redis: lpush queue:agent-runs
+  App->>API: GET /api/runs/:id/events (SSE)
+  API-->>SSE: stream insight (REASONING_*, RUN_FINISHED)
+  SSE-->>App: tampilkan hasil bertahap
+  User->>App: Simpan insight
+  App->>SB: INSERT documents (ringkasan)

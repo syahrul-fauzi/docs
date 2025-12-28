@@ -1,0 +1,30 @@
+metadata:
+  id: [namespace].[category].[name]
+  version: 1.0.0
+  author: [author_name]
+  date: YYYY-MM-DD
+  status: active
+  scope: global | tenant | workspace
+  tags: []
+
+description: >
+  Deskripsi singkat mengenai tujuan aturan ini.
+
+trigger:
+  event: [event_name]
+  conditions:
+    - field: [field_path]
+      operator: [exists | eq | neq | contains]
+      value: [value]
+
+actions:
+  - type: [action_type]
+    params: {}
+    on_success: continue
+    on_failure: fail
+
+error_handling:
+  strategy: [fail_fast | retry | ignore]
+  on_error:
+    log_level: error
+    emit_event: [error_event_name]

@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AgentEvent",
+  "description": "Schema for Agent Events",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for the event"
+    },
+    "tenantId": {
+      "type": "string",
+      "description": "Identifier for the tenant"
+    },
+    "agentId": {
+      "type": "string",
+      "description": "Identifier for the agent that generated the event"
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of the event"
+    },
+    "inputContext": {
+      "type": "string",
+      "description": "Context of the input that triggered the event"
+    },
+    "decisionSummary": {
+      "type": "string",
+      "description": "Summary of the decision made by the agent"
+    },
+    "toolsUsed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "List of tools used by the agent"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of when the event occurred"
+    }
+  },
+  "required": [
+    "id",
+    "tenantId",
+    "agentId",
+    "type",
+    "inputContext",
+    "decisionSummary",
+    "toolsUsed",
+    "timestamp"
+  ]
+}

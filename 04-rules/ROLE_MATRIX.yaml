@@ -1,0 +1,55 @@
+metadata:
+  id: rules.governance.role_matrix
+  version: 1.0.0
+  author: SuperAgent
+  status: active
+  scope: global
+  tags: [governance, rbac, role-matrix, human-ai]
+
+description: >
+  Matriks tanggung jawab dan hak akses antara berbagai peran manusia dan agen
+  di dalam ekosistem SBA-Agentic.
+
+matrix:
+  roles:
+    - name: SuperAdmin (Human)
+      permissions:
+        - system.full_access
+        - governance.policy_write
+        - tenant.management
+        - audit.view_all
+    - name: Supervisor (Human)
+      permissions:
+        - agent.intervention
+        - agent.approve_high_risk
+        - analytics.view
+        - feedback.review
+    - name: AgenticEngineer (Human)
+      permissions:
+        - prompt.engineering
+        - rag.optimization
+        - tool.registry_management
+        - logs.view
+    - name: ExecutionAgent (AI)
+      permissions:
+        - tool.execute
+        - memory.read_write
+        - user.interact
+        - task.plan
+    - name: ReviewAgent (AI)
+      permissions:
+        - output.validate
+        - hallucination.detect
+        - compliance.check
+
+responsibilities:
+  task_execution: [ExecutionAgent]
+  quality_assurance: [ReviewAgent, Supervisor]
+  policy_definition: [SuperAdmin]
+  system_optimization: [AgenticEngineer]
+
+constraints:
+  - role: ExecutionAgent
+    restriction: "Cannot execute high-risk tasks without Supervisor approval."
+  - role: ReviewAgent
+    restriction: "Cannot modify original data, only provide validation scores."

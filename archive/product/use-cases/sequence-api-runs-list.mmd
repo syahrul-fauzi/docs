@@ -1,0 +1,29 @@
+sequenceDiagram
+  actor Client
+  participant API as apps/api (RunsController)
+  participant Redis
+
+  Client->>API: GET /api/v1/runs (listRuns)
+  Note right of API: apps/api/src/api/runs.controller.ts:589-711 listRuns
+  API->>API: Parse query (page, limit, sortBy, sortOrder, status)
+  API->>Redis: SMEMBERS tenant:tenantId:runs
+  alt No run IDs
+    API-->>Client: 200 []
+  else Has run IDs
+    loop for each runId
+      API->>Redis: GET run:runId
+      alt Missing runData
+        API->>API: skip
+      else Has runData
+        API->>API: Filter by userId
+        API->>API: Filter by status (optional)
+      end
+    end
+    API->>API: Sort by sortKey (default createdAt)
+    API->>API: Paginate (page, limit)
+    API->>API: metrics.requestCounter success
+    API-->>Client: 200 [runs]
+  end
+  opt Internal Failure
+    API-->>Client: 500 { error: INTERNAL_ERROR }
+  end

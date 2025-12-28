@@ -1,0 +1,28 @@
+sequenceDiagram
+  actor Client
+  participant API as apps/api (RunsController)
+  participant Redis
+  participant Queue as queue:agent-continuations
+
+  Client->>API: POST /api/v1/runs/:runId/continue (continueRun)
+  Note right of API: apps/api/src/api/runs.controller.ts:300-423 continueRun
+  API->>API: ContinueRunSchema.parse
+  alt Valid runId & run exists & tenant OK
+    API->>Redis: get run:runId
+    API->>API: Push user step & set status=running
+    API->>Redis: setex run:runId JSON
+    API->>API: queueRunContinuation(runId, data)
+    API->>Queue: lpush queue:agent-continuations {runId, message}
+    API-->>Client: 200 { run }
+  else Invalid UUID
+    API-->>Client: 400 INVALID_RUN_ID
+  else Not Found
+    API-->>Client: 404 RUN_NOT_FOUND
+  else Tenant Denied
+    API-->>Client: 403 TENANT_ACCESS_DENIED
+  else Not Continuable
+    API-->>Client: 400 RUN_NOT_CONTINUABLE
+  end
+  opt Internal Failure
+    API-->>Client: 500 INTERNAL_ERROR
+  end

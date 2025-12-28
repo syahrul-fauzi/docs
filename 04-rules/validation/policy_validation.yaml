@@ -1,0 +1,43 @@
+metadata:
+  id: validation.security.robust_guardrails
+  version: 1.1.0
+  author: SuperAgent
+  status: active
+  scope: global
+  tags: [security, policy, guardrail, agentic-safety]
+
+description: >
+  Guardrail keamanan tingkat lanjut untuk memvalidasi setiap rencana tindakan agen
+  terhadap kebijakan keamanan dinamis dan batasan etika.
+
+trigger:
+  event: agent.action.planned
+  conditions:
+    - field: action.plan
+      operator: exists
+
+actions:
+  - type: scan_for_pii_leakage
+    params:
+      sensitivity: high
+    on_failure: deny
+  - type: check_financial_limits
+    params:
+      max_amount: 1000
+      currency: USD
+    on_failure: escalate_to_human
+  - type: verify_tool_permission
+    params:
+      enforce_rbac: true
+    on_failure: deny
+  - type: check_ethical_alignment
+    params:
+      policy: SBA_ETHICS_V1
+    on_failure: retry_with_correction
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: error
+    emit_event: agent.policy_violation
+    log_to: security_audit_trail

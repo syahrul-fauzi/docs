@@ -1,0 +1,37 @@
+metadata:
+  id: agent.[name]
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: workspace
+  tags: [agent, execution, task]
+
+description: >
+  Template untuk mendefinisikan perilaku dan batasan eksekusi agent.
+
+trigger:
+  event: agent.task.requested
+  conditions:
+    - field: agent.role
+      operator: in
+      value: [executor, planner, reviewer]
+
+actions:
+  - type: validate_plan
+    params:
+      require_signature: true
+    on_success: continue
+  - type: check_budget
+    params:
+      max_tokens: 2000
+    on_success: continue
+  - type: execute_task
+    params:
+      timeout_ms: 30000
+    on_success: stop
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: error
+    emit_event: agent.execution_failed

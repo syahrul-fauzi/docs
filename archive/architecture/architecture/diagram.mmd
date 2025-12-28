@@ -1,0 +1,28 @@
+flowchart LR
+  subgraph Frontends
+    A[apps/app (Next.js 15)]
+    W[apps/web (Next.js 14)]
+  end
+  API[apps/api (NestJS)]
+  SP[Shared Packages @sba/*]
+  SB[(Supabase: Postgres + Realtime)]
+  Q[Queue: Redis/BullMQ]
+
+  A -- REST --> API
+  A -- SSE/WS --> API
+  W -- Fetch (AG-UI) --> API
+  W -- CRUD/Realtime --> SB
+
+  A -- transpile --> SP
+  W -- transpile --> SP
+  API -- uses --> SP
+
+  API -- Jobs --> Q
+  API -- Prisma --> SB
+
+  classDef link stroke:#7f8,stroke-width:1px,fill:#eff;
+  classDef api stroke:#48f,stroke-width:1px,fill:#eef;
+  classDef db stroke:#f96,stroke-width:1px,fill:#ffe9d6;
+  class A,W,SP link;
+  class API api;
+  class SB db;

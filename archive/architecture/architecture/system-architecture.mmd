@@ -1,0 +1,22 @@
+flowchart LR
+  subgraph Frontends
+    A[apps/app (Next.js 15)]
+    W[apps/web (Next.js 14)]
+  end
+  API[apps/api (NestJS)]
+  FF[Feature Flags (env + canary)]
+  SP[Shared Packages @sba/*]
+  SB[(Supabase: Postgres + Realtime)]
+  Q[Queue: Redis/BullMQ]
+
+  A -- REST --> API
+  A -- SSE/WS --> API
+  W -- Fetch --> API
+  W -- CRUD/Realtime --> SB
+
+  API -- uses --> SP
+  API -- evaluate --> FF
+  A -- transpile --> SP
+  W -- transpile --> SP
+  API -- Jobs --> Q
+  API -- Prisma --> SB

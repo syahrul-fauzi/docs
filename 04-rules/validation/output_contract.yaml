@@ -1,0 +1,48 @@
+metadata:
+  id: validation.output.contract
+  version: 1.1.0
+  author: SuperAgent
+  status: active
+  scope: global
+
+description: >
+  Mewajibkan validasi output agent terhadap sumber data resmi (Knowledge Base)
+  dan verifikasi silang (cross-check) oleh Review Agent untuk mencegah halusinasi.
+
+trigger:
+  event: agent.output.generated
+  conditions:
+    - field: agent.role
+      operator: equals
+      value: executor
+
+actions:
+  - type: cross_check_knowledge_base
+    params:
+      similarity_threshold: 0.9
+      enforce_citation: true
+    on_failure: fail_fast
+
+  - type: invoke_review_agent
+    params:
+      criteria: [hallucination, factual_accuracy, tone_consistency]
+      validation_level: strict
+    on_failure: deny
+
+  - type: redact_pii
+    params:
+      mode: automatic
+      sensitivity: high
+    on_success: continue
+
+  - type: sign_output_artifact
+    params:
+      signer: ReviewAgent
+    on_success: stop
+
+error_handling:
+  strategy: fail_safe
+  on_error:
+    log_level: error
+    emit_event: validation.hallucination_detected
+    action: quarantine_output

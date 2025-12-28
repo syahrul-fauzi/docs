@@ -1,0 +1,21 @@
+sequenceDiagram
+  actor User
+  participant Web as apps/web
+  participant App as apps/app
+  participant API as apps/api
+  participant SSE as EventSource
+  participant SB as Supabase
+  participant Redis
+
+  User->>Web: Buat Proyek/Tugas (title, KPI)
+  Web->>SB: INSERT documents
+  User->>App: Orkestrasi (Start Run)
+  App->>API: POST /api/v1/runs
+  API->>Redis: setex run:ID JSON + sadd tenant:ID:runs
+  API->>Redis: lpush queue:agent-runs
+  App->>API: GET /api/runs/:id/events (SSE)
+  API-->>SSE: stream agent/tool/stream events
+  SSE-->>App: render progres & insight
+  App->>API: POST /api/v1/runs/:id/continue (opsional)
+  Web->>SB: UPDATE documents (status, outcome)
+  User-->>Web: Tutup tugas/proyek

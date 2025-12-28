@@ -1,0 +1,3 @@
+- Status: TS/ESLint strict terpasang (root), pre-commit hook siap; monitoring lokal berjalan, Prometheus teks tersedia.
+- Masalah: apps/app masih memiliki implicit any dan import UI subpath; dilakukan normalisasi konfigurasi dan rencana codemod bertahap.
+- Rekomendasi: migrasi import ke subpath resmi `@sba/ui/*` via codemod, pengetikan handler eksplisit, tingkatkan coverage ≤5% per iterasi, dan lengkapi dashboard Grafana dengan p95/p99.

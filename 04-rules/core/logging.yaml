@@ -1,0 +1,32 @@
+metadata:
+  id: core.logging.standard
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: global
+  tags: [observability, logging, core]
+
+description: >
+  Menentukan standar logging terstruktur untuk seluruh aktivitas agent
+  dan sistem guna mendukung auditabilitas.
+
+trigger:
+  event: any
+  conditions: []
+
+actions:
+  - type: structured_log
+    params:
+      required_fields:
+        - trace_id
+        - tenant_id
+        - agent_id
+        - action_type
+        - timestamp
+    on_success: continue
+
+error_handling:
+  strategy: fail_safe
+  on_error:
+    log_level: warn
+    emit_event: logging.failed

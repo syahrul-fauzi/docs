@@ -1,0 +1,15 @@
+sequenceDiagram
+  actor Admin
+  participant App as apps/app
+  participant API as apps/api
+  participant WS as Socket.IO
+  participant Redis
+  participant External as Sistem Eksternal
+
+  Admin->>App: Definisikan workflow (steps + triggers)
+  App->>API: POST /api/v1/runs (trigger otomatis)
+  API->>Redis: lpush queue:agent-runs
+  API-->>External: Panggil API (CRM/ERP/Ticketing)
+  App->>API: Subscribe WS/SSE (monitoring)
+  WS-->>App: event proses (started/completed/failed)
+  Admin-->>App: Review outcome & eskalasi

@@ -1,0 +1,31 @@
+metadata:
+  id: validation.input.schema_check
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: global
+  tags: [validation, security, input]
+
+description: >
+  Validasi skema input untuk setiap request yang masuk guna mencegah
+  serangan injeksi dan data malformed.
+
+trigger:
+  event: http.request.received
+  conditions:
+    - field: body
+      operator: exists
+
+actions:
+  - type: validate_json_schema
+    params:
+      strict: true
+    on_success: continue
+  - type: sanitize_input
+    on_success: stop
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: warn
+    emit_event: validation.input_invalid

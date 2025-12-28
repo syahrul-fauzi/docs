@@ -1,0 +1,34 @@
+metadata:
+  id: core.authentication.global
+  version: 1.0.0
+  author: sba-security-team
+  date: 2025-12-28
+  status: active
+  scope: global
+  tags: [security, auth, core]
+
+description: >
+  Aturan utama untuk validasi identitas dan autentikasi session
+  pada setiap entry point API SBA-Agentic.
+
+trigger:
+  event: request.entry
+  conditions:
+    - field: headers.authorization
+      operator: exists
+
+actions:
+  - type: validate_clerk_session
+    params:
+      enforce_mfa: true
+    on_success: attach_principal_context
+    on_failure: deny_access
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: warn
+    emit_event: security.auth_failure
+    response:
+      status: 401
+      message: "Authentication required"

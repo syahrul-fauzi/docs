@@ -1,0 +1,27 @@
+# docker-compose untuk menjalankan Swagger UI terhadap spesifikasi OpenAPI JSON
+# Best practice: gunakan image resmi swaggerapi/swagger-ui dan set API_URL
+# Port mapping: 8080:8080
+# Healthcheck memastikan container siap melayani
+
+version: '3.8'
+
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    container_name: sba-swagger-ui
+    environment:
+      # URL spesifikasi OpenAPI JSON yang disajikan oleh aplikasi
+      - API_URL=${API_URL:-http://localhost:3000/api/openapi.json}
+      # Opsi tambahan: PAGE_TITLE dan BASE_URL jika diperlukan
+      - PAGE_TITLE=SBA-Agentic API Docs
+    ports:
+      - '8080:8080'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080 | grep -qi 'Swagger UI' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    # Catatan: dokumentasi plug-and-play, cukup ekspor API_URL bila base URL berbeda
+

@@ -1,15 +1,29 @@
-# Developer & Operator Handbook
+# SBA-Agentic Documentation Center
 
-Selamat datang di panduan teknis SBA-Agentic. Dokumen ini ditujukan untuk insinyur perangkat lunak, DevOps, dan operator sistem yang bekerja dengan platform ini.
+Selamat datang di pusat dokumentasi resmi **SBA-Agentic (Smart Business Assistant)**. Repositori ini berisi seluruh spesifikasi, panduan, dan aturan operasional untuk pengembangan dan pengelolaan sistem berbasis agen AI.
 
 ---
 
-## 🏗️ Arsitektur Mendalam
+## 🗺️ Peta Dokumentasi (Master Index)
 
-SBA-Agentic menggunakan arsitektur monorepo berbasis Turborepo untuk mengelola dependensi dan build pipeline secara efisien. Untuk peta dokumen lengkap, lihat [Master Index](./INDEX.md).
+Kami menggunakan struktur dokumentasi modular yang disusun berdasarkan siklus hidup proyek dan peran operasional. Silakan mulai dari:
+
+👉 **[MASTER INDEX DOKUMENTASI](./00-index/README.md)**
+
+### 🧭 Navigasi Cepat:
+- **[🤖 Guide for AI Agents](./00-index/AGENTS.md)** — Instruksi navigasi untuk Agen AI.
+- **[👥 Guide for Human Teams](./00-index/HUMANS.md)** — Panduan eksplorasi untuk tim manusia.
+- **[🏗️ Arsitektur Sistem](./02-architecture/README.md)** — Diagram dan detail teknis arsitektur.
+- **[🛠️ Panduan Pengembangan](./06-development/README.md)** — Setup, standar kode, dan workflow.
+- **[🚢 Persiapan Rilis](./10-release-go-live/README.md)** — Checklist Go-Live dan kriteria produksi.
+
+---
+
+## 🏗️ Gambaran Umum Sistem
+
+SBA-Agentic menggunakan arsitektur monorepo berbasis Turborepo untuk mengelola dependensi dan build pipeline secara efisien.
 
 ### Komponen Utama:
-
 1.  **`apps/app` (Control Plane)**: Dashboard utama berbasis Next.js untuk mengelola tenant, workflow, dan monitoring.
 2.  **`apps/orchestrator` (Orchestrator Engine)**: Inti dari sistem yang mengelola penjadwalan tool, retry logic, dan rate limiting.
 3.  **`apps/api` (Tools Gateway)**: Gateway terpadu untuk mengeksekusi tools pihak ketiga dengan validasi schema dan tenant enforcement.
@@ -19,67 +33,17 @@ SBA-Agentic menggunakan arsitektur monorepo berbasis Turborepo untuk mengelola d
 
 ## 🛠️ Alur Kerja Pengembangan
 
-### 1. Standar Coding & AI
+Sangat penting untuk memahami dan mematuhi aturan di **[04-rules/](./04-rules/)** sebelum melakukan perubahan kode.
 
-Sangat penting untuk memahami dan mematuhi [SBA-Agentic Operational Standard](./SBA-Agentic%20Operational%20Standard.md) sebelum melakukan perubahan kode. Standar ini mengatur bagaimana agen AI berinteraksi dengan sistem.
-
+- **Manajemen Paket**: Gunakan `pnpm` (Node.js >= 18.x).
 - **Linting**: Wajib menjalankan `pnpm lint` sebelum commit.
-- **Testing**: Target coverage minimal 80% untuk logika bisnis di `packages/`.
 - **Reasoning**: Setiap fitur agen baru wajib mengikuti pola **ReasoningStep** (Analysis -> Planning -> Execution -> Reflection).
-- **Agent Rules**: Lihat juga [Rules Center](../.trae/rules/README.md) untuk kebijakan penalaran mendalam.
-
-### 2. Manajemen Dependensi
-
-Gunakan `pnpm` untuk manajemen paket. Jangan gunakan `npm` atau `yarn`.
-
-```bash
-pnpm install
-```
-
-### Parameter Konfigurasi Penting
-
-| Parameter                   | Komponen                        | Tujuan                                                  |
-| :-------------------------- | :------------------------------ | :------------------------------------------------------ |
-| `x-tenant-id`               | API boundary                    | Kunci isolasi tenant untuk request, metrik, dan caching |
-| `NEXT_PUBLIC_SUPABASE_*`    | `apps/app`, `apps/web`          | Konfigurasi Supabase di client                          |
-| `SUPABASE_SERVICE_ROLE_KEY` | server-only                     | Akses server (jangan pernah di client bundle)           |
-| `UPSTASH_REDIS_*`           | `apps/orchestrator`, `apps/api` | Cache, rate limit, queue                                |
-| `ORCHESTRATOR_TICK_MS`      | `apps/orchestrator`             | Interval polling orchestrator untuk job baru.           |
-| `MAX_TOOL_TIMEOUT`          | `apps/api`                      | Timeout maksimal eksekusi tool (ms).                    |
-| `ENABLE_SWAGGER`            | `apps/api`                      | Mengaktifkan dokumentasi OpenAPI di `apps/api`.         |
 
 ---
 
-## 🚢 QA & Rilis
+## 📊 Monitoring & Operasi
 
-Setiap perubahan yang masuk ke `main` wajib melewati:
-
-1.  **Code Review**: Minimal 1 approval dari maintainer.
-2.  **CI Pipeline**: Lulus Lint, Type-check, dan Unit Tests.
-3.  **Staging Validation**: Verifikasi fitur di lingkungan staging.
-
-Untuk detail lebih lanjut, lihat [QA & Release Checklist](./QA_AND_RELEASE.md).
-
----
-
-## 📊 Monitoring & Observability
-
-Kami menggunakan stack Prometheus dan Grafana untuk memantau kesehatan sistem.
-
-- **Metrics**: Tersedia di endpoint `/metrics` pada setiap layanan.
-- **Dashboards**: Lihat [Monitoring Setup](./MONITORING_SETUP.md).
-
----
-
-## 🆘 Dukungan & Troubleshooting
-
-Jika Anda menemui masalah:
-
-1.  Cek [Troubleshooting Guide](./development/troubleshooting.md).
-2.  Lihat [Operations Runbook](./deployment/OPERATIONS_RUNBOOK.md) untuk isu produksi.
-3.  Buka Issue di repository dengan label yang sesuai.
-
----
+Kami menggunakan stack Prometheus dan Grafana untuk memantau kesehatan sistem. Detail operasional dapat ditemukan di **[08-operations/](./08-operations/)**.
 
 ---
 

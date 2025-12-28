@@ -1,0 +1,29 @@
+metadata:
+  id: business.knowledge.access_policy
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: workspace
+  tags: [knowledge, rag, security]
+
+description: >
+  Mengatur akses agent ke basis pengetahuan (Knowledge Base) untuk
+  mencegah kebocoran data antar departemen atau workspace.
+
+trigger:
+  event: knowledge.query.requested
+  conditions:
+    - field: query.text
+      operator: exists
+
+actions:
+  - type: filter_by_collection_access
+    on_success: continue
+  - type: log_knowledge_access
+    on_success: stop
+
+error_handling:
+  strategy: fail_safe
+  on_error:
+    log_level: warn
+    emit_event: knowledge.access_denied

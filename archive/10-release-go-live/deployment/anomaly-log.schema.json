@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Canary Anomaly Log Schema",
+  "type": "object",
+  "properties": {
+    "timestamp": { "type": "string", "format": "date-time" },
+    "metric": { "type": "string" },
+    "deviation_percent": { "type": "number" },
+    "baseline": { "type": "number" },
+    "observed": { "type": "number" },
+    "impact": {
+      "type": "string",
+      "enum": ["none", "low", "medium", "high", "critical"]
+    },
+    "description": { "type": "string" },
+    "mitigation": { "type": "string" },
+    "mitigation_result": {
+      "type": "string",
+      "enum": ["resolved", "degraded", "no_change"]
+    }
+  },
+  "required": [
+    "timestamp",
+    "metric",
+    "deviation_percent",
+    "baseline",
+    "observed",
+    "impact",
+    "description",
+    "mitigation",
+    "mitigation_result"
+  ]
+}

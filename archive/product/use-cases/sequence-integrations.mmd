@@ -1,0 +1,14 @@
+sequenceDiagram
+  actor Admin
+  participant App as apps/app
+  participant API as apps/api
+  participant External as Sistem Eksternal
+
+  Admin->>App: Registrasi konektor (credentials)
+  App->>API: POST /integrations/test (konseptual)
+  API-->>External: Test koneksi
+  External-->>API: OK/ERROR
+  API-->>App: Hasil uji
+  Admin->>App: Gunakan konektor dalam run/workflow
+  App->>API: POST /api/v1/runs (uses connector)
+  API-->>External: Operasi bisnis

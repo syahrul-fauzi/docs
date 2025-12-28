@@ -1,0 +1,32 @@
+metadata:
+  id: core.error_handling.taxonomy
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: global
+  tags: [error, core, governance]
+
+description: >
+  Mendefinisikan taksonomi error standar dan strategi penanganan
+  kegagalan untuk menjaga reliabilitas sistem.
+
+trigger:
+  event: error.raised
+  conditions: []
+
+actions:
+  - type: classify_error
+    params:
+      taxonomy:
+        AUTH_001: Token Expired
+        AGENT_404: Agent Not Found
+        EXEC_500: Tool Execution Failed
+        PLAN_001: Invalid Execution Plan
+    on_success: continue
+  - type: notify_observer
+    params:
+      log_level: error
+    on_success: stop
+
+error_handling:
+  strategy: fail_safe

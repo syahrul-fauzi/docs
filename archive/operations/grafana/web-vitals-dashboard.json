@@ -1,0 +1,102 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "SBA Marketing - Web Vitals",
+    "schemaVersion": 38,
+    "timezone": "browser",
+    "version": 1,
+    "panels": [
+      {
+        "type": "timeseries",
+        "title": "Largest Contentful Paint (LCP)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sba_web_vitals_lcp_seconds",
+            "legendFormat": "LCP",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "type": "timeseries",
+        "title": "Cumulative Layout Shift (CLS)",
+        "datasource": "Prometheus",
+        "targets": [
+          { "expr": "sba_web_vitals_cls", "legendFormat": "CLS", "refId": "A" }
+        ]
+      },
+      {
+        "type": "timeseries",
+        "title": "First Input Delay (FID)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "sba_web_vitals_fid_seconds",
+            "legendFormat": "FID",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "type": "timeseries",
+        "title": "Request Latency (Histogram)",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "rate(sba_marketing_request_duration_seconds_sum[5m]) / rate(sba_marketing_request_duration_seconds_count[5m])",
+            "legendFormat": "Avg Latency",
+            "refId": "A"
+          }
+        ]
+      },
+      {
+        "type": "stat",
+        "title": "Error Rate",
+        "datasource": "Prometheus",
+        "targets": [
+          {
+            "expr": "rate(sba_marketing_errors_total[5m])",
+            "legendFormat": "Errors",
+            "refId": "A"
+          }
+        ]
+      }
+    ],
+    "annotations": { "list": [] }
+  },
+  "alertRules": [
+    {
+      "title": "LCP threshold",
+      "condition": "A",
+      "data": [{ "refId": "A", "query": "sba_web_vitals_lcp_seconds > 2.5" }],
+      "for": "5m",
+      "labels": { "severity": "warning", "sla": "core-web-vitals" },
+      "notifications": [{ "type": "slack", "channel": "#perf-alerts" }]
+    },
+    {
+      "title": "CLS threshold",
+      "condition": "A",
+      "data": [{ "refId": "A", "query": "sba_web_vitals_cls > 0.1" }],
+      "for": "5m",
+      "labels": { "severity": "warning", "sla": "core-web-vitals" },
+      "notifications": [{ "type": "slack", "channel": "#perf-alerts" }]
+    },
+    {
+      "title": "FID threshold",
+      "condition": "A",
+      "data": [{ "refId": "A", "query": "sba_web_vitals_fid_seconds > 0.1" }],
+      "for": "5m",
+      "labels": { "severity": "warning", "sla": "core-web-vitals" },
+      "notifications": [{ "type": "slack", "channel": "#perf-alerts" }]
+    }
+  ],
+  "documentation": {
+    "panels": {
+      "LCP": "LCP mengukur waktu untuk elemen konten terbesar muncul. Target ≤ 2.5s",
+      "CLS": "CLS mengukur ketidakstabilan layout. Target ≤ 0.1",
+      "FID": "FID mengukur waktu respons interaksi pertama. Target ≤ 100ms"
+    },
+    "alerts": "Rule akan memicu peringatan ketika metrik melebihi threshold selama ≥5m"
+  }
+}

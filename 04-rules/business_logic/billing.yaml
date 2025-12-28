@@ -1,0 +1,31 @@
+metadata:
+  id: business.billing.quota_enforcement
+  version: 1.0.0
+  author: sba-team
+  status: active
+  scope: tenant
+  tags: [billing, quota, finance]
+
+description: >
+  Mengatur penagihan dan pembatasan kuota resource (API calls, tokens, storage)
+  berdasarkan paket langganan tenant.
+
+trigger:
+  event: resource.usage.detected
+  conditions:
+    - field: usage.amount
+      operator: exists
+
+actions:
+  - type: check_subscription_status
+    on_success: continue
+  - type: enforce_quota_limits
+    params:
+      grace_period: 0
+    on_success: stop
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: error
+    emit_event: billing.quota_exceeded

@@ -1,0 +1,31 @@
+{
+  "title": "Worker Queue Latency",
+  "panels": [
+    {
+      "type": "histogram",
+      "title": "Processing Duration Histogram",
+      "targets": [
+        {
+          "expr": "sum by (le,queue_name) (sba_worker_processing_duration_seconds_bucket)",
+          "legendFormat": "{{queue_name}} le={{le}}"
+        }
+      ]
+    },
+    {
+      "type": "graph",
+      "title": "Latency p95/p99",
+      "targets": [
+        {
+          "expr": "sba_worker_latency_p95_seconds",
+          "legendFormat": "p95 {{queue_name}}"
+        },
+        {
+          "expr": "sba_worker_latency_p99_seconds",
+          "legendFormat": "p99 {{queue_name}}"
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 38,
+  "version": 1
+}

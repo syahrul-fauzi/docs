@@ -1,0 +1,3 @@
+- Ringkasan kemajuan: paket shared-utils dibuat (tenant, rate-limit, error, request), unit test awal ditulis, integrasi awal pada route health.
+- CI: workflow khusus shared-utils ditambahkan dengan build + test + coverage artifact.
+- Rencana selanjutnya: integrasi bertahap ke route API lain, perluasan test, dan hook observability.

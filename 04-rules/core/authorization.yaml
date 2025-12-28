@@ -1,0 +1,46 @@
+metadata:
+  id: core.authorization.zero_trust
+  version: 1.1.0
+  author: SuperAgent
+  status: active
+  scope: global
+  tags: [security, zero-trust, authorization, rbac]
+
+description: >
+  Implementasi prinsip Zero Trust untuk otorisasi akses di SBA-Agentic.
+  Setiap permintaan harus diverifikasi secara eksplisit, menggunakan hak akses terkecil (least privilege),
+  dan mengasumsikan adanya pelanggaran (assume breach).
+
+principles:
+  - Verify Explicitly: Selalu otentikasi dan otorisasi berdasarkan semua titik data yang tersedia.
+  - Use Least Privilege: Batasi akses pengguna/agen dengan Just-In-Time dan Just-Enough-Access (JEA).
+  - Assume Breach: Minimalkan radius dampak dan segmen akses.
+
+trigger:
+  event: access.requested
+  conditions:
+    - field: request.principal
+      operator: exists
+
+actions:
+  - type: verify_identity
+    params:
+      method: [mTLS, JWT]
+    on_success: continue
+  - type: check_least_privilege
+    params:
+      enforce_scope: true
+      tenant_isolation: strict
+    on_success: continue
+  - type: evaluate_risk_score
+    params:
+      threshold: 0.7
+    on_success: stop
+    on_failure: deny
+
+error_handling:
+  strategy: fail_fast
+  on_error:
+    log_level: critical
+    emit_event: security.access_denied
+    alert_channels: [security-ops]

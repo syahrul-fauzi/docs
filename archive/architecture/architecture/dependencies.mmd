@@ -1,0 +1,51 @@
+```mermaid
+flowchart LR
+  subgraph Apps
+    App[apps/app]
+    Web[apps/web]
+    API[apps/api]
+    Orc[apps/orchestrator]
+    Docs[apps/docs]
+  end
+
+  subgraph Packages
+    UI[@sba/ui]
+    Utils[@sba/utils]
+    Entities[@sba/entities]
+    Services[@sba/services]
+    Supabase[@sba/supabase]
+    SDK[@sba/sdk]
+    Tools[@sba/tools]
+    Agui[@sba/agui-client]
+    Integrations[@sba/integrations]
+    Shared[@sba/shared]
+  end
+
+  App --> API
+  App --> UI
+  App --> Supabase
+  App --> SDK
+  App --> Integrations
+  Web --> Supabase
+  Web --> UI
+  Web --> Entities
+  Web --> Services
+  Web --> Agui
+  Orc --> Tools
+  Orc --> SDK
+  API --> SDK
+
+  UI --> Utils
+  UI --> Shared
+  Services --> Entities
+  Services --> Utils
+  Entities --> Utils
+  Supabase --> Utils
+  Tools --> SDK
+
+  class App,Web,API,Orc,Docs app;
+  class UI,Utils,Entities,Services,Supabase,SDK,Tools,Agui,Integrations,Shared pkg;
+
+  classDef app stroke:#48f,fill:#eef;
+  classDef pkg stroke:#7f8,fill:#eff;
+```

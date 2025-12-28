@@ -1,0 +1,103 @@
+{
+  "tasks": [
+    {
+      "id": "task-s3-part-key",
+      "title": "Perbaiki S3 getPartUrl menggunakan key filename",
+      "status": "completed",
+      "priority": "high",
+      "deadline": null,
+      "urgency": 5,
+      "impact": 4,
+      "complexity": 2,
+      "owner": "agent",
+      "progress": 100,
+      "steps_remaining": [],
+      "resources": [
+        "apps/api/src/application/storage/providers/S3MultipartProvider.ts"
+      ],
+      "target_finish": null,
+      "finished_at": "",
+      "blockers": [],
+      "solutions": []
+    },
+    {
+      "id": "task-service-pass-key",
+      "title": "Perbarui StorageUploadService untuk meneruskan key saat part",
+      "status": "completed",
+      "priority": "high",
+      "deadline": null,
+      "urgency": 5,
+      "impact": 4,
+      "complexity": 2,
+      "owner": "agent",
+      "progress": 100,
+      "steps_remaining": [],
+      "resources": ["apps/api/src/application/storage/StorageUploadService.ts"],
+      "target_finish": null,
+      "finished_at": "",
+      "blockers": [],
+      "solutions": []
+    },
+    {
+      "id": "task-persistence-get",
+      "title": "Tambah metode getRecord di UploadPersistence",
+      "status": "completed",
+      "priority": "medium",
+      "deadline": null,
+      "urgency": 3,
+      "impact": 3,
+      "complexity": 1,
+      "owner": "agent",
+      "progress": 100,
+      "steps_remaining": [],
+      "resources": [
+        "apps/api/src/application/storage/persistence/UploadPersistence.ts"
+      ],
+      "target_finish": null,
+      "finished_at": "",
+      "blockers": [],
+      "solutions": []
+    },
+    {
+      "id": "task-azure-part-key",
+      "title": "Perbaiki Azure getPartUrl menggunakan blob filename",
+      "status": "completed",
+      "priority": "medium",
+      "deadline": null,
+      "urgency": 3,
+      "impact": 3,
+      "complexity": 2,
+      "owner": "agent",
+      "progress": 100,
+      "steps_remaining": [],
+      "resources": [
+        "apps/api/src/application/storage/providers/AzureBlockBlobProvider.ts"
+      ],
+      "target_finish": null,
+      "finished_at": "",
+      "blockers": [],
+      "solutions": []
+    },
+    {
+      "id": "task-docs-tracking-report",
+      "title": "Tambahkan dokumentasi sistem pelacakan dan laporan akhir",
+      "status": "in_progress",
+      "priority": "medium",
+      "deadline": null,
+      "urgency": 3,
+      "impact": 3,
+      "complexity": 1,
+      "owner": "agent",
+      "progress": 50,
+      "steps_remaining": [
+        "Buat qc-checklist.md",
+        "Buat template laporan akhir"
+      ],
+      "resources": ["docs/process/work-tracking.md"],
+      "target_finish": "2025-12-10T12:00:00Z",
+      "finished_at": null,
+      "blockers": [],
+      "solutions": []
+    }
+  ]
+}
