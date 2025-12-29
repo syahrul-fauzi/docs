@@ -40,7 +40,8 @@ Kami menggunakan struktur dokumentasi modular yang disusun berdasarkan siklus hi
 | **Product Manager** | [🚀 Product & Business](./01-product/README.md) & [📊 Roadmap](./01-product/PLATFORM_ALIGNMENT_ROADMAP.md) |
 | **DevOps / SRE** | [📊 Operasi](./08-operations/README.md) & [🚢 Go-Live](./10-release-go-live/README.md) |
 | **AI Agent** | [🤖 Agent Guide](./00-index/AGENTS.md) & [🧠 Agentic Core](./03-agentic/README.md) |
-| **Security Officer**| [🛡️ Security](./09-security-compliance/README.md) & [📜 Rules](./04-rules/README.md) |
+| Security Officer| [🛡️ Security](./09-security-compliance/README.md) & [📜 Rules](./04-rules/README.md) |
+| **All Hands** | [📊 Progress Dashboard](./PROGRESS.md) |
 
 ---
 

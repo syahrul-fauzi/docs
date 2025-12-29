@@ -1,189 +1,244 @@
 ---
-title: SBA-Agentic Master Specification
-created_at: 2025-12-28
-author: Documentation Architect
+id: sba.core.master_specification
+version: 2.3.0
+author: Super Agent & SBA-Agentic Team
 status: active
-priority: critical
-tags: [specification, core, architecture, agentic-system]
+scope: global
+tags: [specification, core, architecture, agentic-system, business-os, agentic-enterprise, 2026-roadmap]
 ---
 
 # 🧠 SBA-Agentic Master Specification (Smart Business Assistant)
 
-version: 1.1.0
-status: Final Draft
-last_updated: 2025-12-28
-
-## 📌 Executive Summary
-
-SBA-Agentic adalah platform "Business OS berbasis Agent" yang dirancang untuk mengotomatisasi dan mengoptimalkan proses bisnis melalui orkestrasi agen AI yang cerdas, adaptif, dan berpusat pada event. Sistem ini menggabungkan kekuatan **Rube Engine** untuk eksekusi yang aman dan **ReasoningStep** untuk pengambilan keputusan yang transparan.
+**Version:** 2.3.0 | **Status:** Active | **Last Updated:** 2025-12-29
 
 ---
 
-## 1. Task Management & Technical Execution
+## 📌 PART I: EXECUTIVE OVERVIEW
 
-Fokus utama adalah pada penguatan fondasi multi-tenant, keamanan, dan orkestrasi agen yang deterministik.
+### 1. Visi dan Misi SBA-Agentic
 
-### **A. Daftar Tugas Teknis (High-Priority Backlog)**
+#### 1.1 Visi
+Menjadi **"Sistem Saraf Digital" (Digital Nervous System)** bagi *Agentic Enterprise* masa depan yang mengintegrasikan secara mulus tenaga kerja manusia dan digital (*Silicon + Carbon Workforce*). Kami membayangkan ekosistem di mana SBA-Agentic bertindak sebagai mitra proaktif yang mampu memahami intensi strategis, mengelola memori jangka panjang organisasi, dan mengeksekusi misi bisnis secara otonom dalam koridor etika dan keamanan yang ketat.
 
-| Task ID | Deskripsi Tugas                                      | Prioritas | Dependensi | Penanggung Jawab |
-| :------ | :--------------------------------------------------- | :-------- | :--------- | :--------------- |
-| TM-001  | Konsolidasi Supabase Client (@sba/supabase)          | High      | None       | Backend Lead     |
-| TM-002  | Implementasi Prisma untuk Service Data Layer         | High      | TM-001     | Database Eng     |
-| TM-003  | Verifikasi JWT Signature pada WebSocket Handshake    | High      | TM-001     | Security Lead    |
-| TM-004  | Integrasi Distributed Rate Limiting (Redis/Upstash)  | High      | TM-001     | DevOps           |
-| TM-005  | Pembangunan pgvector + Reranker for Knowledge Search | Medium    | TM-002     | AI/Data Eng      |
-| TM-006  | Refaktor ESLint v9 Flat Config secara Global         | Medium    | None       | Frontend Lead    |
-
-### **B. Dependensi & Alur Kerja**
-
-Tugas teknis dikelola melalui Turborepo untuk memastikan pipeline build, lint, dan test berjalan secara paralel namun tetap menghormati dependensi paket (`packages/*` sebelum `apps/*`).
+#### 1.2 Misi
+1.  **Akselerasi Agentic Enterprise**: Mentransformasi bisnis tradisional menjadi organisasi berbasis agen yang adaptif dan skalabel melalui infrastruktur AI otonom.
+2.  **Sinergi Silicon + Carbon**: Menciptakan harmoni kolaborasi di mana agen AI menangani kompleksitas data dan eksekusi rutin, membebaskan manusia untuk fokus pada kreativitas, empati, dan pengambilan keputusan strategis.
+3.  **Otonomi Berbasis Tujuan (Goal-Oriented Autonomy)**: Mengembangkan agen yang tidak hanya mengikuti instruksi, tetapi mampu melakukan penalaran tingkat tinggi (*High-level Reasoning*) untuk mencapai hasil akhir yang diinginkan.
+4.  **Infrastruktur Kepercayaan (Trust Infrastructure)**: Membangun standar emas dalam keamanan AI, mencakup privasi data otonom, auditabilitas transparan, dan kedaulatan informasi tenant.
+5.  **Interoperabilitas Universal**: Menghapus sekat-sekat aplikasi melalui integrasi dinamis berbasis **Model Context Protocol (MCP)**, memungkinkan agen berinteraksi dengan alat apa pun secara instan.
 
 ---
 
-## 2. Roadmap Pengembangan (Go-Live Ready)
+### 2. Business Value & Use Cases
 
-Roadmap ini dirancang untuk transisi dari "Clean Architecture" menuju "Production Grade".
+SBA-Agentic mengadopsi model **Hybrid Workforce (Silicon + Carbon)**, di mana agen menangani proses terdefinisi sementara manusia fokus pada tata kelola (governance) dan inovasi.
 
-### **Fase 1: Foundation Strengthening (Bulan 1)**
+#### 2.1 Persona Target & Value Proposition
+-   **The Efficiency Seeker (Operations)**: Reduksi tugas manual rutin hingga 80% melalui orkestrasi alur kerja otonom.
+-   **The Data-Driven Exec (Leadership)**: Ringkasan eksekutif dan wawasan real-time dari jutaan titik data tanpa intervensi manual.
+-   **The Security Guardian (IT/Security)**: Kontrol akses agen granular dan perlindungan PII otomatis.
 
-- **Milestone**: Arsitektur "Single Source of Truth" untuk Data & Auth.
-- **Goal**: Migrasi semua client ke `@sba/supabase`, setup Prisma schema untuk internal service, dan validasi RLS.
-- **Resource**: 3 Backend, 1 DevOps, 1 Security.
+#### 2.2 Domain-Specific Use Cases (2025-2026 Edition)
 
-### **Fase 2: Performance & Scalability (Bulan 2)**
+| Domain | Skenario Nyata | Kapabilitas Agentic | Value Driven |
+| :--- | :--- | :--- | :--- |
+| **HR & People** | **Onboarding Otonom** | Orchestrator mengoordinasikan pembuatan kontrak, setup IT, dan penjadwalan mentor. | 90% reduksi waktu admin HR. |
+| **Sales & Revenue** | **Lead Activation & SDR** | Agen melakukan riset LinkedIn, mengirim email personalisasi, dan memicu workflow CRM. | 3x peningkatan rasio meeting. |
+| **Logistics** | **Dynamic Supply Chain** | Deteksi *bottleneck* pengiriman secara real-time dan re-routing otomatis via API ekspedisi. | Optimalisasi biaya logistik 15%. |
+| **Finance** | **Autonomous Auditing** | Verifikasi invoice otomatis, rekonsiliasi bank, dan deteksi penipuan berbasis pola. | Eliminasi kesalahan manusia. |
+| **IT Ops** | **Self-Healing Infra** | Observability terintegrasi yang memicu perbaikan otomatis pada kegagalan layanan mikro. | 99.99% Availability. |
 
-- **Milestone**: Distributed System ready.
-- **Goal**: Implementasi Redis adapter untuk WebSocket, BullMQ untuk asinkron task, dan distributed caching.
-- **Resource**: 2 Backend, 2 Frontend, 1 AI Eng.
+#### 2.3 Deep Dive: Onboarding Otonom Flow
+Berikut adalah visualisasi bagaimana `ReasoningStep` bekerja dalam skenario HR:
+1.  **Analysis**: Agen menerima event `candidate.hired`. Ia mengidentifikasi kebutuhan: Kontrak, Email, Akses Slack, dan Jadwal Meeting.
+2.  **Planning**: Agen membuat rencana:
+    - `Step 1`: Generate kontrak menggunakan template `HR-001`.
+    - `Step 2`: Kirim kontrak via DocuSign API.
+    - `Step 3`: Tunggu tanda tangan (status: `waiting_tool`).
+    - `Step 4`: Setelah ditandatangani, buat akun Google Workspace & Slack.
+3.  **Execution**: Agen memanggil handler `document.extract_data` dan `notification.send_email`.
+4.  **Reflection**: Agen mencatat keberhasilan dan memperbarui status onboarding di dashboard HR.
 
-### **Fase 3: Autonomous Evolution (Bulan 3+)**
-
-- **Milestone**: Self-Learning Loop Active.
-- **Goal**: Integrasi pgvector reranker, automated feedback loop dari `Reflection` step, dan GA (General Availability).
-- **Resource**: 2 AI Researchers, 1 Product Manager, 2 QA.
-
----
-
-## 3. Fitur Utama & Flow Agentic
-
-SBA-Agentic bukan sekadar chatbot, melainkan sistem operasi yang memiliki _Agency_.
-
-### **A. Fitur Inti**
-
-1.  **Autonomous Planner (ReasoningStep)**: Menggunakan pola Analysis -> Planning -> Execution -> Reflection untuk menjamin setiap langkah dapat dijelaskan (explainable).
-2.  **Rube Tool Orchestrator**: Memastikan eksekusi tool aman melalui _Permission Matrix_ dan _Safety Rules_.
-3.  **Knowledge Memory (Long-term)**: Menyimpan konteks tenant dan interaksi masa lalu untuk personalisasi respons.
-4.  **Real-time Decision Streaming**: Streaming log penalaran agen via SSE/WS agar user dapat melakukan intervensi kapan saja.
-
-### **B. Flow Interaksi: "Smart Procurement"**
-
-1.  **Input**: "Beli 5 laptop Dell sesuai budget departemen IT".
-2.  **Autonomous Analysis**: Agen memeriksa saldo budget via ERP tool dan spesifikasi laptop via Knowledge Base.
-3.  **Conflict Detection**: Jika budget kurang, agen memberikan alternatif (Personalization) atau meminta approval (Human-in-the-loop).
-4.  **Execution**: Setelah approval, agen melakukan PO via ERP tool secara otomatis.
-5.  **Learning**: Agen mencatat vendor yang paling responsif untuk saran di masa depan (Feedback Loop).
+#### 2.4 Deep Dive: Sales Lead Activation
+Skenario di mana agen bertindak sebagai Sales Development Representative (SDR):
+1.  **Trigger**: Event `lead.created` dari HubSpot CRM.
+2.  **Research Phase**: Agen memanggil `knowledge.search` untuk mencari berita terbaru tentang perusahaan calon klien.
+3.  **Personalization**: Agen menggunakan LLM untuk menyusun pesan yang relevan dengan masalah yang dihadapi perusahaan klien tersebut.
+4.  **Omnichannel Outreach**: Agen mengirimkan email (Resend) dan pesan LinkedIn (via MCP integration).
+5.  **Autonomous Follow-up**: Jika tidak ada respon dalam 3 hari, agen menganalisis sentimen email sebelumnya dan mengirimkan tindak lanjut yang lebih spesifik.
 
 ---
 
-## 4. Ide / Use Case & Persona
+### 3. Roadmap Pengembangan (Strategic Path)
 
-SBA-Agentic dirancang untuk skala enterprise.
+#### 🏁 Fase 1: Foundation Strengthening (Q1-Q2 2026)
+- **Core Engine GA**: Peluncuran Rube Engine dengan dukungan penuh `ReasoningStep`.
+- **MCP Hub**: Integrasi dengan 50+ server MCP populer (Postgres, GitHub, Slack, etc.).
+- **Security V1**: Implementasi PII Masking dan Immutable Audit Logs tingkat enterprise.
 
-### **A. Persona Target**
+#### 📈 Fase 2: Advanced Reasoning & Memory (Q3-Q4 2026)
+- **Long-term Organization Memory**: Agen mampu mengingat keputusan bisnis tahun lalu untuk memberikan konteks saat ini.
+- **Multi-agent Swarm Orchestration**: Kemampuan untuk menjalankan misi kompleks yang melibatkan >3 agen spesialis.
+- **Cross-Tenant Knowledge Transfer**: (Opsional/Opt-in) Berbagi pola solusi anonim antar tenant untuk meningkatkan akurasi.
 
-- **The Efficiency Seeker (Operations)**: Fokus pada reduksi manual task.
-- **The Data-Driven Exec (Leadership)**: Fokus pada insight real-time dari ribuan agent runs.
-- **The Security Guardian (IT/Security)**: Fokus pada audit trail dan isolasi tenant.
-
-### **B. Use Case Domain**
-
-| Domain       | Skenario Nyata                                        | Value Proposition                                |
-| :----------- | :---------------------------------------------------- | :----------------------------------------------- |
-| **Logistik** | Re-routing pengiriman otonom saat ada gangguan cuaca. | Penghematan biaya bahan bakar & ketepatan waktu. |
-| **Legal**    | Review kontrak otomatis berbasis compliance terbaru.  | Reduksi risiko hukum & waktu review legal.       |
-| **SaaS Ops** | Penanganan insiden infrastruktur (Auto-remediation).  | Penurunan MTTR (Mean Time To Recovery).          |
-
----
-
-## 5. Acceptance Criteria & Route to Screen
-
-Standar kualitas untuk setiap layar dan fitur.
-
-### **A. Kriteria Penerimaan Global**
-
-- **Performance**: CRUD p95 ≤ 2s; Streaming T90 < 2s; Error rate ≤ 0.5%.
-- **Security**: SCA/DAST pass; CSP aktif; Rate limit terverifikasi.
-- **A11y**: Lulus audit WCAG 2.1 AA; Keyboard navigation lengkap.
-
-### **B. Route to Screen (User Journey)**
-
-1.  **Landing**: Penjelasan value proposition & Login.
-2.  **Workspace Selection**: Memilih tenant/workspace yang diisolasi secara ketat.
-3.  **Agent Dashboard**: Monitoring 'Active Runs' and 'System Health'.
-4.  **Execution Detail**: Layar detail untuk melihat **Decision Trace** (Mermaid diagram alur keputusan agen).
+#### 🧠 Fase 3: The Autonomous Enterprise (2027+)
+- **Agentic Economy**: Agen memiliki dompet digital (*Agentic Wallets*) untuk membayar API atau layanan pihak ketiga secara mandiri.
+- **Self-Evolving Systems**: Agen mampu menulis dan melakukan deployment perbaikan kode mereka sendiri (dalam lingkungan sandbox).
+- **Global Governance Standard**: SBA-Agentic menjadi referensi standar industri untuk etika dan keamanan AI otonom.
 
 ---
 
-## 6. Domain Bisnis & Metrik Keberhasilan
+## 🛠️ PART II: TECHNICAL SPECIFICATION
 
-Fokus pada vertikal industri yang memiliki regulasi ketat.
+### 4. Arsitektur Sistem (Agentic Architecture)
 
-- **Kebutuhan Spesifik**: Isolasi data multi-tenant tingkat tinggi (Physical separation options).
-- **Compliance**: SOC2 Type II, HIPAA (untuk health domain), GDPR.
-- **Metrik Bisnis**:
-  - **Automation Rate**: % tugas yang diselesaikan tanpa campur tangan manusia.
-  - **Decision Accuracy**: % akurasi rencana agen vs feedback user.
+SBA-Agentic menggunakan arsitektur **Micro-Orchestration** yang mengutamakan skalabilitas, keamanan, dan *Observability*.
+
+#### 4.1 Diagram Arsitektur Tingkat Tinggi
+
+```mermaid
+graph TD
+    User((User/Client)) --> Gateway[API Gateway / Clerk Auth]
+    Gateway --> Orchestrator[Orchestrator Engine]
+    
+    subgraph "Core Intelligence (The Brain)"
+        Orchestrator --> LLM[LLM Gateway: GPT-4o / Claude 3.5 / Nova]
+        Orchestrator --> Planner[Autonomous Planner - ReasoningStep]
+        Orchestrator --> Memory[Memory Manager - Supabase Vector]
+        Orchestrator --> Router[Semantic Router - SKOS Expansion]
+    end
+    
+    subgraph "Agent Runtime (The Hands)"
+        Orchestrator --> Rube[Rube Tool Engine - Sandboxed Execution]
+        Rube --> MCP[MCP Server Management]
+        MCP --> Tools[Tool Registry: ERP, CRM, APIs]
+    end
+    
+    subgraph "State & Storage"
+        Orchestrator --> Redis[(State Manager - Redis)]
+        Orchestrator --> Postgres[(Primary DB - Supabase/Prisma)]
+    end
+
+    subgraph "Observability (The Eyes)"
+        Orchestrator --> Logs[Audit Logs - Clickhouse/Supabase]
+        Orchestrator --> Metrics[Prometheus/Grafana]
+        Orchestrator --> Tracing[OpenTelemetry]
+    end
+```
+
+#### 4.2 Scalability & Performance
+- **Stateless Orchestration**: Orchestrator dirancang *stateless* untuk memungkinkan scaling horizontal tak terbatas. State sesi dikelola sepenuhnya di Redis Cluster.
+- **Sandboxed Execution**: Menggunakan teknologi isolasi (e.g., gVisor atau WebAssembly) untuk menjalankan kode alat secara aman tanpa risiko eskalasi hak akses.
+- **Edge Deployment**: Kemampuan untuk menjalankan agen ringan di edge node untuk mengurangi latensi dalam interaksi real-time.
+
+### 5. Komponen Inti (Core Components)
+
+#### 5.1 Orchestrator Engine (Rube Engine)
+Pusat kendali yang mengelola lifecycle agen, mulai dari interpretasi pesan hingga resolusi tugas.
+- **Reasoning Policy**: Mengikuti pola `Analysis -> Planning -> Validation -> Execution -> Reflection`.
+- **Confidence Scoring**: Ambang batas minimal 0.7 untuk eksekusi otonom; di bawah itu memerlukan HITL (Human-in-the-loop).
+
+#### 5.2 ReasoningStep Framework
+Framework internal untuk dekomposisi tugas kompleks menjadi sub-tugas yang dapat dikelola.
+- **Step Analysis**: Mengidentifikasi intent, parameter, dan dependensi.
+- **Plan Generation**: Menghasilkan urutan aksi dalam format JSON yang valid terhadap skema `Rube`.
+- **Reflection Loop**: Mengevaluasi output setiap langkah dan menyesuaikan rencana secara dinamis.
+
+#### 5.3 Memory & Context Management
+- **Short-term Memory**: State sesi aktif yang disimpan di Redis.
+- **Long-term Memory**: Penyimpanan vektor (Supabase Vector) dengan dukungan **pgvector** untuk pencarian semantik tingkat lanjut.
+- **SKOS Semantic Expansion**: Memperluas query pengguna menggunakan taksonomi bisnis untuk hasil pencarian memori yang lebih relevan.
+- **Summarization Pipeline**: Kompresi otomatis history chat panjang tanpa kehilangan konteks krusial.
+
+#### 5.4 Tool Gateway & MCP Integration
+- **Model Context Protocol (MCP)**: Standar terbuka yang memisahkan logika agen dari implementasi alat. SBA-Agentic mendukung:
+    - **MCP Servers**: Host lokal atau remote yang menyediakan alat (tools) dan sumber daya (resources).
+    - **Dynamic Discovery**: Agen dapat mencari dan mempelajari kapabilitas alat baru secara runtime melalui file `mcp-config.json`.
+- **Action Handlers Catalog**: Daftar kapabilitas yang dapat dieksekusi (e.g., `db.upsert_record`, `notification.send_email`).
+- **Domain Events Catalog**: Sistem pub/sub berbasis event (e.g., Kafka atau RabbitMQ) untuk memicu aksi agen.
+
+#### 5.5 Multi-agent Swarms (Agent Coordination)
+SBA-Agentic mendukung orkestrasi beberapa agen spesialis yang bekerja sama:
+- **Planner Agent**: Bertanggung jawab atas dekomposisi tugas dan strategi.
+- **Executor Agent**: Fokus pada interaksi alat dan penanganan error teknis.
+- **Observer Agent**: Memantau kepatuhan (*compliance*) dan keamanan secara real-time.
+- **Reviewer Agent**: Bertindak sebagai proxy untuk persetujuan manusia (*Human Approval*).
+- **Coordination Protocol**: Menggunakan mekanisme *Blackboard Architecture* di mana agen berbagi informasi melalui state bersama.
+
+### 6. Standar Keamanan & Privasi Data
+
+#### 6.1 Multi-Tenancy Isolation
+- **Tenant Context Contract**: Memastikan data antar tenant tidak pernah tercampur melalui level isolasi Row Level Security (RLS) di Postgres dan prefixing di Redis.
+- **Workspace-level RBAC**: Kontrol akses berbasis peran yang ketat untuk setiap aset dan alat agen.
+
+#### 6.2 Perlindungan Data Sensitif
+- **Automated PII Masking**: Deteksi dan penyamaran otomatis informasi pribadi (email, nomor telepon, alamat) sebelum data dikirim ke LLM eksternal.
+- **Data Sovereignty**: Dukungan untuk deployment on-premise atau private cloud untuk data yang sangat sensitif.
+
+#### 6.3 Audit & Transparansi
+- **Immutable Audit Logs**: Setiap langkah penalaran (Reasoning Chain) dan eksekusi alat dicatat secara permanen di Clickhouse/Supabase, memastikan transparansi penuh.
+- **Explainable AI (XAI)**: Agen wajib menyertakan atribut `reasoning_path` dalam setiap output, memungkinkan manusia memahami logika di balik setiap keputusan.
+- **Drift Detection**: Observer Agent secara otomatis mendeteksi jika perilaku agen mulai menyimpang dari kebijakan Rube yang ditentukan.
+
+### 7. Integrasi Platform Bisnis (The Ecosystem)
+
+SBA-Agentic dirancang untuk menjadi pusat saraf yang terhubung ke:
+- **Communication**: Slack, Microsoft Teams, WhatsApp Business API.
+- **Productivity**: Google Workspace, Microsoft 365, Notion.
+- **Sales & Marketing**: Salesforce, HubSpot, Mailchimp.
+- **Operations & ERP**: SAP, Odoo, Oracle Netsuite.
+- **Development**: GitHub, GitLab, Jira.
 
 ---
 
-## 7. UI/UX Guidelines (Design System)
+## 🚀 PART III: IMPLEMENTATION & QUALITY ASSURANCE
 
-Filosofi desain: "Minimalist yet Transparent".
+### 8. Metrik Keberhasilan & KPI
 
-- **Komponen UI**: Menggunakan library `@sba/ui` yang konsisten (Shadcn-based).
-- **Interaction Principles**:
-  - **Immediate Feedback**: Setiap ketikan atau aksi agen harus memberikan indikasi visual.
-  - **Why? Button**: Di setiap output agen, tersedia tombol untuk melihat logika di balik keputusan tersebut.
-- **Scalability**: Dashboard dirancang untuk menangani ribuan agent runs secara konkuren dengan filter performa tinggi.
+| Kategori | Metrik | Target | Definisi |
+| :--- | :--- | :--- | :--- |
+| **Performance** | Task Completion Rate | > 95% | Persentase misi yang diselesaikan tanpa intervensi manual. |
+| **Efficiency** | Time Saved per User | > 10 jam/minggu | Estimasi waktu manual yang digantikan oleh aksi agen. |
+| **Accuracy** | Hallucination Rate | < 2% | Frekuensi agen memberikan informasi yang tidak akurat atau fiktif. |
+| **Security** | Security Incidents | 0 | Jumlah kebocoran data atau akses alat yang tidak sah. |
+| **Reliability** | System Uptime | 99.9% | Ketersediaan infrastruktur Orchestrator dan Tool Gateway. |
 
----
+### 9. Panduan Implementasi Praktis
 
-## 8. Functional Requirements & Technical Architecture
+#### 9.1 Development Workflow
+1.  **Define Domain**: Tentukan domain bisnis dan use case menggunakan template YAML.
+2.  **Register Tools**: Daftarkan API dan fungsi yang diperlukan ke Tool Registry via MCP.
+3.  **Configure Rube Rules**: Buat aturan kebijakan (YAML) untuk memandu perilaku agen.
+4.  **Test & Iterate**: Gunakan simulator untuk menguji skenario dan feedback loop.
 
-Spesifikasi teknis untuk skalabilitas horizontal.
-
-- **Arsitektur**: Dual-layer Data (Supabase for Auth/Knowledge, Prisma for Service Metadata).
-- **Concurrency**: Node.js workers dengan BullMQ untuk background processing.
-- **API Spec**: OpenAPI 3.0 dengan validasi skema otomatis (Zod).
-- **Security**: PII Masking pada semua audit logs; JWT verifikasi pada level WebSocket.
-
----
-
-## 🚀 Go-To-Market (GTM) Strategy & Positioning
-
-### **A. Analisis Kompetitif**
-
-| Fitur             | SBA-Agentic                  | Kompetitor Tradisional   |
-| :---------------- | :--------------------------- | :----------------------- |
-| **Otonomi**       | Tinggi (Autonomous Planning) | Rendah (Fixed Workflows) |
-| **Auditabilitas** | Mutlak (Trace per Step)      | Terbatas (Blackbox)      |
-| **Keamanan**      | Native Multi-tenant          | Add-on Security          |
-
-### **B. Positioning & Messaging**
-
-"SBA-Agentic: The first Business Operating System that doesn't just manage, but **thinks** and **acts** with you."
-
-### **C. Launch Strategy**
-
-1.  **Beta Launch (Bulan 1)**: Fokus pada 5 core customers untuk validasi product-market fit.
-2.  **Expansion (Bulan 2-3)**: Integrasi dengan marketplace (Slack, Microsoft Teams) untuk adopsi cepat.
-3.  **Scale (Bulan 6+)**: Public API release untuk developer pihak ketiga membangun "Agentic Tools".
-
-### **D. Rencana Pengukuran**
-
-- **DAU/MAU** pada level Tenant.
-- **Cost per Task**: Efisiensi penggunaan token AI vs output bisnis.
+#### 9.2 Deployment Strategy
+- **Blue-Green Deployment**: Untuk pembaruan engine tanpa downtime.
+- **Canary Releases**: Meluncurkan fitur agen baru ke subset tenant untuk validasi.
 
 ---
 
-_Referensi Utama: [README.md](./README.md), [OPERATIONAL_STANDARD.md](../08-operations/OPERATIONAL_STANDARD.md), [ROADMAP_GO_LIVE.md](../10-release-go-live/ROADMAP_GO_LIVE.md)_
+### 10. Glosarium (Glossary)
+- **Agentic AI**: Sistem AI yang mampu mengejar tujuan secara otonom dengan merencanakan dan menjalankan langkah-langkah secara mandiri.
+- **MCP (Model Context Protocol)**: Standar terbuka untuk menghubungkan model AI dengan sumber data dan alat eksternal.
+- **Rube Engine**: Mesin orkestrasi internal SBA-Agentic yang mengelola logika penalaran dan eksekusi.
+- **ReasoningStep**: Framework dekomposisi tugas yang membagi misi besar menjadi langkah-langkah kecil yang dapat dikelola.
+- **HITL (Human-in-the-loop)**: Mekanisme di mana manusia meninjau atau menyetujui aksi agen sebelum dieksekusi.
+- **Silicon + Carbon Workforce**: Konsep tenaga kerja masa depan yang menggabungkan kemampuan digital (AI) dan manusia secara sinergis.
+
+### 11. Referensi & Sumber Penelitian
+
+- [Salesforce: The Agentic Enterprise](https://architect.salesforce.com/fundamentals/agentic-enterprise-it-architecture)
+- [AWS: Agentic AI Solutions](https://aws.amazon.com/ai/agentic-ai/)
+- [UiPath: Agentic Automation Security](https://www.uipath.com/platform/agentic-automation/foundation)
+- [Model Context Protocol (MCP) Specification](https://modelcontextprotocol.io)
+- [NexaStack: Private AI Assistant Blueprint](https://www.nexastack.ai/blueprints/private-ai-assistant/)
+
+---
+
+## 📄 Lampiran: Versi Teknis Mendetail
+
+Untuk dokumentasi teknis yang lebih mendalam, silakan merujuk pada:
+- [Arsitektur Sistem (Detail)](file:///home/inbox/smart-ai/sba-agentic/docs/02-architecture/README.md)
+- [API Reference](file:///home/inbox/smart-ai/sba-agentic/apps/api/README_API.md)
+- [Rube Engine Specification](file:///home/inbox/smart-ai/sba-agentic/apps/orchestrator/README.md)
+- [Agentic Reasoning Policy](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/agent-reasoning.md)

@@ -101,28 +101,49 @@ Format:
   status: Approved
   responsibility:
     owner: lead@sba
-    reviewer: security@sba
+    reviewer: qa@sba
     approver: pm@sba
     observer: ops@sba
-  tags: [security, performance]
+  tags: [security, infrastructure, rate-limit]
   prd:
     - docs/01-product/prd/rate_limiting_upstash.md
   architecture:
-    - docs/02-architecture/diagrams/rate_limiting_upstash-sequence.mmd
-    - docs/02-architecture/diagrams/rate_limiting_upstash-dataflow.mmd
-    - docs/02-architecture/diagrams/rate_limiting_upstash-component.mmd
+    - docs/02-architecture/adr/ADR-001.md
   flows:
-    - docs/03-agentic/flows/_index.md
+    - docs/03-agentic/flows/20251208-rate_limiting_upstash-flow.md
   api:
-    - docs/05-api/_templates/API-doc-template.md
-  dependencies:
-    - security_headers_csp
-    - ensure_tenant_header
+    - docs/05-api/rate-limiting-api.md
   validation:
     has_prd: true
     has_arch: true
-    has_flow: false
-    has_api: false
+    has_flow: true
+    has_api: true
+
+- id: 20251228-agentic_reasoning_self_correction
+  title: Agentic Reasoning & Self-Correction
+  summary: Implementasi Advanced RAG, SKOS expansion, Validation phase, dan loop self-correction otonom
+  status: Implemented
+  responsibility:
+    owner: lead@sba
+    reviewer: qa@sba
+    approver: pm@sba
+    observer: ops@sba
+  tags: [agentic, reasoning, rag, self-correction]
+  prd:
+    - docs/01-product/prd/20251228-self-correction-autonomous-recovery.md
+  architecture:
+    - docs/02-architecture/adr/ADR-015-autonomous-self-correction-recovery.md
+    - docs/03-agentic/REASONING_ENGINE.md
+    - docs/03-agentic/MULTI_AGENT_COORDINATION.md
+  flows:
+    - docs/03-agentic/flows/20251228-self-correction-flow.md
+  api:
+    - apps/api/src/rube/rube.service.ts
+  validation:
+    has_prd: true
+    has_arch: true
+    has_flow: true
+    has_api: true
 
 - id: 20251206-rbac_access_control
   title: RBAC Access Control

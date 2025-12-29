@@ -38,12 +38,14 @@ The engine features an autonomous recovery loop for failed tool executions.
     - LLM generates a structured analysis.
 2.  **Planning Phase**:
     - Project manager agent creates a step-by-step execution plan.
-3.  **Alternative Generation**:
+3.  **Validation Phase**:
+    - Compliance officer agent validates the plan against business rules, security policies, and constraints.
+4.  **Alternative Generation**:
     - Strategic agent generates 3 distinct approaches with pros/cons.
-4.  **Decision Phase**:
+5.  **Decision Phase**:
     - Lead orchestrator selects the best approach.
     - Outputs a specific `toolCall` if required.
-5.  **Reflection Phase**:
+6.  **Reflection Phase**:
     - Supervisor agent reflects on decision quality and identifies learning points.
 
 ## 📁 Key Components

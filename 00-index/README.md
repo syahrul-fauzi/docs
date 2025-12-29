@@ -14,6 +14,7 @@ Selamat datang di pusat navigasi dokumentasi **SBA-Agentic**. Gunakan indeks ini
 ## 🧭 Panduan Navigasi Cepat
 - **[🤖 Untuk Agen AI](./AGENTS.md)** — Instruksi khusus navigasi dan pengambilan konteks untuk AI.
 - **[👥 Untuk Tim Manusia](./HUMANS.md)** — Onboarding dan panduan kontribusi bagi developer & stakeholder.
+- **[📊 Progress & Readiness](../PROGRESS.md)** — Dashboard status fitur dan dokumentasi real-time.
 
 ---
 

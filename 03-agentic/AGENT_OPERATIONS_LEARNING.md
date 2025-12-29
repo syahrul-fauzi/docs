@@ -20,7 +20,20 @@ Orchestrator menyediakan pemrosesan tugas 24/7 dengan fitur fail-safe, self-heal
 - **Auto-Adjust Concurrency**: Menambah/mengurangi jumlah worker berdasarkan panjang antrean dan tingkat error.
 - **Audit Logging**: Mencatat setiap keputusan penting (`task_started`, `failsafe_triggered`, dll).
 
-## 2. Strategi Pembelajaran Profesional (Self-Learning)
+## 2. Mekanisme Self-Correction & Recovery
+SBA-Agentic mengimplementasikan mekanisme koreksi mandiri otomatis saat eksekusi rule gagal.
+
+### Alur Kerja:
+1. **Detection**: `RuleManager` mendeteksi kegagalan eksekusi tool.
+2. **Reasoning**: `AgenticReasoningEngine` menganalisis error dan menentukan langkah perbaikan (decision).
+3. **Execution**: Tool perbaikan dieksekusi oleh `EnhancedToolRegistry` dengan identitas `system-corrector`.
+4. **Observation**: `ObserverService` memancarkan meta-event `self_correction` untuk monitoring real-time.
+
+### Status Monitoring:
+- **UI Indicator**: Warna `amber` di `MetaEventsUI` menandakan aktivitas koreksi.
+- **Log Severity**: Menggunakan level `info` atau `warn` tergantung pada keberhasilan pemulihan.
+
+## 3. Strategi Pembelajaran Profesional (Self-Learning)
 Agent belajar dari setiap interaksi melalui fase **Reflection** untuk meningkatkan akurasi dan efisiensi.
 
 ### Arsitektur Feedback Loop:
@@ -36,7 +49,26 @@ Siklus pengembangan yang otonom dan berorientasi pada tujuan (goal-oriented).
 - **Goal Tracking**: Melacak tujuan, mencatat tindakan (`recordAction`), dan mengusulkan perbaikan.
 - **Proactive Improvements**: Melakukan instrumentasi, observasi, dan iterasi secara proaktif.
 
-## 4. Keamanan & Kesiapan Produksi
+## 5. Keamanan & Kesiapan Produksi
 - **PII Masking**: Data sensitif wajib di-masking sebelum disimpan dalam log pembelajaran.
 - **Drift Detection**: Mendeteksi anomali jika performa saat ini menyimpang jauh dari baseline 24 jam.
 - **Stress Testing**: Simulasi beban tinggi untuk memastikan stabilitas sistem.
+
+## 6. Dynamic Rate Limiting & Resource Management
+SBA-Agentic menerapkan pembatasan akses (rate limiting) yang dinamis berdasarkan paket langganan (plan) atau konfigurasi khusus per tenant.
+
+### Mekanisme Kerja:
+1.  **Plan-Based Limits**: Default limit yang ditentukan berdasarkan paket (Free, Pro, Enterprise).
+2.  **Config Overrides**: Kemampuan untuk menentukan limit khusus untuk tenant tertentu melalui `tenant.config.rateLimits`.
+3.  **Distributed Enforcement**: Menggunakan Redis (Upstash) untuk sinkronisasi limit di seluruh instance server.
+4.  **Graceful Rejection**: Mengembalikan status `429 Too Many Requests` dengan header `Retry-After` yang sesuai.
+
+### Konfigurasi Default:
+- **Free**: 60 requests/minute
+- **Pro**: 300 requests/minute
+- **Enterprise**: 1000 requests/minute
+
+### Monitoring & Alerts:
+- Setiap kejadian rate limit dicatat dalam log dengan kode `RATE_LIMIT_EXCEEDED`.
+- Anomali pada penggunaan token atau frekuensi request yang mendekati limit akan memicu notifikasi internal.
+
