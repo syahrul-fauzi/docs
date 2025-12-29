@@ -224,6 +224,7 @@ Sistem menggunakan piramida pengujian yang komprehensif:
 
 ---
 ## 📖 Konten Detail
+- **[Arsitektur internal-console.md](./Arsitektur%20internal-console.md)**: Arsitektur detail untuk Internal Control Plane (Tauri app).
 - **[ARCHITECTURE_OVERVIEW.md](./ARCHITECTURE_OVERVIEW.md)**: Gambaran teknis mendalam dan teknologi stack.
 - **[TECHNICAL_SPEC.md](./TECHNICAL_SPEC.md)**: Spesifikasi teknis dan rencana implementasi E2E.
 - **[SYSTEM_CONSTITUTION.md](./SYSTEM_CONSTITUTION.md)**: Prinsip dasar dan konstitusi sistem.

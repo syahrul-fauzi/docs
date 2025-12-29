@@ -40,10 +40,16 @@ Dokumen ini melacak status kesiapan fitur, dokumentasi, dan stabilitas sistem SB
 - **Security Audit**: PII masking terverifikasi untuk data rekursif dan metadata.
 - **Performance**: Latensi rata-benar reasoning < 2s (benchmark lokal).
 
-## 📅 Roadmap Jangka Pendek
+## 📅 Roadmap Jangka Pendek (Completed)
 
-1.  [ ] **Optimization**: Pengurangan token LLM pada fase Reflection (Cache-based).
-2.  [ ] **UI Enhancement**: Heatmap kegagalan rule pada dashboard Admin.
+1.  [x] **Optimization**: Pengurangan token LLM pada fase Reflection (Cache-based).
+2.  [x] **UI Enhancement**: Heatmap kegagalan rule pada dashboard Admin.
+
+## 🔜 Next Steps
+
+1.  [x] **Real-time Feedback Loop**: Integrasi `ObserverService` ke `AgenticReasoningEngine` untuk penyesuaian strategi secara real-time berdasarkan drift deteksi.
+2.  [ ] **Unified Audit Log Export**: Fitur ekspor log audit (CSV/JSON) dengan masking PII otomatis untuk kebutuhan kepatuhan eksternal.
+3.  [ ] **Agent Performance Benchmark UI**: Visualisasi perbandingan latensi dan efisiensi token antar versi model/strategi reasoning.
 
 
 ---

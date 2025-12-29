@@ -51,7 +51,8 @@ SBA-Agentic menggunakan arsitektur monorepo berbasis Turborepo untuk mengelola d
 
 ### Komponen Utama:
 1.  **`apps/app` (Control Plane)**: Dashboard utama berbasis Next.js untuk mengelola tenant, workflow, dan monitoring.
-2.  **`apps/orchestrator` (Orchestrator Engine)**: Inti dari sistem yang mengelola penjadwalan tool, retry logic, dan rate limiting.
+2.  **`apps/internal-console` (Internal Control Plane)**: Aplikasi desktop (Tauri) untuk kontrol operasional tingkat tinggi, kebijakan, dan observabilitas mendalam.
+3.  **`apps/orchestrator` (Orchestrator Engine)**: Inti dari sistem yang mengelola penjadwalan tool, retry logic, dan rate limiting.
 3.  **`apps/api` (Tools Gateway)**: Gateway terpadu untuk mengeksekusi tools pihak ketiga dengan validasi schema dan tenant enforcement.
 4.  **`packages/`**: Kumpulan paket bersama termasuk UI components (`@sba/ui`), database client (`@sba/supabase`), dan logic bersama.
 

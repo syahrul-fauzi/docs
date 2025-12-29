@@ -141,6 +141,8 @@ Pengembangan SBA-Agentic mengikuti metodologi **ADDIE (Analysis, Design, Develop
 | Modul | Dokumen Referensi | Status |
 | :--- | :--- | :--- |
 | **Core Orchestrator** | [agent-reasoning.md](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/agent-reasoning.md) | ✅ Active |
+| **Control Plane Utama** | [Control Plane Utama — Sba-agentic.md](./Control Plane Utama — Sba-agentic.md) | ✅ Active |
+| **Internal Console** | [Control & Intelligence Console — Sba-agentic.md](./Control & Intelligence Console — Sba-agentic.md) | ✅ Active |
 | **Security Protocols** | [PII_MASKING_PROTOCOL.md](../04-rules/PII_MASKING_PROTOCOL.md) | ✅ Active |
 | **Governance & Policy** | [audit-policy.md](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/audit-policy.md) | ✅ Active |
 | **Operational Standard** | [SBA-Agentic Operational Standard.md](../SBA-Agentic Operational Standard.md) | 🔄 Updating |

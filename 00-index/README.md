@@ -22,14 +22,18 @@ Selamat datang di pusat navigasi dokumentasi **SBA-Agentic**. Gunakan indeks ini
 
 ### 00. [Index & Entry Point](./README.md)
 Titik awal navigasi, panduan agen, dan panduan tim manusia.
+- **[Control Plane Utama (apps/app)](./Control%20Plane%20Utama%20—%20Sba-agentic.md)** — Landing page & Kontrak teknis Dashboard Utama.
+- **[Internal Console (apps/internal-console)](./Control%20&%20Intelligence%20Console%20—%20Sba-agentic.md)** — Landing page & Kontrak teknis Admin Console.
 
 ### 01. [Product & Business](../01-product/README.md)
 Visi produk, strategi bisnis, PRD (Product Requirements Document), dan Use Case Specification.
-- *Audience: PO, Stakeholder, Dev Team.*
+- **[Use Case: Control Plane Utama](../01-product/Use%20Case%20Specifications%20—%20Control%20Plane%20(sba-agentic).md)** — 15 use case operasional kritis.
+- **[Use Case: Internal Console](../01-product/Use%20Case%20Specifications%20—%20Internal%20Console%20(sba-agentic).md)** — Spesifikasi use case teknis internal.
 
 ### 02. [System & Agent Architecture](../02-architecture/README.md)
 Diagram sistem, arsitektur agentic, ADR (Architecture Decision Records), dan integrasi teknis.
-- *Audience: Architect, Lead Dev, AI Agent.*
+- **[Arsitektur: Control Plane Utama](../02-architecture/Arsitektur%20apps-app.md)** — C4 Diagrams & Runtime Blueprint.
+- **[Arsitektur: Internal Console](../02-architecture/Arsitektur%20internal-console.md)** — Technical specs for desktop console.
 
 ### 03. [Agentic Core](../03-agentic/README.md)
 Desain perilaku agen, kebijakan penalaran (reasoning), dan mekanisme pembelajaran berkelanjutan.
