@@ -58,8 +58,13 @@ Kami menggunakan CI/CD pipeline melalui GitHub Actions untuk otomatisasi deploym
 Pastikan variabel berikut dikonfigurasi di environment produksi:
 - `DATABASE_URL`: Koneksi ke Postgres Produksi.
 - `SUPABASE_SERVICE_ROLE_KEY`: Untuk operasi administratif.
-- `REDIS_URL`: Untuk antrean pekerjaan (Queue).
+- `REDIS_URL`: Untuk antrean pekerjaan (Queue) dan Analytics Heatmap.
 - `OPENAI_API_KEY` / `ANTHROPIC_API_KEY`: Untuk Reasoning Engine.
+
+## 3. Infrastruktur & Layanan Eksternal
+- **Redis**: Diperlukan untuk rate limiting, antrean task (BullMQ), dan penyimpanan data heatmap rule failure secara real-time. Pastikan Redis dikonfigurasi dengan persistensi yang sesuai untuk data analitik.
+- **Supabase**: Digunakan sebagai database relasional utama dan sistem autentikasi.
+- **LLM Providers**: Pastikan quota dan limitasi API cukup untuk beban kerja agen.
 
 ## 3. Monitoring Pasca-Deployment
 Setelah deployment, pantau metrik kesehatan di dashboard Grafana dan pastikan tidak ada lonjakan error rate di Sentry/Logfire.

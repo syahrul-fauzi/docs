@@ -45,6 +45,18 @@ Dependencies:
 - “React is not defined”: pastikan import React default di komponen TSX dan JSX transform otomatis aktif.
 - Warning CJS `import.meta`: gunakan `process.env` untuk deteksi pada bundel CJS.
 
+## Fitur Admin & Pemeliharaan
+
+### Audit Log Export
+- **Pengecekan**: Pastikan endpoint `GET /admin/audit/export` dapat diakses oleh user dengan role `admin`.
+- **Troubleshooting**: Jika export gagal, cek koneksi ke database Prisma dan pastikan library `@sba/security` terpasang dengan benar untuk masking.
+- **Log Lokasi**: Cek log di `apps/api` untuk error terkait "Failed to export audit logs".
+
+### Agent Benchmarking
+- **Pengecekan**: Buka tab "Performance" di Internal Console untuk melihat grafik benchmark.
+- **Troubleshooting**: Jika data kosong, pastikan `AgentRun` terekam di database dan metadata memiliki `agentId` yang valid.
+- **Refresh**: Gunakan tombol refresh di UI untuk memicu fetch ulang dari API.
+
 ## Kontak Darurat
 
 - Web: Owner Web Team — web-team@example.com

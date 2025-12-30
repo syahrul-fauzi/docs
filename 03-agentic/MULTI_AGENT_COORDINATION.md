@@ -22,16 +22,24 @@ The typical task lifecycle involves multiple agents working in sequence:
     - Uses [SemanticRouter](./SEMANTIC_ROUTING.md) to identify required capabilities.
     - Uses [KnowledgeRetriever](./REASONING_ENGINE.md) to gather business rules.
     - Produces a `ReasoningStep` of type `planning`.
-2.  **ObserverAgent (Validation Phase)**:
-    - Analyzes the plan against security guardrails and tenant constraints.
-    - Flags any potential risks (e.g., PII exposure, high cost).
+2.  **ReviewerAgent (Optional Approval)**:
+    - Triggered if confidence score < 0.7 or for high-risk actions.
+    - The Orchestrator sets the run status to `paused` and emits an `AWAITING_REVIEW` event.
+    - Waits for human feedback via `continueRun` before proceeding.
 3.  **ExecutorAgent (Execution Phase)**:
-    - Receives the validated plan.
+    - Receives the validated/approved plan.
     - Calls tools via the [Tools Gateway](../05-api/README.md).
     - If a tool fails, triggers the **Self-Correction** loop in the Reasoning Engine.
-4.  **ReviewerAgent (Optional Approval)**:
-    - Triggered if confidence score < 0.7 or for high-risk actions.
-    - Waits for human feedback before proceeding.
+4.  **ObserverAgent (Observation & Audit)**:
+    - Monitors the execution in real-time.
+    - Records reasoning traces and broadcasts events to Redis for live monitoring.
+    - Detects anomalies and triggers system alerts if necessary.
+
+## 🧪 Verification & Testing
+
+Complex multi-agent coordination is verified through end-to-end integration tests:
+- **Test Suite**: `apps/api/src/orchestrator/__tests__/multi-agent-coordination.e2e.spec.ts`
+- **Coverage**: Verifies the full loop from task decomposition (Planner) to human review (Reviewer) and finally execution (Executor) with monitoring (Observer).
 
 ## 🤝 Handover Mechanism
 
