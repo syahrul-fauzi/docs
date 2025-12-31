@@ -121,9 +121,10 @@ export interface ExecutionPlan {
   };
 
   // 7. Security & Observability
+  permit: ExecutionPermit; // Mandatory permit for runtime validation
   auditRef: string;
   traceId: string;
-  signature: string; // Kriptografis dari Control Plane
+  signature: string; // Kriptografis dari Control Plane (Plan-level)
 }
 ```
 
@@ -131,19 +132,23 @@ export interface ExecutionPlan {
 
 ## 4. Execution Permit (Mandatory Validation)
 
-Agent Runtime **WAJIB** memverifikasi permit sebelum memulai eksekusi apa pun.
+Agent Runtime **WAJIB** memverifikasi permit sebelum memulai eksekusi apa pun. Permit ini menjamin integritas keputusan kebijakan.
 
 ```ts
 interface ExecutionPermit {
+  permitId: string;
   planId: string;
-  status: 'allow';
-  issuedBy: 'control-plane';
-  policyHash: string;
+  issuedAt: string;
   expiresAt: string;
+  capabilityId: string;
+  tenantId: string;
+  decision: 'allow' | 'degrade' | 'require_confirmation';
+  policyHash: string; // Hash dari set kebijakan yang diterapkan
+  signature: string;  // Tanda tangan kriptografis dari Control Plane
 }
 ```
 
-**Kondisi Kegagalan**: Jika signature invalid, TTL expired, atau agentId tidak cocok, maka:
+**Kondisi Kegagalan**: Jika signature permit invalid, TTL expired, atau data mismatch dengan plan, maka:
 `❌ INVALID → AGENT MUST TERMINATE IMMEDIATELY`
 
 ---

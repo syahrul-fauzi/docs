@@ -1,0 +1,43 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Knowledge Search Web Capability",
+  "description": "Schema for performing systematic web search and information extraction",
+  "type": "object",
+  "required": ["query", "strategy"],
+  "properties": {
+    "query": {
+      "type": "string",
+      "minLength": 5
+    },
+    "strategy": {
+      "type": "string",
+      "enum": ["quick_search", "deep_research", "news_monitoring", "academic_search"],
+      "default": "quick_search"
+    },
+    "maxResults": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50,
+      "default": 10
+    },
+    "language": {
+      "type": "string",
+      "default": "id"
+    },
+    "timeRange": {
+      "type": "string",
+      "enum": ["24h", "week", "month", "year", "all"],
+      "default": "all"
+    },
+    "extractionRequired": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether to extract structured data from search results"
+    },
+    "fieldsToExtract": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Specific fields to look for (e.g., 'pricing', 'features', 'contacts')"
+    }
+  }
+}

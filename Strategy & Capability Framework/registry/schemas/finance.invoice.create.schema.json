@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Finance Invoice Create Capability",
+  "description": "Schema for creating a business invoice in the ERP system",
+  "type": "object",
+  "required": ["tenantId", "customerId", "items", "currency"],
+  "properties": {
+    "tenantId": {
+      "type": "string",
+      "description": "Unique identifier for the tenant"
+    },
+    "customerId": {
+      "type": "string",
+      "description": "Unique identifier for the customer"
+    },
+    "invoiceDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the invoice (ISO 8601)"
+    },
+    "dueDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Due date for payment (ISO 8601)"
+    },
+    "currency": {
+      "type": "string",
+      "enum": ["IDR", "USD", "EUR", "SGD"],
+      "default": "IDR"
+    },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["description", "quantity", "unitPrice"],
+        "properties": {
+          "description": { "type": "string" },
+          "quantity": { "type": "number", "minimum": 1 },
+          "unitPrice": { "type": "number", "minimum": 0 },
+          "taxRate": { "type": "number", "default": 0.11 }
+        }
+      }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

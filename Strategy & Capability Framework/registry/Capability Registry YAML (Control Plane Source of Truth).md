@@ -53,7 +53,14 @@ generatedAt: "2025-01-15T00:00:00Z"
 
 capabilities:
   - id: marketing.capture-lead
+  - id: marketing.enrich-lead
+  - id: ops.health-check
+  - id: workflow.approval_request
+  - id: workflow.task_create
   - id: docs.search-knowledge
+  - id: ai.context_summarize
+  - id: sales.get-pricing
+  - id: sales.order-tracking
   - id: observability.emit-audit
 ```
 

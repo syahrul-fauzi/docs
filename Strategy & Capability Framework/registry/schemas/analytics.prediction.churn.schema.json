@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Churn Prediction Capability",
+  "description": "Schema for analyzing customer behavior and predicting churn risk",
+  "type": "object",
+  "required": ["tenantId", "customerId"],
+  "properties": {
+    "tenantId": {
+      "type": "string"
+    },
+    "customerId": {
+      "type": "string"
+    },
+    "timeWindow": {
+      "type": "string",
+      "description": "Time window for analysis (e.g., 'last_30_days', 'last_quarter')",
+      "default": "last_30_days"
+    },
+    "features": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Specific behavioral features to include in analysis"
+    },
+    "threshold": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "default": 0.75,
+      "description": "Confidence threshold for churn risk classification"
+    }
+  }
+}

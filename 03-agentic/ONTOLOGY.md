@@ -11,17 +11,22 @@ This document defines the semantic relationships between business domains, task 
 ### 1.1 Business Process Automation (BPA)
 - **Description**: Automation of internal operations and repetitive tasks.
 - **Sub-domains**: Document Processing, Workflow Orchestration, Resource Planning.
-- **Related Tools**: `document.extract_data`, `workflow.approval_request`, `erp.sync_inventory`.
+- **Related Tools**: `document.extract_data`, `workflow.approval_request`, `workflow.escalate_request`.
 
 ### 1.2 Customer Experience (CX)
 - **Description**: Enhancing customer interactions and support.
 - **Sub-domains**: Personalization, Support Routing, Sentiment Analysis.
 - **Related Tools**: `cx.customer_profile`, `agent.personalize_response`, `support.route_to_department`.
 
-### 1.3 System Integration (SI)
+### 1.3 Data Analysis & Reporting (DA)
+- **Description**: Aggregating data and generating insights.
+- **Sub-domains**: Metrics Aggregation, Reporting.
+- **Related Tools**: `analytics.generate_report`.
+
+### 1.4 System Integration (SI)
 - **Description**: Connecting disparate systems and data synchronization.
-- **Sub-domains**: CRM Integration, ERP Sync, Analytics Reporting.
-- **Related Tools**: `crm.create_lead`, `erp.sync_inventory`, `analytics.generate_report`.
+- **Sub-domains**: CRM Integration, ERP Sync.
+- **Related Tools**: `crm.create_lead`, `erp.sync_inventory`.
 
 ## 2. Task Patterns (Properties)
 

@@ -38,8 +38,9 @@ The typical task lifecycle involves multiple agents working in sequence:
 ## 🧪 Verification & Testing
 
 Complex multi-agent coordination is verified through end-to-end integration tests:
-- **Test Suite**: `apps/api/src/orchestrator/__tests__/multi-agent-coordination.e2e.spec.ts`
-- **Coverage**: Verifies the full loop from task decomposition (Planner) to human review (Reviewer) and finally execution (Executor) with monitoring (Observer).
+- **Core E2E Suite**: `apps/api/src/__tests__/e2e.4-agent.spec.ts`
+- **Extended E2E Suite**: `apps/api/src/__tests__/e2e.4-agent.extended.spec.ts`
+- **Coverage**: Verifies the full loop from task decomposition (Planner) to human review (Reviewer) and finally execution (Executor) with real-time monitoring via Redis (Observer). It includes self-correction logic and mid-workflow HITL.
 
 ## 🤝 Handover Mechanism
 

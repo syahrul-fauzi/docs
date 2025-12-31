@@ -74,29 +74,61 @@ export interface RoutingInput {
 ```
 
 ### 3.2 Routing Output (Execution Plan)
+Struktur output mengikuti [Execution Plan Contract](../specs/Execution%20Plan%20Contract%20—%20Control%20Plane%20↔%20Agent%20Runtime.md).
+
 ```ts
 export interface ExecutionPlan {
   planId: string;
-  capabilityId: string;
-  decision: 'execute' | 'deny' | 'degrade' | 'escalate';
-  selectedAgent: {
-    agentId: string;
-    version: string;
+  version: string;
+  issuedAt: string;
+  expiresAt: string;
+  tenantContext: {
+    tenantId: string;
+    workspaceId?: string;
+    subscriptionTier: "free" | "pro" | "enterprise";
+    region: string;
   };
-  fallbackAgents?: {
-    agentId: string;
+  requesterContext: {
+    actorId: string;
+    role: string[];
+    trustLevel: "low" | "medium" | "high";
+  };
+  intent: {
+    id: string;
+    name: string;
+    confidence: number;
+    taxonomy: string;
+  };
+  capability: {
+    id: string;
     version: string;
-  }[];
+    executionMode: 'read' | 'write' | 'mixed';
+  };
+  agent: {
+    agentId: string;
+    runtime: 'node' | 'python' | 'container';
+  };
   constraints: {
-    timeoutMs: number;
-    retryPolicy: {
-      maxRetries: number;
-      retryOn: string[];
+    allowedActions: string[];
+    deniedActions: string[];
+    dataScopes: string[];
+    maxSteps: number;
+    maxDurationMs: number;
+    maxCostUnits: number;
+    rateLimit?: {
+      maxCalls: number;
+      windowSeconds: number;
     };
   };
-  policyTraceId: string;
+  policy: {
+    traceId: string;
+    appliedPolicyIds: string[];
+    riskLevel: 'low' | 'medium' | 'high';
+  };
+  permit: ExecutionPermit;
   auditRef: string;
-  reason?: string;
+  traceId: string;
+  signature: string;
 }
 ```
 
@@ -228,10 +260,11 @@ function routeIntent(input: RoutingInput): ExecutionPlan {
   const sorted = stableSort(scoredAgents);
 
   // 5. Plan & Permit
-  const plan = buildExecutionPlan(sorted[0], policy.traceId);
-  const permit = issuePermit(plan);
+  const plan = buildExecutionPlan(sorted[0], policy);
+  const permit = issuePermit(plan, policy);
+  const signedPlan = signPlan({ ...plan, permit });
   
-  return { ...plan, permit, decision: 'execute' };
+  return signedPlan;
 }
 ```
 

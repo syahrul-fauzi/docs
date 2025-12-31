@@ -140,6 +140,7 @@ Pengembangan SBA-Agentic mengikuti metodologi **ADDIE (Analysis, Design, Develop
 
 | Modul | Dokumen Referensi | Status |
 | :--- | :--- | :--- |
+| **Strategy & Framework** | [AFD → Capability Mapping Matrix](../Strategy%20&%20Capability%20Framework/AFD%20→%20Capability%20Mapping%20Matrix.md) | ✅ Active |
 | **Core Orchestrator** | [agent-reasoning.md](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/agent-reasoning.md) | ✅ Active |
 | **Control Plane Utama** | [Control Plane Utama — Sba-agentic.md](./Control Plane Utama — Sba-agentic.md) | ✅ Active |
 | **Internal Console** | [Control & Intelligence Console — Sba-agentic.md](./Control & Intelligence Console — Sba-agentic.md) | ✅ Active |

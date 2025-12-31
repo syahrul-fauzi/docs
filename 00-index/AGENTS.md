@@ -18,6 +18,7 @@ Dokumen disusun berdasarkan peran dan siklus hidup pengembangan:
 - **01-product/**: Visi bisnis, target pengguna, dan perbandingan aplikasi.
 - **02-architecture/**: Spesifikasi teknis, model data, dan arsitektur sistem.
 - **03-agentic/**: Standar perilaku agent, workflow, dan mekanisme HITL.
+- **Strategy & Capability Framework/**: [Agent Capability Registry Spec](../Strategy%20&%20Capability%20Framework/Agent%20Capability%20Registry%20Spec.md) & [SDK Guide](../Strategy%20&%20Capability%20Framework/Agent%20Runtime%20SDK%20(TypeScript).md).
 - **04-rules/**: Aturan proyek, style guide, dan tata kelola dependensi.
 - **05-api/**: Dokumentasi endpoint, skema request/response, dan sistem notifikasi.
 - **06-development/**: Panduan pengembangan, UI/UX standard, dan rencana eksekusi.
