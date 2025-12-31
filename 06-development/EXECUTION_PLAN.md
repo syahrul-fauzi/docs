@@ -14,6 +14,7 @@ Rencana eksekusi pengembangan sistem SBA-Agentic dari fondasi hingga post-launch
 ## 1. Roadmap Pengembangan (Fase)
 
 ### Fase 1: Fondasi & Logika Inti (In Progress)
+
 - [x] **Struktur Project**: Setup Monorepo (Turborepo + pnpm).
 - [x] **Database**: Definisi skema Supabase/Prisma.
 - [x] **Basic API**: Setup NestJS dengan Health/Metrics.
@@ -23,18 +24,21 @@ Rencana eksekusi pengembangan sistem SBA-Agentic dari fondasi hingga post-launch
 - [ ] **Queue System**: Stabilisasi BullMQ workers.
 
 ### Fase 2: Implementasi Fitur (Langkah Selanjutnya)
+
 - [ ] **Tool Registry**: Implementasi tool nyata (Search, Calculator, dsb).
 - [ ] **Session UI**: Menghubungkan Chat Interface Frontend ke Backend.
 - [ ] **Real-time Updates**: Implementasi Polling atau WebSocket untuk status run.
 - [ ] **Error Handling**: Global exception filters dan logika recovery.
 
 ### Fase 3: Testing & Optimasi
+
 - [ ] **Unit Tests**: Coverage > 80% untuk Services.
 - [ ] **Integration Tests**: Supertest untuk semua Controller.
 - [ ] **E2E Tests**: Flow Playwright untuk path kritikal.
-- [ ] **Performa**: Load testing dengan k6.
+- [ ] **Performa**: Load testing with k6.
 
 ### Fase 4: Polish & Delivery
+
 - [ ] **Dokumentasi**: API Docs (Swagger), User Guide.
 - [ ] **UI/UX**: Refine loading states, error messages.
 - [ ] **Deployment**: Dockerfile optimization, CI/CD pipeline.
@@ -57,6 +61,7 @@ Rencana eksekusi pengembangan sistem SBA-Agentic dari fondasi hingga post-launch
 4. **Testing**: Memperluas suite pengujian untuk menjamin stabilitas di setiap rilis.
 
 ## 4. Kriteria Keberhasilan
+
 - Build stabil dan lulus CI gates.
 - Metrik tervalidasi terhadap baseline.
 - UX/a11y dasar terpenuhi (skor Lighthouse > 90).

@@ -85,23 +85,23 @@ tags: [roadmap, go-live, architecture, strategy]
 - Hapus klien lokal duplikat di `apps/app` dan `apps/docs`.
 - Deprecate `packages/db` dan rencanakan penghapusan alias di `tsconfig.json`.
 
-2. Penguatan API
+1. Penguatan API
 
 - Validasi JWT handshake WS; tambahkan guard/adapter Redis.
 - Rate limiting HTTP/WS terdistribusi; kebijakan konsisten lintas stack.
 - Ganti cache Map lokal dengan Redis/kv; tambahkan helper caching standar di API.
 
-3. Data & Query
+1. Data & Query
 
 - Implement pgvector + reranker untuk knowledge; audit indeks dan kolom minimal.
 - Terapkan `SET app.tenant_id` + kebijakan RLS untuk schema Prisma (opsional, jika diinginkan proteksi DB-side).
 
-4. Observabilitas & Keamanan
+1. Observabilitas & Keamanan
 
 - Lengkapi tracing end-to-end; korelasi job-id/tenantId.
 - Perketat CORS allowlist; fail-fast env validation.
 
-5. Kualitas & CI/CD
+1. Kualitas & CI/CD
 
 - Standarisasi ESLint v9; hapus config ganda.
 - Tambah `.github/CODEOWNERS`; perkuat pipeline lint/test/coverage.

@@ -15,16 +15,16 @@ Dokumentasi ini berisi panduan, checklist, dan rencana peluncuran sistem **SBA-A
 
 Untuk meminimalkan risiko, peluncuran dilakukan dalam empat fase utama:
 
-*   **Fase 1: Staging Environment (Minggu 1)**
-    *   Deploy ke lingkungan staging.
-    *   Pengujian internal bersama tim QA.
-*   **Fase 2: Beta Testing (Minggu 2)**
-    *   Deploy ke lingkungan beta.
-    *   Rekrutmen 50-100 beta testers.
-*   **Fase 3: A/B Testing (Minggu 3)**
-    *   Deploy ke 25% basis pengguna.
-*   **Fase 4: Full Rollout (Minggu 4)**
-    *   Deploy ke 100% basis pengguna.
+* **Fase 1: Staging Environment (Minggu 1)**
+  * Deploy ke lingkungan staging.
+  * Pengujian internal bersama tim QA.
+* **Fase 2: Beta Testing (Minggu 2)**
+  * Deploy ke lingkungan beta.
+  * Rekrutmen 50-100 beta testers.
+* **Fase 3: A/B Testing (Minggu 3)**
+  * Deploy ke 25% basis pengguna.
+* **Fase 4: Full Rollout (Minggu 4)**
+  * Deploy ke 100% basis pengguna.
 
 ## 2. Milestone & Jalur Kritis
 
@@ -71,12 +71,15 @@ sequenceDiagram
 ```
 
 ## 📖 Konten Utama
-- **[PRODUCTION_READINESS_CHECKLIST.md](./PRODUCTION_READINESS_CHECKLIST.md)**: Daftar periksa kesiapan produksi.
-- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**: Panduan teknis deployment.
-- **[GO_NOGO_DECISION.md](./GO_NOGO_DECISION.md)**: Protokol keputusan Go/No-Go.
-- **[ROADMAP_GO_LIVE.md](./ROADMAP_GO_LIVE.md)**: Peta jalan peluncuran.
+
+* **[PRODUCTION_READINESS_CHECKLIST.md](./PRODUCTION_READINESS_CHECKLIST.md)**: Daftar periksa kesiapan produksi.
+* **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)**: Panduan teknis deployment.
+* **[GO_NOGO_DECISION.md](./GO_NOGO_DECISION.md)**: Protokol keputusan Go/No-Go.
+* **[ROADMAP_GO_LIVE.md](./ROADMAP_GO_LIVE.md)**: Peta jalan peluncuran.
+* **[Simulasi Full Go-Live End-to-End](../.trae/simulasi%20full%20go-live%20end-to-end.md)**: Panduan simulasi produksi end-to-end.
 
 ## 👥 Audience
-- **DevOps Engineers**: Untuk eksekusi deployment dan monitoring.
-- **Release Managers**: Untuk koordinasi fase peluncuran.
-- **Product Owners**: Untuk validasi milestone dan kriteria rilis.
+
+* **DevOps Engineers**: Untuk eksekusi deployment dan monitoring.
+* **Release Managers**: Untuk koordinasi fase peluncuran.
+* **Product Owners**: Untuk validasi milestone dan kriteria rilis.

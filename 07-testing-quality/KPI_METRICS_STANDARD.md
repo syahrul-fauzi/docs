@@ -54,6 +54,7 @@ Dokumen ini mendefinisikan metrik keberhasilan (Key Performance Indicators) untu
 ---
 
 ## 📈 Mekanisme Pelaporan
+
 - **Real-time**: Dipantau melalui `08-operations/MONITORING_DASHBOARD.md`.
 - **Mingguan**: Laporan performa yang diulas oleh `@ReviewAgent`.
 - **Bulanan**: Audit strategis untuk penyesuaian target KPI berdasarkan data produksi nyata.

@@ -20,9 +20,11 @@ Token dapat diperoleh melalui Clerk (frontend) atau dari dashboard Supabase untu
 ## 1. Runs (`/api/runs`)
 
 ### 1.1 Mulai Run Baru (`POST /api/runs`)
+
 Memulai eksekusi orchestrator untuk serangkaian pesan atau tugas.
 
 **Request Body:**
+
 ```json
 {
   "messages": [
@@ -36,6 +38,7 @@ Memulai eksekusi orchestrator untuk serangkaian pesan atau tugas.
 ```
 
 **Response (201 Created):**
+
 ```json
 {
   "run_id": "run_abc123",
@@ -45,9 +48,11 @@ Memulai eksekusi orchestrator untuk serangkaian pesan atau tugas.
 ```
 
 ### 1.2 Detail Run (`GET /api/runs/:runId`)
+
 Mengambil status terbaru dan metadata dari run tertentu.
 
 **Response (200 OK):**
+
 ```json
 {
   "run_id": "run_abc123",
@@ -64,15 +69,18 @@ Mengambil status terbaru dan metadata dari run tertentu.
 ```
 
 ### 1.3 Stream Update (`GET /api/runs/:runId/stream`)
+
 Membuka koneksi Server-Sent Events (SSE) untuk mendapatkan update real-time.
 
 **Events:**
+
 - `status`: Update status run (`queued`, `in_progress`, `completed`, `failed`).
 - `step`: Update langkah yang sedang dikerjakan agent.
 - `log`: Log audit/pemikiran agent (Reasoning Trace).
 - `result`: Hasil akhir run.
 
 **Contoh Payload Event `log`:**
+
 ```json
 {
   "type": "log",
@@ -89,6 +97,7 @@ Membuka koneksi Server-Sent Events (SSE) untuk mendapatkan update real-time.
 SBA-Agentic menggunakan format error JSON standar untuk semua kegagalan API.
 
 ### 2.1 Format Error Standar
+
 ```json
 {
   "error": {
@@ -104,6 +113,7 @@ SBA-Agentic menggunakan format error JSON standar untuk semua kegagalan API.
 ```
 
 ### 2.2 Kode Status & Error Umum
+
 - **400 Bad Request (`INVALID_PAYLOAD`)**: Request body tidak valid atau tidak lengkap.
 - **401 Unauthorized (`UNAUTHORIZED`)**: Token autentikasi hilang atau tidak valid.
 - **403 Forbidden (`INSUFFICIENT_PERMISSIONS`)**: User tidak memiliki izin (RBAC) atau akses tenant ditolak.
@@ -116,6 +126,7 @@ SBA-Agentic menggunakan format error JSON standar untuk semua kegagalan API.
 Anda dapat mendaftarkan webhook untuk menerima notifikasi saat run selesai atau terjadi error.
 
 ### 3.1 Payload Webhook (`POST`)
+
 ```json
 {
   "event": "run.completed",

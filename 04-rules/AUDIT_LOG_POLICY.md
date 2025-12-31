@@ -14,6 +14,7 @@ Kebijakan ini mengatur pengumpulan, penyimpanan, dan integritas log audit untuk 
 ## 1. Lingkup Pencatatan Audit
 
 Sistem wajib mencatat setiap aktivitas berikut secara *immutable* (tidak dapat diubah):
+
 - **Otentikasi**: Login, logout, kegagalan MFA.
 - **Otorisasi**: Perubahan peran (RBAC), akses ke resource sensitif.
 - **Tindakan Agen**: Eksekusi tool, pengambilan keputusan kritis, intervensi HITL.
@@ -24,6 +25,7 @@ Sistem wajib mencatat setiap aktivitas berikut secara *immutable* (tidak dapat d
 ## 2. Struktur Data Log Audit
 
 Setiap entri log harus mengandung:
+
 - `timestamp`: Waktu kejadian (ISO-8601).
 - `actor_id`: ID user atau ID agen yang melakukan tindakan.
 - `action_type`: Kategori tindakan.

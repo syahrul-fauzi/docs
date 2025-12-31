@@ -1,3 +1,10 @@
+---
+title: Agentic Front Door (AFD)
+created_at: 2025-12-31
+author: SBASuperAgent
+status: active
+---
+
 # Agentic Front Door (AFD)
 
 ## Executive Summary

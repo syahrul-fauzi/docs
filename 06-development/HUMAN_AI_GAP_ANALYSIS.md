@@ -24,11 +24,13 @@ Dokumen ini menganalisis kesenjangan keterampilan antara kompetensi SDM tradisio
 ## 2. Identifikasi Kesenjangan Keterampilan (Gaps)
 
 ### 2.1 Technical Gaps
+
 - **Prompt Engineering**: Kurangnya pemahaman tentang teknik CoT (Chain-of-Thought), ReAct, dan minimalisasi halusinasi.
 - **Vector Database Management**: Kebutuhan akan keahlian dalam pgvector, embeddings, dan semantic search.
 - **AI Observability**: Kurangnya pengalaman dalam memantau metrik non-deterministik.
 
 ### 2.2 Mindset Gaps
+
 - **Delegasi vs Eksekusi**: Kebiasaan mengontrol setiap baris kode dibandingkan mempercayai agen untuk mengambil keputusan otonom.
 - **Probabilistic Thinking**: Kesulitan menangani output AI yang tidak selalu identik untuk input yang sama.
 
@@ -36,9 +38,9 @@ Dokumen ini menganalisis kesenjangan keterampilan antara kompetensi SDM tradisio
 
 ## 3. Strategi Penutupan Celah (Closing the Gaps)
 
-1.  **Pelatihan Intensif**: Workshop internal tentang Arsitektur SBA-Agentic dan LLM Fundamentals.
-2.  **Pairing with Agents**: Mendorong developer menggunakan agen internal dalam alur kerja harian (dogfooding).
-3.  **Recruitment Adjustment**: Menambahkan kriteria "AI Literacy" dan "Agentic System Design" dalam proses rekrutmen baru.
+1. **Pelatihan Intensif**: Workshop internal tentang Arsitektur SBA-Agentic dan LLM Fundamentals.
+2. **Pairing with Agents**: Mendorong developer menggunakan agen internal dalam alur kerja harian (dogfooding).
+3. **Recruitment Adjustment**: Menambahkan kriteria "AI Literacy" dan "Agentic System Design" dalam proses rekrutmen baru.
 
 ---
 

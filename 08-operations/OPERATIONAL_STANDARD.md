@@ -16,12 +16,14 @@ Aturan Operasional Standar (SOP) untuk memastikan agen AI, otomatisasi alur kerj
 Setiap pengembang dan agen AI wajib mematuhi standar dasar berikut:
 
 ### Standar Pengembangan & AI (AgentOps)
+
 - **Coding Standards**: Menggunakan `biome.json`. TypeScript *Strict Mode* wajib aktif.
 - **Reasoning Patterns**: Setiap agen wajib mengikuti pola **ReasoningStep** (Analysis -> Planning -> Execution -> Reflection).
 - **Confidence Scoring**: Keputusan agen dengan skor < 0.7 wajib memicu intervensi manusia (Human-in-the-Loop).
 - **Tool Contracts**: Akses API/DB hanya melalui *Tool Registry* yang tervalidasi.
 
 ### Keamanan & Kepatuhan Operasional
+
 - **Auth**: Supabase Auth + JWT Validation.
 - **Data Protection**: Masking PII rekursif pada log agen dan enkripsi data sensitif.
 - **Audit Logging**: Pencatatan administratif otomatis untuk setiap aksi sensitif.
@@ -43,8 +45,19 @@ Operasional dikategorikan ke dalam 4 pilar utama:
 - **Real-time**: Agent Stream Gateway untuk feedback instan.
 - **Analytics**: Komponen AG-UI untuk visualisasi metrik bisnis.
 
-## 4. Penanganan Kesalahan (Fail-safe)
+## 4. Penanganan Kesalahan & Resiliensi (Fail-safe)
 
-- Setiap eksekusi rule wajib memiliki blok `try-catch` dengan logging error yang terstruktur.
-- Gunakan `span` observabilitas untuk melacak durasi dan status eksekusi setiap aturan.
-- Mekanisme retry otomatis dengan backoff eksponensial untuk kegagalan transien.
+- **Circuit Breakers**: Implementasi pola circuit breaker untuk mencegah kegagalan sistem beruntun saat layanan eksternal bermasalah.
+- **Exponential Backoff**: Mekanisme retry otomatis dengan jeda yang meningkat untuk kegagalan transien.
+- **Dead Letter Queues (DLQ)**: Setiap pesan atau tugas yang gagal diproses setelah retry maksimal akan dipindahkan ke DLQ untuk investigasi manual.
+- **Graceful Degradation**: Sistem tetap berjalan dengan fitur terbatas jika komponen non-kritikal mengalami kegagalan.
+
+## 5. Standar Enterprise & Kepatuhan
+
+- **Keamanan**: Implementasi OAuth 2.0, mTLS antar layanan, dan enkripsi end-to-end.
+- **Compliance**: Kepatuhan terhadap standar GDPR, SOC 2, dan ISO 27001 dalam pengelolaan data.
+- **Disaster Recovery**:
+  - **RTO (Recovery Time Objective)**: < 15 menit.
+  - **RPO (Recovery Point Objective)**: < 1 menit.
+- **Observability**: Monitoring real-time menggunakan stack Prometheus, Grafana, dan ELK untuk logging terpusat.
+- **Auto-scaling**: Skalabilitas horizontal otomatis berdasarkan beban kerja (CPU, Memory, Queue Depth).

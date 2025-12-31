@@ -41,6 +41,7 @@ Pemetaan antara persyaratan fungsional (Requirements) dengan implementasi kode d
 ## 4. Pemeliharaan Matriks
 
 Matriks ini harus diperbarui setiap kali:
+
 - Fitur baru ditambahkan ke roadmap produk.
 - Perubahan arsitektur besar dilakukan (ADR).
 - Suite pengujian baru ditambahkan ke CI/CD.

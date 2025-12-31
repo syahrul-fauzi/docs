@@ -16,11 +16,12 @@ Dokumen ini menetapkan pola alur kerja (workflow) dan penalaran (reasoning) stan
 Semua agen wajib menggunakan pola *Chain-of-Thought* (CoT) melalui mekanisme *Scratchpad* sebelum memberikan jawaban akhir.
 
 **Struktur Reasoning:**
-1.  **Thought**: Analisis terhadap input user dan identifikasi tujuan.
-2.  **Plan**: Daftar langkah-langkah konkret untuk mencapai tujuan.
-3.  **Observation**: Hasil dari eksekusi tool atau pencarian memori.
-4.  **Reflection**: Evaluasi apakah hasil observasi sudah menjawab tujuan. Jika belum, buat rencana baru.
-5.  **Final Answer**: Respon akhir ke user.
+
+1. **Thought**: Analisis terhadap input user dan identifikasi tujuan.
+2. **Plan**: Daftar langkah-langkah konkret untuk mencapai tujuan.
+3. **Observation**: Hasil dari eksekusi tool atau pencarian memori.
+4. **Reflection**: Evaluasi apakah hasil observasi sudah menjawab tujuan. Jika belum, buat rencana baru.
+5. **Final Answer**: Respon akhir ke user.
 
 ---
 
@@ -53,4 +54,5 @@ Untuk tugas yang kompleks, gunakan pola kolaborasi antar agen:
 Semua output internal antar agen wajib menggunakan format JSON yang valid untuk memudahkan parsing dan integrasi sistem.
 
 ---
+
 *Ditetapkan oleh SOLOCoder untuk standarisasi logika operasional agen.*

@@ -12,12 +12,16 @@ tags: [development, coding-standards, setup, workflow]
 Folder ini berisi panduan teknis untuk pengembang, standar penulisan kode, setup lingkungan kerja, dan dokumentasi komponen UI.
 
 ## 👥 Audience
+
 - Frontend Developers
 - Backend Developers
 - Fullstack Engineers
 
 ## 📖 Konten Utama
+
 - **[INSTALLATION.md](./INSTALLATION.md)**: Panduan instalasi dan setup lingkungan pengembangan.
+- **Control Plane Utama (apps/app)**: Jalankan dengan `pnpm -C apps/app dev`.
+- **Internal Console (apps/internal-console)**: Jalankan dengan `pnpm -C apps/internal-console dev` (lihat INSTALLATION untuk env).
 - **[EXECUTION_PLAN.md](./EXECUTION_PLAN.md)**: Peta jalan pengembangan fitur dan milestone.
 - **[TECHNICAL_GUIDELINES.md](./TECHNICAL_GUIDELINES.md)**: Spesifikasi teknis, arsitektur, dan panduan lingkungan.
 - **[CONTRIBUTING.md](./CONTRIBUTING.md)**: Panduan kontribusi, standar koding, dan workflow PR.

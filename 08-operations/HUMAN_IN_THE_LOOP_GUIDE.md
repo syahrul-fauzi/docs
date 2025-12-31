@@ -15,22 +15,22 @@ Panduan ini mendefinisikan kapan, bagaimana, dan mengapa intervensi manusia dipe
 
 Manusia (Supervisor) wajib melakukan intervensi jika agen mengalami kondisi berikut:
 
-1.  **Low Confidence Score**: Agen memberikan estimasi kepercayaan < 70% untuk tugas kritis.
-2.  **High-Risk Actions**: Tugas yang melibatkan penghapusan data masif, transaksi keuangan > $1000, atau perubahan konfigurasi keamanan global.
-3.  **Ambiguity Deadlock**: Agen meminta klarifikasi karena terdapat instruksi yang kontradiktif.
-4.  **Repetitive Loop**: Agen terjebak dalam siklus pemikiran yang sama tanpa kemajuan selama 3 iterasi.
+1. **Low Confidence Score**: Agen memberikan estimasi kepercayaan < 70% untuk tugas kritis.
+2. **High-Risk Actions**: Tugas yang melibatkan penghapusan data masif, transaksi keuangan > $1000, atau perubahan konfigurasi keamanan global.
+3. **Ambiguity Deadlock**: Agen meminta klarifikasi karena terdapat instruksi yang kontradiktif.
+4. **Repetitive Loop**: Agen terjebak dalam siklus pemikiran yang sama tanpa kemajuan selama 3 iterasi.
 
 ---
 
 ## 2. Alur Kerja HITL
 
-1.  **Escalation**: Agen menghentikan eksekusi dan mengirim notifikasi ke dasbor Supervisor.
-2.  **Context Review**: Supervisor meninjau *Reasoning Log* dan *Current State* agen.
-3.  **Action Selection**: Supervisor memilih salah satu tindakan:
-    - **Approve**: Izinkan agen melanjutkan.
-    - **Correct**: Berikan instruksi tambahan atau perbaiki parameter.
-    - **Abort**: Hentikan tugas sepenuhnya.
-    - **Takeover**: Supervisor menyelesaikan tugas secara manual.
+1. **Escalation**: Agen menghentikan eksekusi dan mengirim notifikasi ke dasbor Supervisor.
+2. **Context Review**: Supervisor meninjau *Reasoning Log* dan *Current State* agen.
+3. **Action Selection**: Supervisor memilih salah satu tindakan:
+   - **Approve**: Izinkan agen melanjutkan.
+   - **Correct**: Berikan instruksi tambahan atau perbaiki parameter.
+   - **Abort**: Hentikan tugas sepenuhnya.
+   - **Takeover**: Supervisor menyelesaikan tugas secara manual.
 
 ---
 
@@ -45,9 +45,11 @@ Manusia (Supervisor) wajib melakukan intervensi jika agen mengalami kondisi beri
 ## 4. Antarmuka Supervisor (UI)
 
 Antarmuka HITL harus menyediakan:
+
 - Visualisasi *Chain-of-Thought* yang mudah dibaca.
 - Tombol aksi cepat (Approve/Reject/Edit).
 - Akses instan ke dokumen kebijakan terkait (PROJECT_RULES.md).
 
 ---
+
 *Ditetapkan oleh SuperAgent untuk kolaborasi Manusia-Agen yang aman.*

@@ -81,6 +81,7 @@ The marketing application follows Feature-Sliced Design principles:
    ```
 
 3. **Deploy CMS Package**
+
    ```bash
    cd packages/cms
    bun install
@@ -103,6 +104,7 @@ The marketing application follows Feature-Sliced Design principles:
    - Set up webhook endpoints
 
 3. **Deploy Application**
+
    ```bash
    bun build
    bun start
@@ -275,9 +277,9 @@ The marketing application follows Feature-Sliced Design principles:
 
 ### Documentation
 
-- BaseHub documentation: https://basehub.com/docs
-- Next.js documentation: https://nextjs.org/docs
-- Feature-Sliced Design: https://feature-sliced.design/
+- BaseHub documentation: <https://basehub.com/docs>
+- Next.js documentation: <https://nextjs.org/docs>
+- Feature-Sliced Design: <https://feature-sliced.design/>
 
 ### Community
 

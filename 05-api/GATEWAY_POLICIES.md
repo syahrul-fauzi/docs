@@ -50,4 +50,4 @@ Dokumen ini menetapkan kebijakan operasional untuk API Gateway yang melayani kom
 - **Telemetry**: Semua traffic dicatat ke dalam ELK Stack untuk audit keamanan dan analisis performa (KPI).
 
 ---
-*Dikelola oleh SOLOBuilder untuk menjamin stabilitas infrastruktur API.*
+Dikelola oleh SOLOBuilder untuk menjamin stabilitas infrastruktur API.

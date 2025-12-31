@@ -1,8 +1,10 @@
 ---
 id: sba.core.master_specification
+title: SBA-Agentic Master Specification (Smart Business Assistant)
 version: 2.3.0
 author: Super Agent & SBA-Agentic Team
 status: active
+created_at: 2025-12-29
 scope: global
 tags: [specification, core, architecture, agentic-system, business-os, agentic-enterprise, 2026-roadmap]
 ---

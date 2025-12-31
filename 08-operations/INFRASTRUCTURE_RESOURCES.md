@@ -14,14 +14,17 @@ Panduan pengelolaan dan optimasi sumber daya infrastruktur (Database, Redis, dan
 ## 1. Optimasi Performa Database (PostgreSQL)
 
 ### Analisis Query
+
 - Identifikasi slow query menggunakan log level `query` di Prisma (saat dev).
 - Gunakan `EXPLAIN ANALYZE` untuk menganalisis rencana eksekusi query berat.
 
 ### Strategi Indeks
+
 - Tambahkan indeks komposit pada tabel dengan volume data tinggi (misal: `UsageMetric(tenantId, name, occurredAt)`).
 - Gunakan indeks pada kolom foreign key dan kolom yang sering di-sort/filter.
 
 ### Connection Pooling
+
 - Gunakan **PgBouncer** atau fitur pooling eksternal untuk manajemen koneksi yang efisien.
 - Konfigurasikan `PGPOOL_MAX` sesuai dengan concurrency puncak API dan worker.
 

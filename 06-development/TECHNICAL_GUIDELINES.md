@@ -25,6 +25,7 @@ SBA-Agentic menggunakan arsitektur monorepo berbasis Turborepo dan pnpm workspac
 ## 2. Komponen Reasoning Runtime
 
 Engine reasoning `@sba/agentic-reasoning` bertindak sebagai otak dari agent:
+
 - **Orchestrator**: `apps/app/src/processes/agentic/orchestrator.ts` mengelola perencanaan tugas.
 - **Runtime Loop**: `apps/app/src/processes/agentic/runtime.ts` mencatat log keputusan setiap langkah.
 - **Bootstrapping**: Diinisialisasi via `apps/app/src/instrumentation.ts`.
@@ -56,6 +57,7 @@ Engine reasoning `@sba/agentic-reasoning` bertindak sebagai otak dari agent:
 ## 5. Konfigurasi Lingkungan (Environment)
 
 Setiap aplikasi/paket memerlukan file `.env` yang merujuk pada `.env.example`.
+
 - **Auth**: `CLERK_SECRET_KEY`, `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`.
 - **Database**: `DATABASE_URL`, `DIRECT_URL`.
 - **Redis**: `REDIS_URL`.

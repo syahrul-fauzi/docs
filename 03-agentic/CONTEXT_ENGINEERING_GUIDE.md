@@ -15,10 +15,10 @@ Panduan ini mendefinisikan standar profesional untuk mengelola "Context Stack" d
 
 Context Stack dibagi menjadi 4 lapisan utama yang harus dikelola secara hierarkis:
 
-1.  **System Instructions (Static)**: Core identity, rules, dan batasan agen.
-2.  **Dynamic Context (Session)**: Sejarah percakapan aktif dan variabel state saat ini.
-3.  **Retrieved Context (RAG)**: Data relevan yang ditarik dari Knowledge Base (Supabase Vector).
-4.  **Tool Output Context (Execution)**: Hasil eksekusi fungsi/API yang dibutuhkan untuk langkah selanjutnya.
+1. **System Instructions (Static)**: Core identity, rules, dan batasan agen.
+2. **Dynamic Context (Session)**: Sejarah percakapan aktif dan variabel state saat ini.
+3. **Retrieved Context (RAG)**: Data relevan yang ditarik dari Knowledge Base (Supabase Vector).
+4. **Tool Output Context (Execution)**: Hasil eksekusi fungsi/API yang dibutuhkan untuk langkah selanjutnya.
 
 ---
 

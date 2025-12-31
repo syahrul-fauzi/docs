@@ -40,10 +40,10 @@ sequenceDiagram
 
 ## Logic Breakdown
 
-1.  **Detection**: `RuleExecutor` menangkap exception dan memanggil callback `handleFailure` yang dikonfigurasi saat inisialisasi `RuleManager`.
-2.  **Analysis**: `AgenticReasoningEngine` menggunakan template prompt khusus kegagalan untuk menganalisis payload asli dan pesan error.
-3.  **Action**: Jika perbaikan dimungkinkan via tool (misal: kirim email alert ke tim operasional), tool tersebut dijalankan dengan flag idempotency.
-4.  **Logging**: Event dicatat dengan tipe khusus `self_correction` agar dashboard dapat membedakannya dari flow normal.
+1. **Detection**: `RuleExecutor` menangkap exception dan memanggil callback `handleFailure` yang dikonfigurasi saat inisialisasi `RuleManager`.
+2. **Analysis**: `AgenticReasoningEngine` menggunakan template prompt khusus kegagalan untuk menganalisis payload asli dan pesan error.
+3. **Action**: Jika perbaikan dimungkinkan via tool (misal: kirim email alert ke tim operasional), tool tersebut dijalankan dengan flag idempotency.
+4. **Logging**: Event dicatat dengan tipe khusus `self_correction` agar dashboard dapat membedakannya dari flow normal.
 
 ## Error Handling
 

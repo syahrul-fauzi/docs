@@ -34,10 +34,10 @@ Sistem monitoring telah dikonfigurasi dengan Prometheus & Grafana.
 
 ### Alert Rules (`monitoring/prometheus/alert.rules.yml`)
 
-1.  **HighErrorRate:** Trigger jika HTTP 5xx > 5% selama 2 menit.
-2.  **HighCPUUsage:** Trigger jika CPU usage > 80% selama 5 menit.
-3.  **HighMemoryUsage:** Trigger jika Memory usage > 90% selama 5 menit.
-4.  **InstanceDown:** Trigger jika service down > 1 menit.
+1. **HighErrorRate**: Trigger jika HTTP 5xx > 5% selama 2 menit.
+2. **HighCPUUsage**: Trigger jika CPU usage > 80% selama 5 menit.
+3. **HighMemoryUsage**: Trigger jika Memory usage > 90% selama 5 menit.
+4. **InstanceDown**: Trigger jika service down > 1 menit.
 
 **Action Plan saat Alert Triggered:**
 
@@ -49,12 +49,13 @@ Sistem monitoring telah dikonfigurasi dengan Prometheus & Grafana.
 
 Jika terjadi kegagalan deployment atau anomali performa berat:
 
-**Langkah 1: Identifikasi Masalah**
+### Langkah 1: Identifikasi Masalah
 
 - Cek Alert di Grafana/Prometheus.
 - Validasi error logs.
 
-**Langkah 2: Rollback Cepat (Docker)**
+### Langkah 2: Rollback Cepat (Docker)
+
 Jika menggunakan image tag spesifik (misal `v1.0.1` ke `v1.0.2` bermasalah):
 
 ```bash
@@ -64,7 +65,7 @@ vim docker-compose.prod.yml
 docker-compose -f docker-compose.prod.yml up -d
 ```
 
-**Langkah 3: Rollback Code (Git)**
+### Langkah 3: Rollback Code (Git)
 
 ```bash
 # Revert commit terakhir
@@ -74,7 +75,8 @@ git push origin main
 # Pipeline CI/CD akan otomatis deploy versi revert
 ```
 
-**Langkah 4: Database Rollback (Jika perlu)**
+### Langkah 4: Database Rollback (Jika perlu)
+
 _Hati-hati: Data baru mungkin hilang._
 
 ```bash

@@ -1,3 +1,10 @@
+---
+title: Use Case Specifications — Internal Console (SBA-Agentic)
+created_at: 2025-12-31
+author: SBASuperAgent
+status: active
+---
+
 # Use Case Specifications — Internal Console (SBA-Agentic)
 
 > **Kontrak Operasional & Spesifikasi Use Case** untuk aplikasi `apps/internal-console`. Dokumen ini mendetailkan interaksi antara operator manusia, AI Agent, dan Control Plane.

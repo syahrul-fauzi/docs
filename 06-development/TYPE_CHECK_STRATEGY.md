@@ -36,6 +36,7 @@ Strategi dan panduan pemeriksaan tipe (Type-Check) untuk menjaga integritas kode
 ## 4. Integrasi CI (GitHub Actions)
 
 Job `typecheck-global` harus berjalan paling awal dan menjadi prasyarat bagi job lainnya:
+
 1. Setup environment (Node, pnpm, deps).
 2. Jalankan `pnpm run type-check` dan `pnpm run type-check:test:global`.
 3. Jika gagal, hentikan pipeline dan berikan feedback pada PR.
@@ -43,6 +44,7 @@ Job `typecheck-global` harus berjalan paling awal dan menjadi prasyarat bagi job
 ## 5. Dashboard & Monitoring
 
 Metrik type-check dipantau via `typecheck-summary.json`:
+
 - **Total Errors**: Harus selalu 0 pada branch utama.
 - **Durasi**: Dipantau untuk mendeteksi regresi performa kompilasi.
 - **Progres Pengetatan**: Persentase file yang telah memenuhi standar `strict` terbaru.

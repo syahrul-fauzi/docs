@@ -12,46 +12,50 @@ status: draft
 
 ## Bentuk Persistensi
 
-```
+```json
 {
-  id: string,
-  title: string,
-  tenant_id: string,
-  user_id: string,
-  status: 'active'|'paused'|'completed'|'archived',
-  metadata?: Record<string, unknown>,
-  turns: Array<{
-    id: string,
-    role: 'user'|'assistant'|'system',
-    content: string,
-    timestamp: string|Date,
-    metadata?: {
-      model?: string,
-      tokens?: number,
-      duration?: number,
-      error?: string,
-    },
-    toolCalls?: Array<{ type: string; id: string; name: string; args?: Record<string, unknown> }>
-  }>,
-  created_at: string,
-  updated_at: string
+  "id": "string",
+  "title": "string",
+  "tenant_id": "string",
+  "user_id": "string",
+  "status": "active|paused|completed|archived",
+  "metadata": "Record<string, unknown>",
+  "turns": [
+    {
+      "id": "string",
+      "role": "user|assistant|system",
+      "content": "string",
+      "timestamp": "string|Date",
+      "metadata": {
+        "model": "string",
+        "tokens": "number",
+        "duration": "number",
+        "error": "string"
+      },
+      "toolCalls": [
+        { "type": "string", "id": "string", "name": "string", "args": "Record<string, unknown>" }
+      ]
+    }
+  ],
+  "created_at": "string",
+  "updated_at": "string"
 }
 ```
 
 ## Bentuk Domain
 
-```
+```typescript
 {
-  id: string,
-  title: string,
-  tenantId: string,
-  userId: string,
-  status: ConversationStatus,
-  metadata: { tags?: string[]; priority?: 'low'|'medium'|'high'; category?: string; customFields?: Record<string, unknown>; starred?: boolean },
-  turns: Array<{ id: string; role: 'user'|'assistant'|'system'; content: string; timestamp: Date; metadata?: any; toolCalls?: Array<{ id: string; name: string; parameters: Record<string, unknown>; status: 'completed' }>}>,
-  messages: Array<{ id: string; role: 'user'|'assistant'|'system'; content: string; timestamp: Date; metadata?: any; toolCalls?: Array<{ id: string; name: string; parameters: Record<string, unknown>; status: 'completed' }>}>,
-  createdAt: Date,
-  updatedAt: Date
+  "id": "string",
+  "title": "string",
+  "tenantId": "string",
+  "userId": "string",
+  "status": "ConversationStatus",
+  "metadata": { "tags": "string[]", "priority": "low|medium|high", "category": "string", "customFields": "Record<string, unknown>", "starred": "boolean" },
+  "turns": "Array<{ id: string; role: 'user'|'assistant'|'system'; content: string; timestamp: Date; metadata?: any; toolCalls?: Array<{ id: string; name: string; parameters: Record<string, unknown>; status: 'completed' }>}>",
+  "messages": "Array<{ id: string; role: 'user'|'assistant'|'system'; content: string; timestamp: Date; metadata?: any; toolCalls?: Array<{ id: string; name: string; parameters: Record<string, unknown>; status: 'completed' }>}>",
+  "createdAt": "Date",
+  "updatedAt": "Date"
 }
 ```
 

@@ -2,10 +2,10 @@
 title: Arsitektur Control Plane Utama (apps/app)
 slug: arsitektur-apps-app
 created_at: 2025-12-29
-last_modified: 2025-12-29
+last_modified: 2025-12-31
 author: SBA-Agentic Team
 status: Final
-version: 1.2.1
+version: 1.2.2
 ---
 
 # Arsitektur Control Plane Utama
@@ -86,12 +86,12 @@ graph TD
 ## 5. Technical Debt Inventory
 Daftar hutang teknis yang perlu ditangani untuk menjaga kesehatan jangka panjang `apps/app`.
 
-| ID | Component | Description | Priority | Effort |
-| :--- | :--- | :--- | :--- | :--- |
-| **TD-01** | Hydration | Server components hydration mismatch pada beberapa dashboard widgets. | Medium | Low |
-| **TD-02** | Bundle Size | Beberapa library charting (Recharts) menambah bundle size signifikan. | Low | Medium |
-| **TD-03** | Testing | Unit test coverage untuk `features/runs` masih di bawah 50%. | High | Medium |
-| **TD-04** | Error Boundary | Perlu implementasi error boundary yang lebih granular per feature widget. | Medium | Low |
+| ID | Component | Description | Priority | Effort | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **TD-01** | Hydration | Server components hydration mismatch pada beberapa dashboard widgets. | Medium | Low | **Fixed** |
+| **TD-02** | Bundle Size | Beberapa library charting (Recharts) menambah bundle size signifikan. | Low | Medium | **Fixed** |
+| **TD-03** | Testing | Unit test coverage untuk `features/runs` masih di bawah 50%. | High | Medium | **Fixed** |
+| **TD-04** | Error Boundary | Perlu implementasi error boundary yang lebih granular per feature widget. | Medium | Low | **Fixed** |
 
 ---
 
@@ -146,6 +146,7 @@ Kerangka kerja untuk memastikan visibilitas penuh terhadap kesehatan aplikasi da
 ## 9. Change Log
 | Version | Date | Author | Description |
 | :--- | :--- | :--- | :--- |
+| 1.2.2 | 2025-12-31 | SBA-Agentic Team | Update status Technical Debt (TD-01 s/d TD-04 resolved). |
 | 1.2.1 | 2025-12-29 | SBA-Agentic Team | Inisialisasi arsitektur detail untuk Control Plane Utama (apps/app). |
 
 ---
@@ -154,4 +155,4 @@ Kerangka kerja untuk memastikan visibilitas penuh terhadap kesehatan aplikasi da
 ## 9. Referensi Terkait
 * [Control Plane Utama — Landing Page](../00-index/Control%20Plane%20Utama%20—%20Sba-agentic.md)
 * [Use Case Specifications — Control Plane](../01-product/Use%20Case%20Specifications%20—%20Control%20Plane%20(sba-agentic).md)
-* [SBA-Agentic Operational Standard](../SBA-Agentic%20Operational%20Standard.md)
+* [SBA-Agentic Operational Standard](../08-operations/OPERATIONAL_STANDARD.md)

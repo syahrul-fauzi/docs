@@ -3,6 +3,9 @@ title: Semantic Routing in SBA-Agentic
 description: Technical documentation for the Semantic Router and its integration into the Agentic Reasoning Engine.
 version: 1.0.0
 last_updated: 2025-12-28
+created_at: 2025-12-28
+author: SBASuperAgent
+status: active
 ---
 
 # 🧠 Semantic Routing & Agentic Decision-Making

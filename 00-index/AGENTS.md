@@ -18,7 +18,7 @@ Dokumen disusun berdasarkan peran dan siklus hidup pengembangan:
 - **01-product/**: Visi bisnis, target pengguna, dan perbandingan aplikasi.
 - **02-architecture/**: Spesifikasi teknis, model data, dan arsitektur sistem.
 - **03-agentic/**: Standar perilaku agent, workflow, dan mekanisme HITL.
-- **Strategy & Capability Framework/**: [Agent Capability Registry Spec](../Strategy%20&%20Capability%20Framework/Agent%20Capability%20Registry%20Spec.md) & [SDK Guide](../Strategy%20&%20Capability%20Framework/Agent%20Runtime%20SDK%20(TypeScript).md).
+- **Strategy & Capability Framework/**: [Agent Capability Registry Spec](../Strategy%20%26%20Capability%20Framework/specs/Agent%20Capability%20Registry%20Spec.md) & [SDK Guide](../Strategy%20%26%20Capability%20Framework/guides/Agent%20Runtime%20SDK%20(TypeScript).md).
 - **04-rules/**: Aturan proyek, style guide, dan tata kelola dependensi.
 - **05-api/**: Dokumentasi endpoint, skema request/response, dan sistem notifikasi.
 - **06-development/**: Panduan pengembangan, UI/UX standard, dan rencana eksekusi.
@@ -40,7 +40,12 @@ Anda wajib mengikuti pola **ReasoningStep**:
 3. **Execution**: Lakukan perubahan kode atau dokumentasi.
 4. **Reflection**: Verifikasi hasil dan pastikan tidak ada regresi.
 
-## 4. Batasan (Guardrails)
+## 4. Kolaborasi Peran (@SBASuperAgent)
+- **@SOLOCoder**: implementasi teknis, debugging, dan optimasi performa.
+- **@SOLOBuilder**: integrasi komponen, manajemen dependensi, otomasi, dan packaging.
+- Sinkronisasi dilakukan dengan memastikan perubahan kode selaras dengan dokumentasi (`README.md`, `docs/`) dan status tercermin di `docs/PROGRESS.md`.
+
+## 5. Batasan (Guardrails)
 - Jangan membuat file baru kecuali benar-benar diperlukan.
 - Jangan menghapus dokumentasi asli; gunakan folder `archive/` jika diperlukan.
 - Selalu tambahkan YAML frontmatter pada dokumen baru.

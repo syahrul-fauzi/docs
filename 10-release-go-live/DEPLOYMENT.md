@@ -15,7 +15,7 @@ Files konfigurasi environment telah disiapkan untuk tiga environment:
 - `Staging`: `.env.staging` (staging.services-id.com)
 - `Production`: `.env.production` (services-id.com)
 
-### Action Required:
+### Action Required
 
 Sebelum deployment, pastikan file `.env.production` diisi dengan credentials asli (Database, JWT Secret, API Keys) di server production.
 
@@ -40,19 +40,25 @@ Tambahkan DNS record berikut pada provider domain Anda:
 
 Nginx telah dikonfigurasi untuk SSL. Untuk production, gunakan sertifikat valid (bukan self-signed).
 
-### Menggunakan Certbot (Let's Encrypt):
+### Menggunakan Certbot (Let's Encrypt)
 
-1.  Install Certbot di server:
+1. Install Certbot di server:
+
     ```bash
     sudo apt update
     sudo apt install certbot
     ```
-2.  Generate sertifikat:
+
+2. Generate sertifikat:
+
     ```bash
     sudo certbot certonly --standalone -d services-id.com -d www.services-id.com -d api.services-id.com
     ```
-3.  Update `nginx/nginx.conf`:
+
+3. Update `nginx/nginx.conf`:
+
     Ganti path sertifikat placeholder dengan path asli Let's Encrypt:
+
     ```nginx
     ssl_certificate /etc/letsencrypt/live/services-id.com/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/services-id.com/privkey.pem;
@@ -62,22 +68,25 @@ Nginx telah dikonfigurasi untuk SSL. Untuk production, gunakan sertifikat valid 
 
 Jalankan perintah berikut di server production:
 
-1.  **Clone/Pull Repository**
-2.  **Copy Environment File**
+1. **Clone/Pull Repository**
+2. **Copy Environment File**
+
     ```bash
     cp apps/api/.env.production apps/api/.env
     cp apps/web/.env.production apps/web/.env
     ```
-3.  **Run Docker Compose**
+
+3. **Run Docker Compose**
+
     ```bash
     docker-compose -f docker-compose.prod.yml up -d --build
     ```
 
 ## 5. Monitoring & Maintenance
 
-- **Web App**: https://services-id.com
-- **API Health**: https://api.services-id.com/health
-- **Grafana Dashboard**: http://[Server-IP]:30000 (Default user: admin/admin)
+- **Web App**: <https://services-id.com>
+- **API Health**: <https://api.services-id.com/health>
+- **Grafana Dashboard**: <http://[Server-IP]:30000> (Default user: admin/admin)
 - **Logs**:
   - Web: `docker logs sba-agentic-web-1`
   - API: `docker logs sba-agentic-api-daemon-1`
@@ -97,9 +106,9 @@ Jalankan perintah berikut di server production:
 
 Jika deployment gagal:
 
-1.  Revert commit code.
-2.  Jalankan `docker-compose -f docker-compose.prod.yml down`.
-3.  Redeploy versi stabil sebelumnya.
+1. Revert commit code.
+2. Jalankan `docker-compose -f docker-compose.prod.yml down`.
+3. Redeploy versi stabil sebelumnya.
 
 ## 8. Optimization Features Deployment
 
@@ -109,7 +118,7 @@ Ensure the following variables are set in your deployment environment:
 
 - `OPENAI_API_KEY`: Required for LLM-based error analysis fallback.
 - `CRON_SECRET`: A secure random string for protecting the cron endpoint.
-- `NEXT_PUBLIC_APP_URL`: The base URL of your application (e.g., https://services-id.com).
+- `NEXT_PUBLIC_APP_URL`: The base URL of your application (e.g., <https://services-id.com>).
 
 ### Database Migration
 

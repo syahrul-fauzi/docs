@@ -48,20 +48,22 @@ Dependencies:
 ## Fitur Admin & Pemeliharaan
 
 ### Audit Log Export
+
 - **Pengecekan**: Pastikan endpoint `GET /admin/audit/export` dapat diakses oleh user dengan role `admin`.
 - **Troubleshooting**: Jika export gagal, cek koneksi ke database Prisma dan pastikan library `@sba/security` terpasang dengan benar untuk masking.
 - **Log Lokasi**: Cek log di `apps/api` untuk error terkait "Failed to export audit logs".
 
 ### Agent Benchmarking
+
 - **Pengecekan**: Buka tab "Performance" di Internal Console untuk melihat grafik benchmark.
 - **Troubleshooting**: Jika data kosong, pastikan `AgentRun` terekam di database dan metadata memiliki `agentId` yang valid.
 - **Refresh**: Gunakan tombol refresh di UI untuk memicu fetch ulang dari API.
 
 ## Kontak Darurat
 
-- Web: Owner Web Team — web-team@example.com
-- App: App Team — app-team@example.com
-- Docs: Docs Team — docs-team@example.com
-- Marketing: Marketing Web Team — marketing-team@example.com
-- API: Backend/API Team — api-team@example.com
-- Orchestrator: Platform Team — platform-team@example.com
+- Web: Owner Web Team — <web-team@example.com>
+- App: App Team — <app-team@example.com>
+- Docs: Docs Team — <docs-team@example.com>
+- Marketing: Marketing Web Team — <marketing-team@example.com>
+- API: Backend/API Team — <api-team@example.com>
+- Orchestrator: Platform Team — <platform-team@example.com>

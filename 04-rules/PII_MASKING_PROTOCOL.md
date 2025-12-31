@@ -14,6 +14,7 @@ Protokol ini mendefinisikan standar teknis untuk mendeteksi, menyembunyikan, dan
 ## 1. Definisi Data Sensitif (PII)
 
 Data yang wajib di-masking meliputi:
+
 - **Identitas**: Nama lengkap, NIK, nomor paspor.
 - **Kontak**: Alamat email, nomor telepon, alamat rumah.
 - **Finansial**: Nomor kartu kredit, detail rekening bank.
@@ -24,6 +25,7 @@ Data yang wajib di-masking meliputi:
 ## 2. Strategi Masking Otomatis
 
 Masking dilakukan pada lapisan `Sanitization Layer` sebelum data dikirim ke LLM eksternal:
+
 - **Redaction**: Mengganti data dengan label kategori (misal: `[EMAIL_MASKED]`, `[PHONE_REDACTED]`).
 - **Hashing**: Menggunakan hash satu arah (SHA-256) jika data diperlukan untuk perbandingan tanpa mengungkapkan aslinya.
 - **Synthetic Data**: Menggunakan data buatan yang realistis untuk keperluan testing.

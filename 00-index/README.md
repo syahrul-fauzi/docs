@@ -15,6 +15,12 @@ Selamat datang di pusat navigasi dokumentasi **SBA-Agentic**. Gunakan indeks ini
 - **[🤖 Untuk Agen AI](./AGENTS.md)** — Instruksi khusus navigasi dan pengambilan konteks untuk AI.
 - **[👥 Untuk Tim Manusia](./HUMANS.md)** — Onboarding dan panduan kontribusi bagi developer & stakeholder.
 - **[📊 Progress & Readiness](../PROGRESS.md)** — Dashboard status fitur dan dokumentasi real-time.
+- **[📅 Roadmap 30-60-90 Hari](../.trae/PRIORITY%20EXECUTION%20ROADMAP%2030-60-90%20Hari.md)** — Strategi eksekusi jangka menengah.
+
+## 🤝 Kerangka Kolaborasi Agentic (@SBASuperAgent)
+- **@SOLOCoder** berfokus pada implementasi teknis, debugging, dan optimasi.
+- **@SOLOBuilder** berfokus pada integrasi lintas komponen, dependensi, otomasi, dan packaging.
+- Referensi proses kerja dan standar pelacakan perubahan: [README](../../README.md#kolaborasi-agentic-sbasuperagent).
 
 ---
 

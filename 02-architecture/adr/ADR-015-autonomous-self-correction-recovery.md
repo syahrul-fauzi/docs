@@ -3,6 +3,8 @@ id: ADR-015
 title: Autonomous Self-Correction & Recovery Mechanism
 deciders: Super Agent, Technical Lead
 date: 2025-12-28
+created_at: 2025-12-28
+author: Super Agent
 status: Accepted
 priority: P1
 related:

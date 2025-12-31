@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: Agentic Front Door (AFD) API
+  description: API for capturing multimodal intents and adapting UI in the SBA-Agentic ecosystem.
+  version: 1.2.0
+  contact:
+    name: SBASuperAgent
+    email: support@sba-agentic.ai
+servers:
+  - url: https://api.sba-agentic.ai/v1
+    description: Production Server
+paths:
+  /intent/capture:
+    post:
+      summary: Capture Multimodal Intent
+      description: Processes text, voice, or UI events to identify user intent.
+      operationId: captureIntent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MultimodalInput'
+      responses:
+        '200':
+          description: Intent successfully captured
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntentResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal server error
+
+  /ui/adapt:
+    post:
+      summary: Adapt UI Layout
+      description: Instructions for the AFD to change the UI based on intent fulfillment.
+      operationId: adaptUI
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UIAdaptInput'
+      responses:
+        '200':
+          description: UI adaptation successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UIAdaptResponse'
+
+components:
+  schemas:
+    MultimodalInput:
+      type: object
+      properties:
+        text:
+          type: string
+          example: "I need help with my taxes"
+        voice_token:
+          type: string
+          description: ID of the uploaded audio blob
+        ui_event:
+          type: object
+          properties:
+            element_id:
+              type: string
+            action:
+              type: string
+              enum: [click, swipe, long_press]
+        context:
+          type: object
+          additionalProperties: true
+
+    IntentResponse:
+      type: object
+      properties:
+        intent_id:
+          type: string
+          example: "finance.tax.help"
+        confidence:
+          type: number
+          format: float
+          example: 0.98
+        task_id:
+          type: string
+          description: A2A Task ID for tracking
+        context:
+          type: object
+
+    UIAdaptInput:
+      type: object
+      properties:
+        component:
+          type: string
+          example: "HeroSection"
+        variant:
+          type: string
+          example: "tax_specialist"
+        payload:
+          type: object
+
+    UIAdaptResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string

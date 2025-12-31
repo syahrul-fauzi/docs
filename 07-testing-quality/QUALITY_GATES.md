@@ -12,7 +12,9 @@ Quality Gates adalah sekumpulan kriteria yang harus dipenuhi oleh setiap perubah
 ---
 
 ## 1. Gate 1: Integritas Kode (Lokal & CI)
+
 Fokus pada kebersihan dan fungsionalitas dasar.
+
 - **Linting**: 0 error (ESLint/Prettier).
 - **Type-Check**: 0 error (TypeScript strict mode).
 - **Unit Testing**: Minimal 85% coverage.
@@ -21,7 +23,9 @@ Fokus pada kebersihan dan fungsionalitas dasar.
 ---
 
 ## 2. Gate 2: Keamanan & Kepatuhan
+
 Memastikan sistem aman dari kerentanan dan kebocoran data.
+
 - **Secret Scanning**: Tidak ada API Key atau kredensial yang tersimpan di kode.
 - **Dependency Audit**: Tidak ada dependensi dengan level kerentanan `High` atau `Critical`.
 - **RBAC Validation**: Verifikasi bahwa endpoint baru memiliki proteksi otorisasi yang benar.
@@ -29,7 +33,9 @@ Memastikan sistem aman dari kerentanan dan kebocoran data.
 ---
 
 ## 3. Gate 3: Inteligensi Agen (Agentic Quality)
+
 Metrik khusus untuk memvalidasi performa reasoning agen.
+
 - **Reasoning Accuracy**: Minimal 90% pada dataset benchmark internal.
 - **Hallucination Rate**: < 2% berdasarkan evaluasi `Review Agent`.
 - **Constraint Compliance**: Agen harus mematuhi semua batasan yang ditetapkan dalam `System Instructions`.
@@ -37,7 +43,9 @@ Metrik khusus untuk memvalidasi performa reasoning agen.
 ---
 
 ## 4. Gate 4: Performa & Skalabilitas
+
 Menjamin sistem dapat menangani beban produksi.
+
 - **API Latency**: p95 ≤ 2 detik untuk endpoint non-AI.
 - **AI Streaming Latency**: Time to First Token (TTFT) ≤ 500ms.
 - **Load Test**: Lulus simulasi 1000 pengguna konkuren tanpa degradasi layanan.

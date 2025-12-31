@@ -22,10 +22,12 @@ SBA-Agentic mengikuti struktur pengujian berlapis:
 ## 2. Strategi E2E (Playwright)
 
 ### Konfigurasi Launch
+
 - Gunakan `E2E_USE_WEBSERVER=0` jika server sudah berjalan secara eksternal (mempercepat eksekusi di lokal).
 - Gunakan `E2E_USE_WEBSERVER=1` di CI untuk membangun dan menjalankan server secara otomatis.
 
 ### Skenario Utama
+
 - **Login Flow**: Validasi sukses, gagal, dan penanganan session.
 - **Chat & Reasoning**: Verifikasi pengiriman pesan, streaming respon AI, dan log reasoning.
 - **Workflow Execution**: Memastikan workflow agent berjalan dari awal hingga akhir.
@@ -34,6 +36,7 @@ SBA-Agentic mengikuti struktur pengujian berlapis:
 ## 3. QA & Validasi Teknis
 
 ### Checklist Pra-Rilis
+
 - [ ] Semua unit test lulus (Coverage target ≥ 80%).
 - [ ] Semua tes E2E lulus di browser target (Chromium, Firefox, WebKit).
 - [ ] Validasi tipe TypeScript bersih (`pnpm run type-check`).
@@ -41,12 +44,14 @@ SBA-Agentic mengikuti struktur pengujian berlapis:
 - [ ] Verifikasi keamanan (RBAC, CSP, HMAC) aktif dan benar.
 
 ### Mekanisme Stabilitasi
+
 - Gunakan "Repeat-run" (minimal 5 kali) untuk mendeteksi flakiness pada tes E2E.
 - Implementasikan `webServer.timeout` yang memadai untuk build monorepo yang berat.
 
 ## 4. Rencana Validasi Sistem
 
 Setiap rilis besar harus melalui fase validasi teknis:
+
 1. **Analisis Niat**: Verifikasi bahwa fitur sesuai dengan persyaratan fungsional.
 2. **Review Arsitektur**: Memastikan perubahan tidak merusak pola desain yang ada.
 3. **Review Keamanan**: Audit terhadap endpoint baru dan penanganan data sensitif.

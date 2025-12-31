@@ -1,3 +1,10 @@
+---
+title: SBA Control Plane Integration Guide
+created_at: 2025-12-31
+author: Super Agent
+status: active
+---
+
 # SBA Control Plane Integration Guide
 
 This guide describes how to integrate and use the `@sba/control-plane` package within the SBA-Agentic ecosystem.
@@ -5,6 +12,7 @@ This guide describes how to integrate and use the `@sba/control-plane` package w
 ## Overview
 
 The Control Plane is the central management layer for AI agents. It handles:
+
 - **Agent Lifecycle**: Registration, status management (draft, active, paused, retired).
 - **Policy Management**: Publishing and compiling Rube YAML policies.
 - **Execution Control**: Validating agent commands against active policies and kill-switches.
@@ -39,6 +47,7 @@ The Control Plane functionality is exposed via the following API endpoints (base
 ### Domain-Driven Design (DDD)
 
 The package follows DDD principles:
+
 - **Domain**: Aggregates (`Agent`, `Rule`), Repository Interfaces, and Policy Evaluator.
 - **Application**: Services (`AgentLifecycleService`, `PolicyAuthorityService`, `ExecutionControlService`, `AuditService`).
 - **Infrastructure**: Persistent repositories using Prisma (`PrismaAgentRepository`, etc.) and the `RubeCompiler`.
@@ -57,15 +66,17 @@ All operations are tenant-aware. The `tenantId` is extracted from the authentica
 ### Agent Blocked
 
 If an agent's command is blocked, check:
-1.  **Agent Status**: Ensure the agent is in `active` status.
-2.  **Kill-switches**: Check if any global or agent-specific kill-switches are active.
-3.  **Policies**: Review the active Rube policies for the tenant. The `PolicyTrace` in the audit logs will show which policies were evaluated and their outcomes.
+
+1. **Agent Status**: Ensure the agent is in `active` status.
+2. **Kill-switches**: Check if any global or agent-specific kill-switches are active.
+3. **Policies**: Review the active Rube policies for the tenant. The `PolicyTrace` in the audit logs will show which policies were evaluated and their outcomes.
 
 ### Policy Compilation Fails
 
 If publishing a policy fails:
-1.  **YAML Syntax**: Ensure the YAML is valid.
-2.  **Rube Schema**: Check that the YAML follows the required Rube policy schema (id, name, target, rules, etc.).
+
+1. **YAML Syntax**: Ensure the YAML is valid.
+2. **Rube Schema**: Check that the YAML follows the required Rube policy schema (id, name, target, rules, etc.).
 
 ### Database Errors
 

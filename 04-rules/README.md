@@ -12,11 +12,13 @@ tags: [rules, governance, standards]
 Folder ini berisi seluruh aturan proyek, pedoman gaya penulisan kode, dan tata kelola dependensi yang wajib diikuti oleh seluruh kontributor dan agent AI.
 
 ## 👥 Audience
+
 - All Developers
 - AI Agents
 - Tech Leads
 
 ## 📖 Konten Utama
+
 - **[PROJECT_RULES.md](./PROJECT_RULES.md)**: Dokumen otoritas pusat untuk aturan proyek dan tata kelola.
 - **[STYLE_GUIDE.md](./STYLE_GUIDE.md)**: Panduan gaya penulisan kode (TypeScript, Python) dan dokumentasi.
 - **[DEPENDENCIES.md](./DEPENDENCIES.md)**: Tata kelola dependensi dan core technology stack.
@@ -26,6 +28,7 @@ Folder ini berisi seluruh aturan proyek, pedoman gaya penulisan kode, dan tata k
 - **[ROLE_MATRIX.yaml](./ROLE_MATRIX.yaml)**: Matriks peran formal Human-AI.
 
 ## 📂 Struktur Folder
+
 - `core/`: Aturan sistem yang bersifat global (Auth, Logging, dll).
 - `business_logic/`: Aturan spesifik domain bisnis dan isolasi tenant.
 - `validation/`: Skema validasi input/output dan guardrail keamanan.

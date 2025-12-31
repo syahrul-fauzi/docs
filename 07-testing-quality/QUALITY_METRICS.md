@@ -44,6 +44,7 @@ Laporan dan metrik kualitas sistem berdasarkan hasil pengujian dan monitoring be
 ## 4. Laporan Validasi Sistem
 
 Laporan otomatis dihasilkan setelah setiap eksekusi pipeline CI:
+
 - **`TEST_REPORT.md`**: Ringkasan detail kelulusan tes.
 - **`artifacts/typecheck-summary.json`**: Status integritas tipe.
 - **`artifacts/coverage-summary.json`**: Persentase cakupan kode.
@@ -51,6 +52,7 @@ Laporan otomatis dihasilkan setelah setiap eksekusi pipeline CI:
 ## 5. Monitoring Kualitas Pasca-Deploy
 
 Integrasi dengan Grafana untuk memantau:
+
 - Error rate per rute.
 - Latency per tenant.
 - Saturation resource (CPU/Memory).

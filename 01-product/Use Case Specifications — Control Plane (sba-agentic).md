@@ -146,4 +146,4 @@ graph TD
 ## 7. Referensi Terkait
 * [Control Plane Utama — Sba-agentic](./Control%20Plane%20Utama%20—%20Sba-agentic.md)
 * [Arsitektur apps-app](../02-architecture/Arsitektur%20apps-app.md)
-* [SBA-Agentic Operational Standard](../SBA-Agentic%20Operational%20Standard.md)
+* [SBA-Agentic Operational Standard](../08-operations/OPERATIONAL_STANDARD.md)

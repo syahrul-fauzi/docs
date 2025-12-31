@@ -176,4 +176,4 @@ components:
 ## 6. Referensi Terkait
 * [Use Case Specifications — Control Plane](./Use%20Case%20Specifications%20—%20Control%20Plane%20(sba-agentic).md)
 * [Arsitektur apps-app](../02-architecture/Arsitektur%20apps-app.md)
-* [SBA-Agentic Operational Standard](../SBA-Agentic%20Operational%20Standard.md)
+* [SBA-Agentic Operational Standard](../08-operations/OPERATIONAL_STANDARD.md)

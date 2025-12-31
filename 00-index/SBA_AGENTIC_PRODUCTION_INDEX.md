@@ -140,20 +140,20 @@ Pengembangan SBA-Agentic mengikuti metodologi **ADDIE (Analysis, Design, Develop
 
 | Modul | Dokumen Referensi | Status |
 | :--- | :--- | :--- |
-| **Strategy & Framework** | [AFD → Capability Mapping Matrix](../Strategy%20&%20Capability%20Framework/AFD%20→%20Capability%20Mapping%20Matrix.md) | ✅ Active |
+| **Strategy & Framework** | [AFD → Capability Mapping Matrix](../Strategy%20%26%20Capability%20Framework/registry/AFD%20%E2%86%92%20Capability%20Mapping%20Matrix.md) | ✅ Active |
 | **Core Orchestrator** | [agent-reasoning.md](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/agent-reasoning.md) | ✅ Active |
 | **Control Plane Utama** | [Control Plane Utama — Sba-agentic.md](./Control Plane Utama — Sba-agentic.md) | ✅ Active |
 | **Internal Console** | [Control & Intelligence Console — Sba-agentic.md](./Control & Intelligence Console — Sba-agentic.md) | ✅ Active |
 | **Security Protocols** | [PII_MASKING_PROTOCOL.md](../04-rules/PII_MASKING_PROTOCOL.md) | ✅ Active |
 | **Governance & Policy** | [audit-policy.md](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/audit-policy.md) | ✅ Active |
-| **Operational Standard** | [SBA-Agentic Operational Standard.md](../SBA-Agentic Operational Standard.md) | 🔄 Updating |
+| **Operational Standard** | [Operational Standard](../08-operations/OPERATIONAL_STANDARD.md) | ✅ Active |
 
 ---
 
 ## 🛠️ 8. Administrasi & Kolaborasi
 - **Otoritas**: @SuperAgent (Governance & Final Reviewer)
 - **Operasional**: @SOLOBuilder (Infrastructure Lead) & @SOLOCoder (Implementation Lead)
-- **Prosedur Perubahan**: Setiap perubahan besar wajib melalui proses RFC (Request for Comments) sesuai [PROJECT_RULES.md](../.trae/rules/project_rules.md).
+- **Prosedur Perubahan**: Setiap perubahan besar wajib melalui proses RFC (Request for Comments) sesuai [PROJECT_RULES.md](../04-rules/PROJECT_RULES.md).
 
 ---
 *Dokumen ini adalah aset intelektual SBA-Agentic. Pembaruan dilakukan secara berkala melalui mekanisme Self-Evolution.*

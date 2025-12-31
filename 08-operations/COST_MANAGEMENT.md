@@ -14,6 +14,7 @@ Panduan untuk mengelola dan mengoptimalkan biaya operasional sistem SBA-Agentic,
 ## 1. Optimasi Biaya Token LLM
 
 Biaya LLM adalah pengeluaran terbesar. Strategi optimasi meliputi:
+
 - **Model Tiering**: Gunakan model murah (misal: GPT-3.5 Turbo / Claude Haiku) untuk tugas sederhana dan model mahal (misal: GPT-4 / Claude Opus) hanya untuk reasoning kompleks.
 - **Prompt Compression**: Gunakan `Context Engineering Guide` untuk meminimalkan token input.
 - **Caching**: Simpan jawaban untuk pertanyaan yang identik di Redis (TTL 24 jam).

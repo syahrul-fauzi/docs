@@ -35,9 +35,11 @@ Jalankan stack monitoring di lingkungan pengembangan:
 
 1. Pastikan aplikasi berjalan di `localhost:3000`.
 2. Jalankan docker compose:
+
    ```bash
    docker compose -f ops/monitoring/docker-compose.yml up -d
    ```
+
 3. Akses Dashboard:
    - **Prometheus**: `http://localhost:9090`
    - **Grafana**: `http://localhost:3003` (user/pass: `admin/admin`)
@@ -45,6 +47,7 @@ Jalankan stack monitoring di lingkungan pengembangan:
 ## 4. Dashboard Grafana
 
 Dashboard utama mencakup:
+
 - **System Health**: Status UP/DOWN layanan inti.
 - **Request Performance**: Grafik RPS dan Latency (p95/p99).
 - **Queue Status**: Jumlah pesan di antrean (Active, Waiting, Failed).
@@ -53,6 +56,7 @@ Dashboard utama mencakup:
 ## 5. Validasi Metrik
 
 Gunakan `curl` untuk memverifikasi eksposur metrik:
+
 - Web: `curl http://localhost:3000/api/health/metrics`
 - API: `curl http://localhost:9464/metrics`
 - Worker: `curl -H "Authorization: Bearer <token>" http://localhost:<port>/metrics/workers`

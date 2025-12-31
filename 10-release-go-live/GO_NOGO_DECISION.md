@@ -26,20 +26,23 @@ Dokumen ini mendefinisikan kriteria (Gates) yang harus dipenuhi untuk memberikan
 
 **Keputusan Akhir:** `NO-GO` (Per 28 Desember 2025)
 
-### Alasan (Rationale):
+### Alasan (Rationale)
+
 - **Celah Teknis**: Belum ada integrasi pemindaian keamanan otomatis (Snyk/ZAP) dalam pipeline CI.
 - **Celah Operasional**: Prosedur pemulihan bencana (DR) belum divalidasi melalui pengujian riil.
 - **Celah Data**: Baseline performa di bawah beban penuh (stress test) belum dikumpulkan secara konsisten.
 
 ## 3. Jalur Menuju "GO" (Path to Go)
+
 1. **Selesaikan Mitigasi Keamanan**: Integrasikan ZAP/Snyk ke dalam pipeline CI.
-2. **Validasi DR**: Lakukan simulasi kegagalan database dan uji pemulihan dari backup terbaru.
-3. **Stress Testing**: Jalankan skenario k6 untuk mensimulasikan beban 10x lipat dari traffic yang diperkirakan.
+1. **Validasi DR**: Lakukan simulasi kegagalan database dan uji pemulihan dari backup terbaru.
+1. **Stress Testing**: Jalankan skenario k6 untuk mensimulasikan beban 10x lipat dari traffic yang diperkirakan.
 
 Setelah langkah-langkah di atas selesai, lakukan penilaian ulang menggunakan kerangka kerja ini.
 
 ---
 **Pemberi Persetujuan Akhir:**
+
 - Tech Lead: ____________________
 - Product Owner: ____________________
 - Security Officer: ____________________

@@ -1,3 +1,10 @@
+---
+title: SBA-Agentic Comprehensive Architecture
+created_at: 2025-12-31
+author: SBASuperAgent
+status: active
+---
+
 # SBA-Agentic Comprehensive Architecture
 **Version**: 1.0.0
 **Status**: Production-Ready
@@ -71,6 +78,17 @@ graph TD
     - **Standardisasi**: Mengadopsi **Model Context Protocol (MCP)** untuk interoperabilitas alat (tool) lintas framework.
     - **Self-Describing**: Setiap adapter menyediakan manifest (name, description, input schema) yang dapat dibaca oleh Control Plane.
 - **Technology**: packages/capabilities.
+
+### 3.6 Agentic Information Literacy & Web Research
+- **Role**: Pengumpulan informasi eksternal yang terverifikasi.
+- **Functions**:
+    - **6-Step Search Strategy**: Implementasi alur Starting -> Chaining -> Browsing -> Differentiating -> Monitoring -> Extracting.
+    - **Hybrid Retrieval**: Gabungan semantic search (pgvector) dan Reranking untuk akurasi tinggi.
+    - **Source Evaluation**: Penggunaan metode ROBOT dan Lateral Reading untuk memvalidasi kredibilitas sumber web.
+- **Performance Benchmarks**:
+    - **Latency**: p90 < 2s untuk orchestrated search; p90 < 200ms untuk cached hits.
+    - **Accuracy**: >98% intent recognition accuracy pada multimodal capture.
+    - **Resilience**: Circuit Breaker terintegrasi (5 failures/60s) dengan fallback ke knowledge base lokal.
 
 ## 4. Operational Flow (The Lifecycle)
 

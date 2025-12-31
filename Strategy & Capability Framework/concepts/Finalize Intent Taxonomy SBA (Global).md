@@ -1,16 +1,20 @@
-**Finalize Intent Taxonomy (Global SBA)** yang **definitif, production-grade, dan siap dijadikan source of truth** untuk seluruh sistem **SBA-Agentic**.
-
-Dokumen ini **bukan sekadar list intent**, tetapi:
-
-* fondasi **Agentic Front Door**
-* kontrak **AFD → Control Plane**
-* basis **Capability Registry, Policy, Monetization, Observability**
-
+---
+title: Finalize Intent Taxonomy SBA (Global)
+version: 1.2.0
+status: approved
+last_updated: 2025-12-31
+approved_by: @SBASuperAgent
+related_docs:
+  - docs/00-index/Agentic Front Door (AFD).md
+  - docs/Strategy & Capability Framework/concepts/Docs sebagai Single Source of Truth - AFD.md
 ---
 
 # Finalize Intent Taxonomy — Global SBA
 
 **Smart Business Assistant (SBA-Agentic)**
+
+Dokumen ini adalah **Semantic Source of Truth** untuk seluruh sistem SBA-Agentic.
+Setiap intent yang didefinisikan di sini adalah **kontrak keras** antara **Agentic Front Door (AFD)** dan **Control Plane**, serta menjadi dasar bagi **A2A (Agent-to-Agent) communication**.
 
 ---
 
@@ -18,28 +22,23 @@ Dokumen ini **bukan sekadar list intent**, tetapi:
 
 Intent Taxonomy Global bertujuan untuk:
 
-1. Menstandarkan **bahasa tujuan bisnis** lintas channel (web, app, API, WA, dsb)
-2. Memisahkan **apa yang user mau** dari **bagaimana agent bekerja**
-3. Menjadi:
-
-   * input utama Control Plane
-   * dasar routing capability
-   * dasar pricing & policy
-4. Menghindari:
-
-   * UI-driven logic
-   * agent-coupling
-   * ad-hoc orchestration
+1.  Menstandarkan **bahasa tujuan bisnis** lintas channel (web, app, API, WA, dsb)
+2.  Memisahkan **apa yang user mau** dari **bagaimana agent bekerja**
+3.  Menjadi:
+    *   Input utama Control Plane
+    *   Dasar routing capability (Greeter Pattern)
+    *   Dasar pricing & policy
+    *   **Capability Advertisement** dalam A2A Agent Cards
 
 ---
 
 ## 2. Prinsip Desain (WAJIB)
 
-1. **Business-semantic**, bukan teknis
-2. **Channel-agnostic**
-3. **Composable & hierarchical**
-4. **Stable naming (backward compatible)**
-5. **Extensible lintas industri**
+1.  **Business-semantic**, bukan teknis
+2.  **Channel-agnostic**
+3.  **Composable & hierarchical**
+4.  **Stable naming (backward compatible)**
+5.  **Multimodal-ready**: Mendukung input teks, suara, dan visual secara native
 
 ---
 
@@ -51,162 +50,77 @@ Intent SBA menggunakan **3 level hirarki**:
 <domain>.<category>.<action>
 ```
 
-Contoh:
-
-```
-marketing.lead.capture
-finance.invoice.generate
-ops.workflow.optimize
-```
+Contoh: `marketing.lead.capture`, `finance.invoice.generate`.
 
 ---
 
-## 4. Level Klasifikasi Intent
+## 4. Global Intent Taxonomy (FINAL)
 
-### 4.1 Level 1 — Domain (WHY)
-
-Mewakili **area bisnis utama**.
-
-| Domain     | Deskripsi                 |
-| ---------- | ------------------------- |
-| marketing  | Akuisisi & growth         |
-| sales      | Pipeline & closing        |
-| finance    | Keuangan & billing        |
-| ops        | Operasional               |
-| hr         | SDM                       |
-| compliance | Regulasi & audit          |
-| analytics  | Insight & reporting       |
-| system     | Reasoning & orchestration |
-
----
-
-### 4.2 Level 2 — Category (WHAT)
-
-Kelompok aktivitas bisnis.
-
-Contoh:
-
-* marketing → lead, campaign, content
-* finance → invoice, payment, report
-
----
-
-### 4.3 Level 3 — Action (DO)
-
-Aksi spesifik yang diinginkan user.
-
-Contoh:
-
-* capture
-* generate
-* analyze
-* optimize
-
----
-
-## 5. Global Intent Taxonomy (FINAL)
-
-### 5.1 Marketing Domain
+### 4.1 Marketing Domain (AFD Primary Source)
+*Digunakan secara ekstensif oleh Agentic Front Door untuk menangkap sinyal user.*
 
 ```txt
-marketing.lead.capture
-marketing.lead.qualify
-marketing.lead.enrich
-marketing.campaign.create
-marketing.campaign.launch
-marketing.campaign.optimize
-marketing.content.generate
-marketing.content.personalize
+marketing.visitor.track       # Tracking anonim (signal producer) [Risk: Low]
+marketing.lead.capture        # User submit form / contact [Risk: Medium]
+marketing.lead.qualify        # User berinteraksi dengan pricing/fitur [Risk: Medium]
+marketing.lead.enrich         # System memperkaya data lead [Risk: Low]
+marketing.content.view        # User melihat konten spesifik (context capture) [Risk: Low]
+marketing.campaign.click      # User klik campaign link [Risk: Low]
+marketing.content.generate    # User ingin generate konten [Risk: Medium]
+marketing.signal.perception   # [AFD] Menangkap sinyal multimodal non-spesifik [Risk: Low]
+marketing.ux.adaptation       # [AFD] User memberikan feedback terhadap adaptasi UI [Risk: Low]
 ```
 
----
+### 4.2 Sales Domain
+```txt
+sales.pipeline.create         # [Risk: Medium]
+sales.deal.score              # [Risk: Low]
+sales.deal.close              # [Risk: High] - Memerlukan konfirmasi manusia
+sales.customer.onboard        # [Risk: Medium]
+```
 
-### 5.2 Sales Domain
+### 4.3 Finance Domain
+```txt
+finance.invoice.generate      # [Risk: High] - Memerlukan konfirmasi manusia
+finance.payment.collect       # [Risk: High] - Memerlukan konfirmasi manusia
+finance.report.generate       # [Risk: Medium]
+```
+
+### 4.4 Operations Domain
+```txt
+ops.workflow.optimize         # [Risk: Medium]
+ops.task.assign               # [Risk: Medium]
+ops.resource.allocate         # [Risk: High]
+```
+
+### 4.5 System / Intelligence Domain (Internal & AFD)
+*Intent khusus untuk orkestrasi, adaptasi UI, dan A2A protocol.*
 
 ```txt
-sales.pipeline.create
-sales.pipeline.update
-sales.deal.score
-sales.deal.close
-sales.customer.onboard
+system.decision.reason      # Agent menjelaskan alasan [Risk: Low]
+system.context.enrich       # Memperkaya context user [Risk: Low]
+system.intent.clarify       # Meminta klarifikasi (Ambiguity) [Risk: Low]
+system.ui.adapt             # [AFD] Permintaan adaptasi layout [Risk: Low]
+system.router.redirect      # [AFD] Hard redirect ke halaman lain [Risk: Medium]
+system.a2a.delegate         # [A2A] Mendelegasikan tugas ke agent lain [Risk: Medium]
+system.a2a.status_update    # [A2A] Update status task (working/completed/etc) [Risk: Low]
+system.drift.detected       # [SSOT] Deteksi inkonsistensi antara docs dan kode [Risk: High]
 ```
 
----
-
-### 5.3 Finance Domain
+### 4.6 Multimodal Interaction Domain (NEW)
+*Intent khusus untuk menangani input non-tekstual.*
 
 ```txt
-finance.invoice.generate
-finance.invoice.send
-finance.payment.collect
-finance.payment.reconcile
-finance.report.generate
+multimodal.voice.process    # Memproses stream audio/voice command
+multimodal.visual.analyze   # Menganalisis screenshot/UI interaction visual
+multimodal.gesture.detect   # Mendeteksi pola interaksi UI (long press, swipe)
 ```
 
 ---
 
-### 5.4 Operations Domain
+## 5. Intent Meta Model & A2A Integration
 
-```txt
-ops.workflow.create
-ops.workflow.optimize
-ops.task.assign
-ops.task.monitor
-ops.resource.allocate
-```
-
----
-
-### 5.5 HR Domain
-
-```txt
-hr.employee.onboard
-hr.employee.evaluate
-hr.payroll.calculate
-```
-
----
-
-### 5.6 Compliance Domain
-
-```txt
-compliance.audit.prepare
-compliance.document.verify
-compliance.policy.check
-compliance.risk.assess
-```
-
----
-
-### 5.7 Analytics Domain
-
-```txt
-analytics.report.generate
-analytics.report.explain
-analytics.metric.monitor
-analytics.anomaly.detect
-```
-
----
-
-### 5.8 System / Intelligence Domain (KRITIS)
-
-Intent **non-UI**, **non-business-surface**, khusus agent.
-
-```txt
-system.decision.reason
-system.context.enrich
-system.intent.clarify
-system.notification.dispatch
-system.agent.orchestrate
-system.memory.update
-```
-
-⚠️ **Tidak boleh langsung di-trigger UI tanpa policy**
-
----
-
-## 6. Intent Meta Model (TypeScript)
+### 5.1 TypeScript Contract
 
 ```ts
 export interface SBAIntent {
@@ -214,144 +128,116 @@ export interface SBAIntent {
   domain: DomainType
   category: string
   action: string
-
   description: string
-
   riskLevel: 'low' | 'medium' | 'high'
-
   requiresConfirmation?: boolean
-
-  monetizable?: boolean
-
-  allowedChannels: Channel[]
-
-  defaultCapabilities?: CapabilityRef[]
+  allowedChannels: Channel[]     // ['web', 'mobile', 'api']
+  modalities: ('text' | 'voice' | 'visual')[]
 }
 ```
 
----
+### 5.2 Mapping ke A2A Task States
 
-## 7. Intent Confidence & Ambiguity Handling
+Setiap intent yang diproses oleh Control Plane akan diubah menjadi **A2A Task** dengan lifecycle status berikut:
 
-Setiap intent **WAJIB** memiliki confidence score.
-
-```ts
-IntentDetectionResult {
-  intent: SBAIntent
-  confidence: number
-  alternatives?: SBAIntent[]
-}
-```
-
-Jika:
-
-* confidence < threshold → `system.intent.clarify`
-* ambiguous → multi-intent resolution
+| Intent Phase | A2A Task State | Deskripsi |
+| :--- | :--- | :--- |
+| **Emission** | `submitted` | Intent ditangkap oleh AFD dan dikirim ke Control Plane. |
+| **Routing** | `working` | Control Plane menunjuk ExecutorAgent (A2A Server). |
+| **Clarification** | `input-required` | Agent butuh data tambahan (Trigger `system.intent.clarify`). |
+| **Fulfillment** | `completed` | Task selesai, hasil dikirim balik ke user/AFD. |
+| **Failure** | `failed` | Terjadi error, diproses oleh Shared Error Handling. |
 
 ---
 
-## 8. Mapping ke AFD (Agentic Front Door)
+## 6. Mapping ke Agentic Front Door (AFD)
 
-AFD **tidak tahu agent**, hanya emit intent:
+AFD berfungsi sebagai **Intent Emitter** dan **A2A Client**.
+
+### 6.1 Emission Contract (Multimodal)
+
+AFD mengirimkan sinyal intent dengan metadata modalitas:
 
 ```ts
+// AFD code snippet
 emitIntent({
   intent: 'marketing.lead.capture',
-  confidence: 0.82,
-  source: 'pricing_page',
-  context
+  confidence: 0.95,
+  modalities: ['text', 'voice'],
+  source: 'landing_page_hero',
+  context: {
+    visitor_segment: 'enterprise',
+    campaign_id: 'q1_promo',
+    voice_token: 'audio_blob_id_001'
+  }
 })
 ```
 
----
+### 6.2 Feedback Loop (Adaptive UI via A2A Artifacts)
 
-## 9. Hubungan Intent ↔ Capability ↔ Agent
+Hasil dari task (`completed`) dapat dikirim dalam bentuk **A2A Artifacts** (misal: JSON layout baru) yang memicu intent `system.ui.adapt`:
 
-```txt
-Intent (WHY)
-   ↓
-Capability (WHAT CAN BE DONE)
-   ↓
-Agent (WHO EXECUTES)
+```json
+{
+  "response_intent": "system.ui.adapt",
+  "artifact": {
+    "type": "ui_component",
+    "payload": {
+      "component": "HeroSection",
+      "variant": "enterprise_focus",
+      "message": "Solusi skala besar untuk kebutuhan Anda."
+    }
+  }
+}
 ```
 
-Intent **tidak berubah** walau:
-
-* agent diganti
-* model diganti
-* workflow berubah
-
 ---
 
-## 10. Observability & Audit (WAJIB)
+## 7. Capability Advertisement (Agent Cards)
 
-Setiap intent menghasilkan event:
+Setiap agent dalam ekosistem SBA wajib menyediakan **Agent Card** yang mencantumkan intent yang didukungnya:
 
-```ts
-IntentEmitted
-IntentResolved
-IntentRejected
-IntentCompleted
+```json
+{
+  "agent_id": "@SOLOCoder",
+  "capabilities": [
+    "marketing.lead.capture",
+    "marketing.lead.enrich",
+    "multimodal.voice.process"
+  ],
+  "supported_modalities": ["text", "voice"],
+  "endpoint": "https://api.sba.ai/v1/execute"
+}
 ```
 
-Dipakai untuk:
+---
 
-* audit
-* SLA
-* analytics
-* replay
+## 8. Observability & Audit
+
+Setiap intent yang dipancarkan AFD akan dicatat dalam **Federated Context Graph**:
+
+*   `IntentEmitted`: Saat user klik/interaksi.
+*   `IntentRouted`: Saat Control Plane memilih agent.
+*   `IntentFulfilled`: Saat agent selesai bekerja.
 
 ---
 
-## 11. Anti-Pattern yang DILARANG
+## 9. Referensi & Dokumen Terkait
 
-❌ intent berbasis UI (`click_pricing_cta`)
-❌ intent terlalu teknis (`call_llm`)
-❌ agent-specific intent
-❌ hardcoded domain logic
-
----
-
-## 12. Dampak Strategis ke SBA-Agentic
-
-Dengan taxonomy ini:
-
-* Semua app → **berbicara bahasa yang sama**
-* Control Plane jadi **benar-benar intelligent**
-* Monetization bisa berbasis:
-
-  * intent
-  * risk
-  * volume
-* SBA siap:
-
-  * vertical SaaS
-  * enterprise governance
-  * cross-agent orchestration
+*   [Glossary of Terms - SBA](file:///home/inbox/smart-ai/sba-agentic/docs/Strategy%20%26%20Capability%20Framework/concepts/Glossary%20of%20Terms%20-%20SBA.md)
+*   [Agentic Front Door (AFD)](file:///home/inbox/smart-ai/sba-agentic/docs/00-index/Agentic%20Front%20Door%20(AFD).md)
+*   [Docs sebagai Single Source of Truth - AFD](file:///home/inbox/smart-ai/sba-agentic/docs/Strategy%20%26%20Capability%20Framework/concepts/Docs%20sebagai%20Single%20Source%20of%20Truth%20-%20AFD.md)
+*   [SBA Feature Design](file:///home/inbox/smart-ai/sba-agentic/docs/Strategy%20%26%20Capability%20Framework/concepts/SBA%20Feature%20Design.md)
 
 ---
 
-## 13. Checklist Finalisasi (CONFIRM)
+## 10. Changelog
 
-* [x] Domain lengkap
-* [x] Stable naming
-* [x] System intent dipisah
-* [x] Channel-agnostic
-* [x] Policy-ready
-* [x] Observability-ready
+| Versi | Tanggal | Deskripsi Perubahan | Author |
+| :--- | :--- | :--- | :--- |
+| 1.0.0 | 2025-12-28 | Inisialisasi taxonomy. | @SBASuperAgent |
+| 1.1.0 | 2025-12-30 | Penambahan domain Marketing & System. | @SBASuperAgent |
+| 1.2.0 | 2025-12-31 | Integrasi A2A Task States, Multimodal Domain, dan Agent Cards. | @SBASuperAgent |
 
 ---
-
-## 14. Langkah Berikutnya (Natural Flow)
-
-Setelah Intent Taxonomy FINAL, **urutan paling sehat**:
-
-1. ✅ Intent Taxonomy (ini)
-2. **Capability Coverage Map** 'docs/00-index/Strategy & Capability Framework/Capability Coverage Map.md'(intent mana → capability apa)
-3. **Policy Enforcement Spec**
-4. **Internal Console: Intent Explorer UI**
-5. **Pricing by Intent Tier**
-
-Jika Anda setuju, langkah berikut **paling tepat** adalah:
-
-👉 **Capability Coverage Map (Global SBA)**'docs/00-index/Strategy & Capability Framework/Capability Coverage Map.md'
+*Dokumen ini valid dan siap digunakan sebagai landasan interoperabilitas agen.*

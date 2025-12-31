@@ -1,3 +1,10 @@
+---
+title: "Technical Specification: New Agent Tools (2025.12.31)"
+created_at: 2025-12-31
+author: Super Agent
+status: active
+---
+
 # 🛠️ Technical Specification: New Agent Tools (2025.12.31)
 
 Dokumen ini merinci spesifikasi teknis, skema input/output, dan kebijakan keamanan untuk tools baru yang ditambahkan ke dalam ekosistem SBA-Agentic.
@@ -5,9 +12,11 @@ Dokumen ini merinci spesifikasi teknis, skema input/output, dan kebijakan keaman
 ## 1. Document Extraction Tool (`document.extract_data`)
 
 ### Deskripsi
+
 Mengekstraksi data terstruktur dari URL dokumen (PDF, Gambar) menggunakan pemrosesan OCR dan NLP. Ideal untuk pemrosesan invoice, kuitansi, atau dokumen identitas.
 
 ### Skema Input
+
 ```json
 {
   "document_url": "string (valid URL)",
@@ -20,6 +29,7 @@ Mengekstraksi data terstruktur dari URL dokumen (PDF, Gambar) menggunakan pemros
 ```
 
 ### Skema Output
+
 ```json
 {
   "success": "boolean",
@@ -40,6 +50,7 @@ Mengekstraksi data terstruktur dari URL dokumen (PDF, Gambar) menggunakan pemros
 ```
 
 ### Kebijakan Keamanan (Rube)
+
 - **Roles**: `admin`, `manager`, `user`
 - **Guards**: `enforce_tenant`, `audit_log`
 - **Rate Limit**: Per tenant (configurable).
@@ -49,9 +60,11 @@ Mengekstraksi data terstruktur dari URL dokumen (PDF, Gambar) menggunakan pemros
 ## 2. Analytics Report Tool (`analytics.generate_report`)
 
 ### Deskripsi
+
 Menghasilkan laporan analitik berdasarkan performa, penggunaan, atau error dalam rentang waktu tertentu.
 
 ### Skema Input
+
 ```json
 {
   "report_type": "performance" | "usage" | "error" | "custom",
@@ -64,6 +77,7 @@ Menghasilkan laporan analitik berdasarkan performa, penggunaan, atau error dalam
 ```
 
 ### Skema Output
+
 ```json
 {
   "success": "boolean",
@@ -83,6 +97,7 @@ Menghasilkan laporan analitik berdasarkan performa, penggunaan, atau error dalam
 ```
 
 ### Kebijakan Keamanan (Rube)
+
 - **Roles**: `admin`, `manager` (Restricted access)
 - **Guards**: `enforce_tenant`, `audit_log`
 - **Rate Limit**: 10 requests/hour/tenant.
@@ -92,9 +107,11 @@ Menghasilkan laporan analitik berdasarkan performa, penggunaan, atau error dalam
 ## 3. Support Routing Tool (`support.route_to_department`)
 
 ### Deskripsi
+
 Mengarahkan tiket dukungan ke departemen yang tepat berdasarkan konten pesan dan metadata menggunakan logika klasifikasi (simulated NLP).
 
 ### Skema Input
+
 ```json
 {
   "ticket_id": "string",
@@ -106,6 +123,7 @@ Mengarahkan tiket dukungan ke departemen yang tepat berdasarkan konten pesan dan
 ```
 
 ### Skema Output
+
 ```json
 {
   "success": "boolean",
@@ -124,6 +142,7 @@ Mengarahkan tiket dukungan ke departemen yang tepat berdasarkan konten pesan dan
 ```
 
 ### Kebijakan Keamanan (Rube)
+
 - **Roles**: `admin`, `manager`, `user`
 - **Guards**: `enforce_tenant`
 - **Rate Limit**: None (Utility class).
@@ -131,10 +150,12 @@ Mengarahkan tiket dukungan ke departemen yang tepat berdasarkan konten pesan dan
 ---
 
 ## 🧪 Verifikasi (Testing)
+
 Semua tools di atas telah divalidasi dengan unit tests di `apps/api/src/tools/tests/` dengan coverage > 90%.
+
 - `DocumentExtractTool.test.ts`
 - `AnalyticsReportTool.test.ts`
 - `SupportRouteTool.test.ts`
 
 ---
-*Terakhir diperbarui: 2025-12-31 oleh @SuperAgent*
+Terakhir diperbarui: 2025-12-31 oleh @SuperAgent.

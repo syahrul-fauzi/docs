@@ -16,10 +16,12 @@ Playbook ini berisi panduan konfigurasi dan operasional untuk sistem penskalaan 
 Sistem menggunakan Horizontal Pod Autoscaler (HPA) berdasarkan metrik berikut:
 
 ### 1.1 Metrik Resource
+
 - **CPU Utilization**: Target > 70% rata-rata di seluruh instance.
 - **Memory Usage**: Target > 80% rata-rata.
 
 ### 1.2 Metrik Agentic (Custom)
+
 - **Event Queue Depth**: Jika jumlah pesan di antrean Redis `agent-tasks` > 1000 pesan.
 - **Task Latency**: Jika waktu tunggu rata-rata task di antrean > 5 detik.
 
@@ -38,12 +40,15 @@ Sistem menggunakan Horizontal Pod Autoscaler (HPA) berdasarkan metrik berikut:
 ## 3. Prosedur Penskalaan Manual (Emergency)
 
 Jika autoscaling otomatis gagal atau terlalu lambat:
-1.  **Identify**: Periksa beban melalui `kubectl top pods` atau Grafana Dashboard.
-2.  **Execute**: Jalankan perintah manual untuk meningkatkan kapasitas:
-    ```bash
-    kubectl scale deployment orchestrator --replicas=20
-    ```
-3.  **Validate**: Pastikan pod baru mencapai status `Running` dan `Ready`.
+
+1. **Identify**: Periksa beban melalui `kubectl top pods` atau Grafana Dashboard.
+2. **Execute**: Jalankan perintah manual untuk meningkatkan kapasitas:
+
+   ```bash
+   kubectl scale deployment orchestrator --replicas=20
+   ```
+
+3. **Validate**: Pastikan pod baru mencapai status `Running` dan `Ready`.
 
 ---
 

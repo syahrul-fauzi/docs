@@ -16,11 +16,13 @@ Prosedur penanganan insiden, pemecahan masalah (troubleshooting), dan rencana pe
 Lakukan rollback jika terjadi kegagalan deployment atau regresi kritikal yang terdeteksi oleh monitoring.
 
 ### Skenario Pemicu
+
 - Kegagalan build/deploy di pipeline CI/CD.
 - Lonjakan error rate > 5% secara tiba-tiba pasca-deploy.
 - Kegagalan fungsi kritikal (Auth, Chat, Payment).
 
 ### Langkah-langkah Rollback
+
 1. **Revert Build**: Kembali ke artefak build terakhir yang diketahui stabil (last known-good).
    - Perintah: `pnpm run staging:rollback`.
 2. **Restore Env**: Kembalikan variabel lingkungan ke versi sebelumnya jika ada perubahan config.
@@ -39,6 +41,7 @@ Jika terjadi masalah operasional, ikuti langkah berikut:
 ## 3. Verifikasi Pasca-Insiden
 
 Setelah tindakan perbaikan atau rollback dilakukan, verifikasi sistem:
+
 - Jalankan "Smoke Test" E2E pada rute kritikal: `/dashboard`, `/settings`, `/observability`.
 - Pastikan endpoint metrik (`/metrics`, `/metrics/workers`) kembali tersedia.
 - Konfirmasi status `ok` pada semua indikator di System Health Widget.
@@ -46,6 +49,7 @@ Setelah tindakan perbaikan atau rollback dilakukan, verifikasi sistem:
 ## 4. Pelaporan Insiden (Post-Mortem)
 
 Setiap insiden besar wajib didokumentasikan:
+
 - Deskripsi masalah dan durasi downtime.
 - Akar penyebab (Root Cause Analysis).
 - Tindakan perbaikan yang diambil.
