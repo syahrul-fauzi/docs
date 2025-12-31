@@ -39,6 +39,7 @@ Semua event wajib mengikuti struktur envelope berikut (format JSON):
 Tipe event wajib menggunakan format `lower_snake_case` dengan struktur: `{domain}.{entity}.{action}`.
 
 **Contoh:**
+
 - `agent.task.created`
 - `billing.invoice.paid`
 - `memory.vector.updated`

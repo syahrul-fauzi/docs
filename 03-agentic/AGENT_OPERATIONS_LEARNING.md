@@ -84,5 +84,3 @@ SBA-Agentic menerapkan pembatasan akses (rate limiting) yang dinamis berdasarkan
 
 - Setiap kejadian rate limit dicatat dalam log dengan kode `RATE_LIMIT_EXCEEDED`.
 - Anomali pada penggunaan token atau frekuensi request yang mendekati limit akan memicu notifikasi internal.
-
-

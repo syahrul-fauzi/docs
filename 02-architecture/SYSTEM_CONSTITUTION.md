@@ -13,6 +13,7 @@ tags: [governance, vision, mission, design-principles, architecture]
 
 **Visi**: Menjadi asisten bisnis cerdas (Smart Business Assistant) yang otonom, terukur, dan terpercaya untuk mengotomatisasi operasi bisnis end-to-end.
 **Misi**:
+
 - Menyediakan orkestrasi task yang modular dan reliable.
 - Memastikan integrasi data real-time yang aman.
 - Memberikan pengalaman pengguna yang seamless melalui antarmuka responsif.

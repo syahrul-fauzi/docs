@@ -1,10 +1,12 @@
 # Cross-Team Coordination & Sync Schedule
+
 **Version**: 1.0.0
 **Last Updated**: 2025-12-31
 
 Dokumen ini mendefinisikan protokol komunikasi dan jadwal sinkronisasi antar tim untuk memastikan kelancaran operasional SBA-Agentic.
 
 ## 1. Core Teams & Stakeholders
+
 | Team | Lead | Responsibility |
 | --- | --- | --- |
 | **Agentic Platform (AP)** | SBA Super Agent | Core architecture, Control Plane, Rube Engine |
@@ -14,6 +16,7 @@ Dokumen ini mendefinisikan protokol komunikasi dan jadwal sinkronisasi antar tim
 | **Business Domain (BD)** | Domain Expert | BPA, CX, DA, SI Rules and Logic |
 
 ## 2. Sync Schedule
+
 | Meeting | Frequency | Participants | Objective |
 | --- | --- | --- | --- |
 | **Daily Stand-up** | Daily (09:00 UTC) | All Dev Teams | Blockers, daily progress, immediate risks |
@@ -25,10 +28,10 @@ Dokumen ini mendefinisikan protokol komunikasi dan jadwal sinkronisasi antar tim
 
 - **Slack/Discord**:
 
-    - `#sba-alerts`: Critical production incidents (automated).
-    - `#sba-dev`: General development discussion.
-    - `#sba-ops`: Infrastructure and deployment coordination.
-- **Incident Response**: PagerDuty for automated escalation based on `afd_circuit_breaker_open` or high error rates.
+  - `#sba-alerts`: Critical production incidents (automated).
+  - `#sba-dev`: General development discussion.
+  - `#sba-ops`: Infrastructure and deployment coordination.
+- **Incident Response**: PagerDuty for automated escalation berdasarkan `afd_circuit_breaker_open` atau high error rates.
 
 ## 4. Decision Making (ADR Flow)
 

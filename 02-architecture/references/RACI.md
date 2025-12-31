@@ -21,7 +21,7 @@ Riwayat Perubahan:
 - QA: API QA Lead
 - On-call: Backend On-call Rotation
 - Eskalasi: P1 (immediate), P2 (4 jam), P3 (24 jam)
-- Kontak: api@sba.local
+- Kontak: <api@sba.local>
 
 ## Data Domain
 
@@ -30,7 +30,7 @@ Riwayat Perubahan:
 - Consulted: Data Analyst, Data Steward
 - Informed: Compliance Officer
 - Kebijakan: RLS, Audit, Retensi
-- Kontak: data@sba.local
+- Kontak: <data@sba.local>
 
 ## Web Domain
 
@@ -39,7 +39,7 @@ Riwayat Perubahan:
 - Consulted: UX Designer, Accessibility Specialist
 - Informed: Customer Success
 - Kualitas: a11y, e2e coverage
-- Kontak: web@sba.local
+- Kontak: <web@sba.local>
 
 ## Review Berkala
 

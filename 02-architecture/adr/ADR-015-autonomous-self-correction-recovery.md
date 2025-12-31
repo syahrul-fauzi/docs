@@ -26,25 +26,30 @@ Sistem SBA-Agentic berbasis rule (Rube Engine) memerlukan mekanisme yang lebih t
 
 Kami mengimplementasikan mekanisme **Self-Correction** yang terintegrasi langsung ke dalam siklus hidup eksekusi rule:
 
-1.  **Failure Hook**: `RuleManager` di `packages/rube` kini mendukung callback `handleFailure` yang dipicu saat eksekusi rule menghasilkan error.
-2.  **Reasoning Integration**: `RubeService` (apps/api) mengimplementasikan `handleFailure` dengan memanggil `AgenticReasoningEngine.reason()`. Engine ini menganalisis konteks kegagalan dan mengembalikan `decision`.
-3.  **Corrective Execution**: Jika engine merekomendasikan sebuah tool, `EnhancedToolRegistry` mengeksekusi tool tersebut dengan identitas `system-corrector` untuk membedakannya dari eksekusi user biasa.
-4.  **Specialized Observation**: `ObserverService` mencatat aksi ini dengan flag `isCorrection: true` dan menyimpannya sebagai meta-event tipe `self_correction`.
-5.  **Recursive PII Masking Compliance**: Memastikan metadata self-correction (yang mungkin berisi detail error teknis) tetap melewati filter masking PII, namun mengecualikan kunci metadata internal agar tidak kehilangan context debugging yang kritikal.
+* **Observation**: Agent mendeteksi kegagalan (e.g., Tool timeout).
+* **Analysis**: Agent menganalisis penyebab (e.g., API Down vs Invalid Payload).
+* **Planning**: Agent membuat rencana koreksi (e.g., Retry with different parameter).
+* **Execution**: Agent mengeksekusi rencana koreksi.
+
+1. **Failure Hook**: `RuleManager` di `packages/rube` kini mendukung callback `handleFailure` yang dipicu saat eksekusi rule menghasilkan error.
+2. **Reasoning Integration**: `RubeService` (apps/api) mengimplementasikan `handleFailure` dengan memanggil `AgenticReasoningEngine.reason()`. Engine ini menganalisis konteks kegagalan dan mengembalikan `decision`.
+3. **Corrective Execution**: Jika engine merekomendasikan sebuah tool, `EnhancedToolRegistry` mengeksekusi tool tersebut dengan identitas `system-corrector` untuk membedakannya dari eksekusi user biasa.
+4. **Specialized Observation**: `ObserverService` mencatat aksi ini dengan flag `isCorrection: true` dan menyimpannya sebagai meta-event tipe `self_correction`.
+5. **Recursive PII Masking Compliance**: Memastikan metadata self-correction (yang mungkin berisi detail error teknis) tetap melewati filter masking PII, namun mengecualikan kunci metadata internal agar tidak kehilangan context debugging yang kritikal.
 
 ## Consequences
 
 ### Positive
 
--   ✅ **Resilience**: Sistem dapat pulih dari kegagalan transien tanpa intervensi manusia.
--   ✅ **Traceability**: Setiap upaya perbaikan tercatat secara eksplisit di audit log dan UI.
--   ✅ **Extensibility**: Strategi perbaikan dapat dikembangkan lebih lanjut di level `AgenticReasoningEngine` tanpa mengubah inti Rube Engine.
+* ✅ **Resilience**: Sistem dapat pulih dari kegagalan transien tanpa intervensi manusia.
+* ✅ **Traceability**: Setiap upaya perbaikan tercatat secara eksplisit di audit log dan UI.
+* ✅ **Extensibility**: Strategi perbaikan dapat dikembangkan lebih lanjut di level `AgenticReasoningEngine` tanpa mengubah inti Rube Engine.
 
 ### Negative
 
--   ❌ **Complexity**: Menambah satu lapisan abstraksi dalam penanganan error.
--   ❌ **Potential Loops**: Jika langkah perbaikan juga gagal, ada risiko loop jika tidak dibatasi (saat ini dibatasi oleh flow satu tingkat).
--   ❌ **Token Usage**: Penggunaan LLM untuk reasoning saat failure menambah biaya operasional.
+* ❌ **Complexity**: Menambah satu lapisan abstraksi dalam penanganan error.
+* ❌ **Potential Loops**: Jika langkah perbaikan juga gagal, ada risiko loop jika tidak dibatasi (saat ini dibatasi oleh flow satu tingkat).
+* ❌ **Token Usage**: Penggunaan LLM untuk reasoning saat failure menambah biaya operasional.
 
 ## Implementation Details
 
@@ -66,6 +71,6 @@ interface SelfCorrectionMetadata {
 
 ## References
 
-- [RubeService](file:///home/inbox/smart-ai/sba-agentic/apps/api/src/rube/rube.service.ts)
-- [RuleExecutor](file:///home/inbox/smart-ai/sba-agentic/packages/rube/src/executor/rule-executor.ts)
-- [PRD-015: Self-Correction & Autonomous Recovery](file:///home/inbox/smart-ai/sba-agentic/docs/01-product/prd/20251228-self-correction-autonomous-recovery.md)
+* [RubeService](file:///home/inbox/smart-ai/sba-agentic/apps/api/src/rube/rube.service.ts)
+* [RuleExecutor](file:///home/inbox/smart-ai/sba-agentic/packages/rube/src/executor/rule-executor.ts)
+* [PRD-015: Self-Correction & Autonomous Recovery](file:///home/inbox/smart-ai/sba-agentic/docs/01-product/prd/20251228-self-correction-autonomous-recovery.md)

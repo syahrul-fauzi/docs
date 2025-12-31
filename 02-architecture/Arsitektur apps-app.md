@@ -10,7 +10,7 @@ version: 1.2.2
 
 # Arsitektur Control Plane Utama
 
-**SBA-Agentic (Smart Business Assistant)**
+## SBA-Agentic (Smart Business Assistant)
 
 **Status**: Final – Production Oriented
 **Audience**: Product Owner, Lead Engineer, Frontend Developer, Platform Engineer, Security & Ops
@@ -19,11 +19,13 @@ version: 1.2.2
 ---
 
 ## 1. Pendahuluan
+
 Control Plane Utama (`apps/app`) adalah antarmuka web pusat yang mengorkestrasi interaksi antara pengguna manusia dan ekosistem AI Agentic. Dibangun di atas **Next.js 15**, aplikasi ini mengutamakan kecepatan (App Router), keamanan (Supabase RLS), dan skalabilitas (Feature-Sliced Design).
 
 ---
 
 ## 2. Prinsip Arsitektur
+
 | Prinsip | Implementasi |
 | :--- | :--- |
 | **Separation of Concerns** | Feature-Sliced Design (FSD) + Shared Packages. |
@@ -37,25 +39,29 @@ Control Plane Utama (`apps/app`) adalah antarmuka web pusat yang mengorkestrasi 
 ## 3. High-Level Architectural Overview
 
 ### 3.1 Technology Stack
-- **Framework**: Next.js 15 (App Router, Server Components).
-- **Language**: TypeScript.
-- **Styling**: Tailwind CSS.
-- **State Management**: Zustand (Global), React Query (Server Cache).
-- **Backend-as-a-Service**: Supabase (Auth, DB, Storage).
-- **Policy Engine**: Rube Engine (Rust/WASM).
+
+* **Framework**: Next.js 15 (App Router, Server Components).
+* **Language**: TypeScript.
+* **Styling**: Tailwind CSS.
+* **State Management**: Zustand (Global), React Query (Server Cache).
+* **Backend-as-a-Service**: Supabase (Auth, DB, Storage).
+* **Policy Engine**: Rube Engine (Rust/WASM).
 
 ### 3.2 Feature-Sliced Design (FSD) Structure
+
 Aplikasi dibagi menjadi lapisan-lapisan yang saling terisolasi:
-- **App**: Inisialisasi provider, layout global, dan routing.
-- **Features**: Modul bisnis fungsional (e.g., `agents`, `runs`, `knowledge`).
-- **Entities**: Data model dan logika bisnis inti.
-- **Shared**: Komponen UI atomik, utility, dan API client.
+
+* **App**: Inisialisasi provider, layout global, dan routing.
+* **Features**: Modul bisnis fungsional (e.g., `agents`, `runs`, `knowledge`).
+* **Entities**: Data model dan logika bisnis inti.
+* **Shared**: Komponen UI atomik, utility, dan API client.
 
 ---
 
 ## 4. Interaction Diagrams (C4 Diagrams)
 
 ### 4.1 Component Diagram (Module Dependency)
+
 ```mermaid
 graph TD
     subgraph App_Layer [App Layer]
@@ -84,6 +90,7 @@ graph TD
 ---
 
 ## 5. Technical Debt Inventory
+
 Daftar hutang teknis yang perlu ditangani untuk menjaga kesehatan jangka panjang `apps/app`.
 
 | ID | Component | Description | Priority | Effort | Status |
@@ -96,6 +103,7 @@ Daftar hutang teknis yang perlu ditangani untuk menjaga kesehatan jangka panjang
 ---
 
 ## 6. Risk Assessment Matrix
+
 Evaluasi risiko teknis dan operasional untuk Control Plane Utama.
 
 | Risk Scenario | Likelihood | Impact | Mitigation Strategy |
@@ -108,7 +116,9 @@ Evaluasi risiko teknis dan operasional untuk Control Plane Utama.
 ---
 
 ## 7. Runtime Architecture Blueprint
+
 ### 7.1 Deployment Topology
+
 Control Plane Utama dideploy sebagai aplikasi SSR di platform cloud (Vercel/K8s).
 
 ```mermaid
@@ -122,28 +132,33 @@ graph LR
 ---
 
 ## 8. Observability & Monitoring Framework
+
 Kerangka kerja untuk memastikan visibilitas penuh terhadap kesehatan aplikasi dan kinerja agent.
 
 ### 8.1 Logging Standards
-- **Structured Logging**: Menggunakan format JSON untuk semua log aplikasi.
-- **Trace ID Propagation**: Setiap request dari frontend ke backend (BFF) menyertakan `x-trace-id` untuk distributed tracing.
-- **Reasoning Trace Audit**: Log penalaran agent disimpan di tabel `agent_reasoning_traces` dengan retensi 90 hari (ISO 27001 compliance).
+
+* **Structured Logging**: Menggunakan format JSON untuk semua log aplikasi.
+* **Trace ID Propagation**: Setiap request dari frontend ke backend (BFF) menyertakan `x-trace-id` untuk distributed tracing.
+* **Reasoning Trace Audit**: Log penalaran agent disimpan di tabel `agent_reasoning_traces` dengan retensi 90 hari (ISO 27001 compliance).
 
 ### 8.2 Dashboard & Metrics
-- **Performance Metrics**: LCP, FID, CLS dipantau via Vercel Analytics / Sentry.
-- **Error Tracking**: Sentry digunakan untuk menangkap exception di sisi client dan server.
-- **Business KPI Dashboard**: Visualisasi real-time untuk:
-    - Total Active Runs per Tenant.
-    - Average Reasoning Time.
-    - Success vs Failure Rate of Tool Executions.
+
+* **Performance Metrics**: LCP, FID, CLS dipantau via Vercel Analytics / Sentry.
+* **Error Tracking**: Sentry digunakan untuk menangkap exception di sisi client dan server.
+* **Business KPI Dashboard**: Visualisasi real-time untuk:
+  * Total Active Runs per Tenant.
+  * Average Reasoning Time.
+  * Success vs Failure Rate of Tool Executions.
 
 ### 8.3 Alerting Policy
-- **Critical Errors**: Notifikasi Slack/PagerDuty jika error rate > 5% dalam 5 menit.
-- **Security Violations**: Alert instan jika terdeteksi percobaan bypass RLS atau anomali akses tenant.
+
+* **Critical Errors**: Notifikasi Slack/PagerDuty jika error rate > 5% dalam 5 menit.
+* **Security Violations**: Alert instan jika terdeteksi percobaan bypass RLS atau anomali akses tenant.
 
 ---
 
 ## 9. Change Log
+
 | Version | Date | Author | Description |
 | :--- | :--- | :--- | :--- |
 | 1.2.2 | 2025-12-31 | SBA-Agentic Team | Update status Technical Debt (TD-01 s/d TD-04 resolved). |
@@ -153,6 +168,7 @@ Kerangka kerja untuk memastikan visibilitas penuh terhadap kesehatan aplikasi da
 ---
 
 ## 9. Referensi Terkait
+
 * [Control Plane Utama — Landing Page](../00-index/Control%20Plane%20Utama%20—%20Sba-agentic.md)
 * [Use Case Specifications — Control Plane](../01-product/Use%20Case%20Specifications%20—%20Control%20Plane%20(sba-agentic).md)
 * [SBA-Agentic Operational Standard](../08-operations/OPERATIONAL_STANDARD.md)

@@ -9,7 +9,7 @@ version: 1.2.1
 
 # Arsitektur Internal Console
 
-**SBA-Agentic (Smart Business Assistant)**
+## SBA-Agentic (Smart Business Assistant)
 
 **Status**: Final – Production Oriented
 **Audience**: Product Owner, Lead Engineer, AI Agent Engineer, Platform Engineer, Security & Ops
@@ -59,7 +59,7 @@ Internal Console dirancang untuk:
 
 ### 3.1 Context Diagram (Konseptual)
 
-```
+```text
 ┌─────────────────────────────┐
 │   Tenant Apps / End Users   │
 └─────────────┬───────────────┘
@@ -95,7 +95,7 @@ Internal Console **tidak mengeksekusi agent**, tetapi:
 
 Internal Console menerapkan **layered architecture**:
 
-```
+```text
 Presentation Layer (UI)
 ↓
 Feature / Use Case Layer
@@ -350,7 +350,9 @@ Internal Console disiapkan untuk:
 ---
 
 ## 16. Runtime Architecture Blueprint
+
 ### 16.1 Deployment Topology & Infrastructure
+
 Internal Console dideploy sebagai aplikasi desktop native menggunakan Tauri (Rust backend + React frontend).
 
 ```mermaid
@@ -375,11 +377,13 @@ graph LR
 ```
 
 ### 16.2 Scaling & Performance Strategy
-- **Frontend Scaling**: Karena berbasis desktop, beban komputasi (UI rendering, local sync) didistribusikan ke workstation user. 
-- **Backend Scaling**: Control Plane menggunakan Horizontal Pod Autoscaler (HPA) berdasarkan metrik latensi dan jumlah koneksi aktif.
-- **Data Scaling**: Penggunaan partitioned tables per tenant_id untuk performa query audit yang konsisten.
+
+* **Frontend Scaling**: Karena berbasis desktop, beban komputasi (UI rendering, local sync) didistribusikan ke workstation user.
+* **Backend Scaling**: Control Plane menggunakan Horizontal Pod Autoscaler (HPA) berdasarkan metrik latensi dan jumlah koneksi aktif.
+* **Data Scaling**: Penggunaan partitioned tables per tenant_id untuk performa query audit yang konsisten.
 
 ### 16.3 Failure Domain Analysis & Mitigation
+
 | Domain | Scenario | Impact | Mitigation Strategy |
 | :--- | :--- | :--- | :--- |
 | **Local** | SQLite Corruption | History lost | Automatic recovery from cloud state sync. |
@@ -390,10 +394,13 @@ graph LR
 ---
 
 ## 17. Observability Framework
+
 ### 17.1 Metrics Collection & SLOs
+
 Sistem mengumpulkan metrik operasional untuk memastikan kepatuhan terhadap Service Level Objectives (SLOs).
 
 #### 17.1.1 Metrics Schema (JSON)
+
 Metrik dikirim dalam format JSON terstruktur ke Telemetry Store.
 
 ```json
@@ -420,29 +427,35 @@ Metrik dikirim dalam format JSON terstruktur ke Telemetry Store.
 ```
 
 #### 17.1.2 Service Level Objectives (SLOs)
-- **Availability**: 99.9% uptime untuk Control Plane APIs.
-- **Latency (P95)**: < 200ms untuk validasi kebijakan Rube.
-- **Throughput**: Mendukung hingga 10k concurrent agent traces per tenant.
+
+* **Availability**: 99.9% uptime untuk Control Plane APIs.
+* **Latency (P95)**: < 200ms untuk validasi kebijakan Rube.
+* **Throughput**: Mendukung hingga 10k concurrent agent traces per tenant.
 
 ### 17.2 Logging & Alerting Standards
-- **Logging**: Format JSON terstruktur dengan `trace_id` yang konsisten di seluruh layer.
-- **Alerting Thresholds**:
-    - **CRITICAL**: > 5% failure rate pada `agents/invoke` dalam 5 menit.
-    - **WARNING**: P99 Latency > 2s untuk eksekusi workflow.
-    - **SECURITY**: > 10 policy violations dari aktor yang sama dalam 1 jam.
+
+* **Logging**: Format JSON terstruktur dengan `trace_id` yang konsisten di seluruh layer.
+* **Alerting Thresholds**:
+  * **CRITICAL**: > 5% failure rate pada `agents/invoke` dalam 5 menit.
+  * **WARNING**: P99 Latency > 2s untuk eksekusi workflow.
+  * **SECURITY**: > 10 policy violations dari aktor yang sama dalam 1 jam.
 
 ### 17.3 Dashboard Specifications
-- **Operational Dashboard**: Real-time agent activity, task queue status, active users.
-- **Security Dashboard**: Policy violation heatmaps, failed auth attempts, audit log stream.
-- **System Health**: CPU/Memory usage (Tauri process), sync latency, network throughput.
+
+* **Operational Dashboard**: Real-time agent activity, task queue status, active users.
+* **Security Dashboard**: Policy violation heatmaps, failed auth attempts, audit log stream.
+* **System Health**: CPU/Memory usage (Tauri process), sync latency, network throughput.
 
 ---
 
 ### 18. Desktop-First & Offline Resilience
+
 ### 18.1 Offline Synchronization Protocol
+
 Menggunakan arsitektur **Local-first** dengan Outbox pattern.
 
 #### 18.1.1 Sync State Diagram
+
 ```mermaid
 stateDiagram-v2
     [*] --> Pending: Action Triggered (Offline)
@@ -458,20 +471,23 @@ stateDiagram-v2
 ```
 
 #### 18.1.2 Implementation Steps
+
 1. Perintah disimpan di SQLite lokal dengan status `PENDING`.
 2. Background worker (Rust side) mencoba sinkronisasi ke Control Plane.
 3. Setelah Ack diterima, status diperbarui menjadi `SYNCED`.
 4. Konflik diselesaikan menggunakan **Vector Clocks** (Logical clocks) untuk menjamin konsistensi data.
 
 ### 18.2 Accessibility & Localization
-- **WCAG 2.1 AA Compliance**: Kontras warna tinggi, navigasi keyboard penuh, dan dukungan screen reader.
-- **Localization**: Dukungan i18n untuk Bahasa Indonesia dan Inggris sebagai standar awal operasional.
+
+* **WCAG 2.1 AA Compliance**: Kontras warna tinggi, navigasi keyboard penuh, dan dukungan screen reader.
+* **Localization**: Dukungan i18n untuk Bahasa Indonesia dan Inggris sebagai standar awal operasional.
 
 ---
 
 ## 19. Governance & Risk Management
 
 ### 19.1 Technical Debt Inventory
+
 | ID | Component | Description | Priority | Effort |
 | :--- | :--- | :--- | :--- | :--- |
 | **TD-01** | Local DB | SQLite encryption currently uses fixed key; needs migration to OS Keychain. | High | Medium |
@@ -480,6 +496,7 @@ stateDiagram-v2
 | **TD-04** | Testing | Coverage for Tauri IPC bridge commands is < 40%. | High | Medium |
 
 ### 19.2 Risk Assessment Matrix
+
 | Risk Scenario | Likelihood | Impact | Mitigation Strategy |
 | :--- | :---: | :---: | :--- |
 | **Local Data Breach** | Low | High | Use SQLCipher + OS Keychain integration. |
@@ -490,6 +507,7 @@ stateDiagram-v2
 ---
 
 ## 20. Change Log
+
 | Version | Date | Author | Description |
 | :--- | :--- | :--- | :--- |
 | 1.2.1 | 2025-12-29 | SBA-Agentic Team | Enhanced: Added Technical Debt Inventory and Risk Assessment Matrix. |
@@ -501,6 +519,7 @@ stateDiagram-v2
 ---
 
 ## 21. Operational Risk Assessment
+
 Evaluasi risiko operasional berdasarkan probabilitas dan dampak terhadap bisnis.
 
 | Risk ID | Risk Description | Probability | Impact | Mitigation Strategy | Owner |
@@ -514,32 +533,38 @@ Evaluasi risiko operasional berdasarkan probabilitas dan dampak terhadap bisnis.
 ---
 
 ## 22. Strategic Roadmap & Tech Stack Evolution
+
 Rencana pengembangan teknis Internal Console untuk 12-24 bulan ke depan.
 
 ### 20.1 Phase 2: Intelligence Enhancement (Q1-Q2 2026)
-- **Feature**: Real-time Agent Visual Debugger (Step-by-step reasoning trace).
-- **Tech**: Integration with WebGL for large-scale graph visualization of agent plans.
-- **Goal**: Meningkatkan transparansi keputusan AI untuk operator manusia.
+
+* **Feature**: Real-time Agent Visual Debugger (Step-by-step reasoning trace).
+* **Tech**: Integration with WebGL for large-scale graph visualization of agent plans.
+* **Goal**: Meningkatkan transparansi keputusan AI untuk operator manusia.
 
 ### 20.2 Phase 3: Autonomous Operations (Q3-Q4 2026)
-- **Feature**: Multi-agent Collaborative Workspace.
-- **Tech**: gRPC bi-directional streaming for low-latency agent-to-agent communication.
-- **Goal**: Memungkinkan orkestrasi tugas kompleks yang melibatkan > 5 agent terspesialisasi.
+
+* **Feature**: Multi-agent Collaborative Workspace.
+* **Tech**: gRPC bi-directional streaming for low-latency agent-to-agent communication.
+* **Goal**: Memungkinkan orkestrasi tugas kompleks yang melibatkan > 5 agent terspesialisasi.
 
 ### 20.3 Phase 4: Edge Intelligence (2027+)
-- **Feature**: Local LLM Execution for privacy-sensitive tasks.
-- **Tech**: WebGPU / ONNX Runtime integration within Tauri for local inference.
-- **Goal**: Mengurangi ketergantungan pada Cloud API dan meningkatkan privasi data tenant.
+
+* **Feature**: Local LLM Execution for privacy-sensitive tasks.
+* **Tech**: WebGPU / ONNX Runtime integration within Tauri for local inference.
+* **Goal**: Mengurangi ketergantungan pada Cloud API dan meningkatkan privasi data tenant.
 
 ---
 
 ## 23. Kesimpulan
+
 Internal Console SBA-Agentic bukan sekadar dashboard administratif; ia adalah **Operating System untuk Bisnis Masa Depan** yang mengandalkan AI. Dengan arsitektur yang mengutamakan keamanan (Rust/Tauri), ketaatan aturan (Rube Engine), dan transparansi (Observability Framework), sistem ini siap mendukung transformasi digital skala enterprise yang aman dan terukur.
 
 ---
 
 ## 24. Referensi Terkait
-- [Control & Intelligence Console — Landing Page](file:///home/inbox/smart-ai/sba-agentic/docs/00-index/Control%20&%20Intelligence%20Console%20—%20Sba-agentic.md)
-- [Use Case Specifications — Internal Console](file:///home/inbox/smart-ai/sba-agentic/docs/01-product/Use%20Case%20Specifications%20%E2%80%94%20Internal%20Console%20(sba-agentic).md)
-- [SBA-Agentic Workflow Standard](file:///home/inbox/smart-ai/sba-agentic/docs/SBA-Agentic-Workflow-Standard.md)
-- [Rube Policy Engine Specification](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/rules-specification.md)
+
+* [Control & Intelligence Console — Landing Page](file:///home/inbox/smart-ai/sba-agentic/docs/00-index/Control%20&%20Intelligence%20Console%20—%20Sba-agentic.md)
+* [Use Case Specifications — Internal Console](file:///home/inbox/smart-ai/sba-agentic/docs/01-product/Use%20Case%20Specifications%20%E2%80%94%20Internal%20Console%20(sba-agentic).md)
+* [SBA-Agentic Workflow Standard](file:///home/inbox/smart-ai/sba-agentic/docs/SBA-Agentic-Workflow-Standard.md)
+* [Rube Policy Engine Specification](file:///home/inbox/smart-ai/sba-agentic/.trae/rules/rules-specification.md)

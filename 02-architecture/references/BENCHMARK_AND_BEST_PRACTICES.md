@@ -11,7 +11,7 @@ Versi: 1.0.0
 Riwayat Perubahan:
 
 - 1.0.0 (2025-12-05): Draft referensi awal.
-  Penanggung Jawab: SBA Docs Team — contact: docs@sba.local
+  Penanggung Jawab: SBA Docs Team — contact: <docs@sba.local>
 
 ## Benchmarking Fitur Serupa
 

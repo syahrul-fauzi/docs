@@ -62,7 +62,7 @@ Tidak termasuk:
 
 ## Ringkasan Eksekutif
 
-SBA-Agentic adalah monorepo berbasis Turborepo + pnpm workspaces. Tooling yang ada sudah fungsional, tetapi tersebar (root config + tooling/_ + tools/_ + scripts/\*) dan belum memiliki “contract” yang jelas untuk:
+SBA-Agentic adalah monorepo berbasis Turborepo + pnpm workspaces. Tooling yang ada sudah fungsional, tetapi tersebar (root config + `tooling/*` + `tools/*` + `scripts/*`) dan belum memiliki “contract” yang jelas untuk:
 
 - konsistensi lint/typecheck lintas workspace
 - quality gate CI yang seragam (lint/test/typecheck/security/perf)
@@ -83,7 +83,7 @@ Tooling Layer 2.0 menargetkan:
 
 ### Struktur tooling saat ini (fokus folder `tooling/`)
 
-```
+```text
 tooling/
 ├─ eslint/
 │  ├─ eslint.config.js
@@ -243,7 +243,7 @@ Kemampuan saat ini sudah memiliki pondasi, tetapi belum:
 
 ## 2.2 Target Struktur (Layer 2.0)
 
-```
+```text
 tooling/
 ├─ eslint/                     (preset lint + guard rules)
 ├─ typescript/                 (tsconfig profiles: app/web/node/lib/test)
@@ -265,7 +265,7 @@ tools/
 
 ## 2.2.1 Struktur Monorepo (Implementasi di repo)
 
-```
+```text
 /
 ├─ apps/
 │  ├─ app/                  (Next.js app utama)
@@ -562,7 +562,13 @@ Tujuan: menyediakan contract tooling lintas workspace:
 Implementasi (saat ini):
 
 - Manifest: [manifest.json](file:///home/inbox/smart-ai/sba-agentic/tooling/manifest.json)
-- Workspace packages (pnpm): [tooling/eslint/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/eslint/package.json), [tooling/typescript/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/typescript/package.json), [tooling/tailwind/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/tailwind/package.json), [tooling/observability/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/observability/package.json), [tooling/security/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/security/package.json), [tooling/ci/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/ci/package.json)
+- Workspace packages (pnpm):
+  - [tooling/eslint/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/eslint/package.json)
+  - [tooling/typescript/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/typescript/package.json)
+  - [tooling/tailwind/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/tailwind/package.json)
+  - [tooling/observability/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/observability/package.json)
+  - [tooling/security/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/security/package.json)
+  - [tooling/ci/package.json](file:///home/inbox/smart-ai/sba-agentic/tooling/ci/package.json)
 
 ### B. `tooling/observability` (Tooling Telemetry)
 
@@ -778,12 +784,12 @@ Konten minimal:
 
 ### Modul yang diubah/dihapus/ditambahkan (Tooling Layer)
 
-**Diubah**
+### Diubah
 
 - `tooling/typescript/*`: konsolidasi menjadi satu base + profiles; deprecate salah satu base yang redundan.
 - `tooling/eslint/*`: migrasi dari config yang tidak dipakai ke preset modular yang dipakai root.
 
-**Ditambahkan**
+### Ditambahkan
 
 - `tooling/observability` (schema + exporter)
 - `tooling/ci` (wrappers untuk baseline gates + reporters)
@@ -791,7 +797,7 @@ Konten minimal:
 - `tooling/prettier`, `tooling/vitest`, `tooling/playwright` sebagai preset resmi (mengikuti template layer 2.0)
 - `tooling/manifest.json` sebagai contract versi
 
-**Direlokasi (tanpa mengubah fungsionalitas)**
+### Direlokasi (tanpa mengubah fungsionalitas)
 
 - sebagian utilitas `tools/ci` yang bersifat “policy/preset” dipindah menjadi library di `tooling/ci`, sementara runner tetap di `tools/ci`.
 
@@ -1057,9 +1063,9 @@ Output minimum (artifact JSON) per stage:
 
 ## Appendix F — Referensi Eksternal (Opsional)
 
-- ESLint Flat Config: https://eslint.org/docs/latest/use/configure/configuration-files-new
-- TypeScript Project References: https://www.typescriptlang.org/docs/handbook/project-references.html
-- Turborepo: https://turbo.build/repo/docs
-- pnpm Workspaces: https://pnpm.io/workspaces
-- PlantUML: https://plantuml.com/
-- Mermaid: https://mermaid.js.org/
+- ESLint Flat Config: <https://eslint.org/docs/latest/use/configure/configuration-files-new>
+- TypeScript Project References: <https://www.typescriptlang.org/docs/handbook/project-references.html>
+- Turborepo: <https://turbo.build/repo/docs>
+- pnpm Workspaces: <https://pnpm.io/workspaces>
+- PlantUML: <https://plantuml.com/>
+- Mermaid: <https://mermaid.js.org/>

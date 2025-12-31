@@ -88,26 +88,34 @@ graph TD
 ## 4. Definisi API (Highlights)
 
 ### 4.1 API Autentikasi
+
 `POST /api/auth/login`
+
 - **Request**: email, password.
 - **Response**: user object, session object, access_token.
 
 ### 4.2 API Manajemen Agen
+
 `POST /api/agents/create`
+
 - **Request**: name, description, multimodal_config, interrupt_settings, workflow_config.
 - **Response**: agent_id, status, config object.
 
 ### 4.3 API Interaksi Chat
+
 `POST /api/chat/send-message`
+
 - **Request**: agent_id, message, thread_id, context.
 - **Response**: response_id, content, reasoning, interrupt, meta_events.
 
 ## 5. Data Model (Highlights)
+
 - **USERS**: id, email, role, metadata, timestamps.
 - **AGENTS**: id, user_id, name, description, configs, is_active, timestamps.
 - **CONVERSATIONS**: id, user_id, agent_id, thread_id, context, status, timestamps.
 - **MESSAGES**: id, conversation_id, message_type, content, reasoning_data, interrupt_data, is_from_agent, created_at.
 
 ## 6. Security & Accessibility
+
 - **Security**: CSP Headers, Rate Limiting (public: 100/hr, auth: 1000/hr), RBAC (User vs Admin).
 - **A11y**: WCAG AA Compliance (4.5:1 contrast), Keyboard navigation, Screen Reader support (ARIA).

@@ -32,4 +32,3 @@ Log ini mencatat risiko teknis dan operasional yang teridentifikasi, beserta str
 ## 4. Closed Risks
 
 *None at this stage.
-
