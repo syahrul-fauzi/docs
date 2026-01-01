@@ -1,72 +1,85 @@
 # 📊 Laporan Analisis Komprehensif: SBA-Agentic Rules Engine
 
-## 1. Pendahuluan
-Laporan ini menganalisis dokumen `.trae/Project: SBA (apps-api)-Agentic Rules Engine.md` sebagai **Single Source of Truth (SSOT)** untuk pengembangan mesin aturan (rules engine) pada aplikasi `apps/api`.
+## **1. Pendahuluan**
+Dokumen `.trae/Project: SBA (apps-api)-Agentic Rules Engine.md` berfungsi sebagai **Single Source of Truth (SSOT)** untuk pengembangan mesin aturan (Rules Engine) di platform SBA-Agentic. Dokumen ini merinci arsitektur, kontrak data, siklus hidup aturan, dan standar operasional yang diperlukan untuk membangun sistem pengambilan keputusan yang otonom, aman, dan terukur.
 
-## 2. Pemahaman Struktur & Konten
-Dokumen SSOT dirancang dengan pendekatan enterprise-grade, mencakup:
-- **Arsitektur Modular**: Pemisahan antara Loader, Evaluator, Governance, dan Dispatcher.
-- **Kontrak Rule**: Definisi schema JSON yang sangat ketat dengan metadata, parameter, aksi, dan penanganan error.
-- **Lifecycle Terpadu**: Alur kerja dari *Draft* hingga *Revise* dengan feedback loop AI.
-- **Keamanan & Observabilitas**: Fokus tinggi pada isolasi tenant, RBAC, dan metrik performa.
+---
 
-## 3. Identifikasi Persyaratan
-### Fungsional:
-- Evaluasi aturan berbasis event, jadwal (cron), dan kondisi.
-- Orkestrasi aksi multimodal (internal, eksternal, AI).
-- Penanganan error otomatis dengan kebijakan retry dan fallback.
-- Mekanisme pembelajaran mandiri (AI Feedback Loop).
+## **2. Pemahaman Struktur & Konten**
+Dokumen terbagi menjadi 12 bagian utama yang mencakup seluruh spektrum pengembangan:
+- **Arsitektur**: Menggunakan pendekatan modular dengan pemisahan antara *Loader*, *Evaluator*, *Governance*, dan *Dispatcher*.
+- **Kontrak Rule (Schema JSON)**: Mendefinisikan struktur data yang ketat untuk setiap aturan, mencakup metadata, trigger, parameter, aksi, penanganan kesalahan, dan observabilitas.
+- **Lifecycle**: Mengikuti alur *Draft → Validate → Simulate → Approve → Deploy → Execute → Observe → Revise*.
+- **Integrasi & Governance**: Fokus pada kemandirian aturan dari kode domain, isolasi tenant, dan kontrol akses berbasis peran (RBAC).
+- **AI & Self-Development**: Memungkinkan AI untuk memberikan saran revisi aturan berdasarkan metrik kinerja.
 
-### Non-Fungsional:
-- **Latensi**: Evaluasi < 50ms, End-to-end < 500ms.
-- **Skalabilitas**: > 1000 evaluasi per detik.
-- **Keamanan**: Zero Trust, isolasi multi-tenant, audit trail lengkap.
+---
 
-## 4. Pemetaan Alur Kerja & Aturan Bisnis
-Sistem saat ini menggunakan YAML untuk definisi aturan (misal: `BPA-APP-01`), namun SSOT mengarahkan ke JSON schema yang lebih terstruktur. Alur kerja utama meliputi:
-1. **Triggering**: Event diterima oleh `RubeService`.
-2. **Validation**: Pengecekan keamanan (Zero Trust) dan isolasi tenant.
-3. **Evaluation**: Mencocokkan kondisi aturan.
-4. **Execution**: Memanggil `ActionDispatcher` untuk mengeksekusi tools.
-5. **Reflection**: AI menganalisis hasil dan memberikan feedback.
+## **3. Identifikasi Persyaratan**
 
-## 5. Verifikasi & Evaluasi Arsitektur
-### Keselarasan:
-- Arsitektur yang diusulkan selaras dengan visi SBA sebagai asisten cerdas yang otonom.
-- Penggunaan `AgenticReasoningEngine` menunjukkan integrasi AI yang dalam.
+### **3.1 Persyaratan Fungsional**
+- **Rule Management**: Kemampuan untuk memuat, memvalidasi, dan mengeksekusi aturan dari file konfigurasi eksternal.
+- **Trigger Support**: Mendukung pemicu berbasis event, jadwal (cron), dan kondisi sistem.
+- **Action Orchestration**: Mendukung aksi internal (service calls), eksternal (API), notifikasi, dan inferensi AI.
+- **Governance Layers**: Implementasi empat lapisan tata kelola (*Auto, Guarded, HITL, Restricted*) untuk keamanan operasional.
+- **AI Feedback Loop**: Mekanisme untuk merekam hasil eksekusi dan memberikan umpan balik ke model AI untuk perbaikan aturan secara mandiri.
 
-### Kesenjangan (Gaps):
-- **Format Data**: Implementasi saat ini menggunakan YAML, sementara SSOT meminta JSON.
-- **Lokasi File**: Aturan saat ini berada di `packages/rube/src/rules`, SSOT menyarankan `apps/api/.trae/rules/`.
-- **Komponen Terpisah**: `GovernanceEngine` dan `ActionDispatcher` belum sepenuhnya dipisahkan sebagai komponen independen di `apps/api`.
+### **3.2 Persyaratan Non-Fungsional**
+- **Performa (SLA/SLO)**: Latensi evaluasi aturan < 50ms dan throughput > 1.000 evaluasi/detik.
+- **Keamanan**: Isolasi tenant yang ketat, prinsip *Least Privilege*, dan penggunaan *Circuit Breakers* untuk panggilan eksternal.
+- **Observabilitas**: Log terstruktur, metrik Prometheus/OTEL, dan *distributed tracing* untuk setiap eksekusi aturan.
+- **Reliabilitas**: Kebijakan retrial otomatis dengan *exponential backoff* dan mekanisme *fallback*.
 
-## 6. Dependensi & Integrasi
-- **Internal**: `PrismaService` (DB), `QueueService` (BullMQ), `EnhancedToolRegistry`.
-- **Eksternal**: Redis (Caching/Rate Limiting), OpenTelemetry (Tracing), AI Models (Inference).
+---
 
-## 7. Rekomendasi Penyempurnaan
-1. **Standardisasi Format**: Migrasi dari YAML ke JSON Schema yang didefinisikan di SSOT untuk memudahkan validasi otomatis oleh sistem.
-2. **Refaktorisasi Komponen**: Pisahkan `GovernanceEngine` dari `RuleExecutor` untuk memungkinkan audit dan kebijakan keamanan yang lebih fleksibel.
-3. **Implementasi Registry**: Gunakan `registry.json` untuk manajemen versi dan status rule (Draft, Active, Deprecated).
-4. **Enhance Simulation**: Tambahkan fitur dry-run yang lebih canggih untuk mensimulasikan efek aturan sebelum deploy ke produksi.
+## **4. Pemetaan Alur Kerja & Aturan Bisnis**
+- **Alur Eksekusi**: Event masuk → Evaluasi (Trigger & Condition) → Governance Check → Action Dispatch → Logging/Metrics.
+- **Governance Policy**:
+    - **Auto**: Aturan pasif (logging/monitoring).
+    - **Guarded**: Aksi berisiko rendah tanpa intervensi manusia.
+    - **HITL (Human-in-the-Loop)**: Memerlukan persetujuan manusia untuk aksi sensitif.
+    - **Restricted**: Pembatasan ketat untuk transaksi finansial atau penghapusan data.
 
-## 8. Rencana Implementasi
-### Fase 1: Pemantapan Fondasi (Minggu 1)
-- [ ] Implementasi `RuleValidator` berbasis Zod sesuai schema SSOT.
-- [ ] Refaktorisasi `RuleManager` untuk mendukung loading dari lokasi baru.
-- [ ] Setup struktur direktori `apps/api/src/rube/core/`.
+---
 
-### Fase 2: Governance & Dispatcher (Minggu 2)
-- [ ] Ekstraksi `GovernanceEngine` untuk penanganan RBAC dan scope fencing.
-- [ ] Implementasi `ActionDispatcher` yang mendukung prioritas dan concurrency.
-- [ ] Integrasi audit logging di setiap langkah eksekusi.
+## **5. Verifikasi & Evaluasi Arsitektur**
+Arsitektur yang diusulkan sangat selaras dengan prinsip **Enterprise-Grade** platform SBA:
+- **Modularitas**: Pemisahan komponen (Loader, Evaluator, dll.) memungkinkan skalabilitas horizontal dan isolasi kegagalan.
+- **Event-Driven**: Penggunaan `idempotencyKey` dan amplop event standar memastikan konsistensi data dalam sistem terdistribusi.
+- **Zero Trust**: Pengecekan `scope` dan `tenantIsolated` di tingkat metadata memperkuat keamanan platform.
 
-### Fase 3: Observability & AI Loop (Minggu 3)
-- [ ] Setup metrik Prometheus untuk `rule_execution_latency`.
-- [ ] Implementasi OTEL tracing antar komponen rules engine.
-- [ ] Peningkatan fitur `reflect` untuk menyimpan hasil belajar ke `AgentLearning`.
+---
 
-### Fase 4: Validasi & Go-Live (Minggu 4)
-- [ ] Pengujian beban (Load Testing) untuk mencapai target 1k eval/sec.
-- [ ] Simulasi chaos untuk menguji kebijakan retry dan fallback.
-- [ ] Deployment rule pertama dengan schema baru.
+## **6. Dependensi & Integrasi**
+Rules Engine memiliki dependensi kritis terhadap:
+- **Infrastruktur**: Redis (caching/rate limiting), BullMQ (scheduling/queue), OpenTelemetry (observability).
+- **Internal Services**: `PrismaService` (database), `QueueService`, dan domain-specific services.
+- **AI Core**: Model bahasa untuk analisis pola dan proposal revisi aturan.
+
+---
+
+## **7. Rekomendasi Penyempurnaan**
+Berdasarkan analisis terhadap implementasi saat ini di `apps/api/src/rube` dan `packages/rube`, berikut adalah rekomendasi untuk dokumen SSOT:
+1.  **Transisi YAML ke JSON**: Saat ini implementasi menggunakan YAML, sedangkan SSOT menyarankan JSON Schema. Perlu penegasan apakah sistem akan mendukung keduanya atau bermigrasi sepenuhnya ke JSON.
+2.  **Detail Sandbox Execution**: Tambahkan spesifikasi teknis tentang bagaimana "sandboxing" dilakukan untuk mencegah aturan mengeksekusi kode berbahaya.
+3.  **Versi Kontrak API**: Definisikan versi API untuk integrasi antara `Action Dispatcher` dan domain services guna mencegah *breaking changes*.
+4.  **Lokasi Penyimpanan Aturan**: SSOT menyarankan `apps/api/.trae/rules/`, namun secara arsitektur monorepo, penyimpanan di `packages/rube/src/rules` mungkin lebih baik untuk berbagi logika antar aplikasi.
+
+---
+
+## **8. Rencana Implementasi**
+
+### **Fase 1: Fondasi & Validasi (Minggu 1-2)**
+- [ ] Implementasi `RuleValidator` berbasis Zod sesuai schema JSON di SSOT.
+- [ ] Refaktorisasi `RuleManager` untuk mendukung skema baru dan lokasi penyimpanan terpusat.
+- [ ] Setup *Observability Layer* dasar (Log terstruktur & Trace ID).
+
+### **Fase 2: Governance & Execution (Minggu 3-4)**
+- [ ] Implementasi `GovernanceEngine` dengan pengecekan RBAC dan isolasi tenant.
+- [ ] Pengembangan `ActionDispatcher` yang mendukung berbagai tipe aksi (Internal, External, AI).
+- [ ] Integrasi dengan BullMQ untuk pemicu berbasis jadwal (Cron).
+
+### **Fase 3: AI Integration & Optimization (Minggu 5-6)**
+- [ ] Implementasi `FeedbackLoopService` untuk merekam hasil eksekusi ke database audit.
+- [ ] Pengembangan agen AI untuk menganalisis audit log dan mengusulkan revisi aturan.
+- [ ] Benchmarking performa untuk mencapai target < 50ms evaluasi.
